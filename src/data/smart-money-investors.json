@@ -1,0 +1,67 @@
+[
+  {
+    "priority": 1,
+    "slug": "warren-buffett",
+    "investor": "Warren Buffett",
+    "firm": "Berkshire Hathaway",
+    "cik": "0001067983",
+    "trackingReason": "大型株を長期保有する代表的な運用会社として、四半期ごとの保有変化を比較しやすいため。"
+  },
+  {
+    "priority": 2,
+    "slug": "ray-dalio",
+    "investor": "Ray Dalio",
+    "firm": "Bridgewater Associates",
+    "cik": "0001350694",
+    "trackingReason": "マクロ視点と分散運用で知られる運用会社の米国上場証券部分を確認できるため。"
+  },
+  {
+    "priority": 3,
+    "slug": "bill-ackman",
+    "investor": "Bill Ackman",
+    "firm": "Pershing Square Capital Management",
+    "cik": "0001336528",
+    "trackingReason": "保有銘柄を絞る傾向があり、13F上の増減を比較しやすいため。"
+  },
+  {
+    "priority": 4,
+    "slug": "michael-burry",
+    "investor": "Michael Burry",
+    "firm": "Scion Asset Management",
+    "cik": "0001649339",
+    "trackingReason": "保有の入れ替わりが注目されやすく、四半期末時点の開示変化を確認する対象として有用なため。"
+  },
+  {
+    "priority": 5,
+    "slug": "stanley-druckenmiller",
+    "investor": "Stanley Druckenmiller",
+    "firm": "Duquesne Family Office",
+    "cik": "0001536411",
+    "trackingReason": "マクロ環境と成長テーマの両方を重視する運用会社の開示変化を確認できるため。"
+  },
+  {
+    "priority": 6,
+    "slug": "david-tepper",
+    "investor": "David Tepper",
+    "firm": "Appaloosa",
+    "cik": "0001656456",
+    "trackingReason": "大型テクノロジー株や景気敏感株などの四半期ごとの変化を確認しやすいため。"
+  },
+  {
+    "priority": 7,
+    "slug": "seth-klarman",
+    "investor": "Seth Klarman",
+    "firm": "Baupost Group",
+    "cik": "0001061768",
+    "trackingReason": "バリュー運用で知られる運用会社の米国上場証券部分を比較できるため。"
+  },
+  {
+    "priority": 8,
+    "slug": "cathie-wood",
+    "investor": "Cathie Wood",
+    "firm": "ARK Investment Management",
+    "cik": "0001697748",
+    "trackingReason": "成長株・イノベーション銘柄の13F上の変化を確認できるため。",
+    "disclosureNote": "ARKのETFは日次保有情報も公開されていますが、このページは比較条件をそろえるためSEC Form 13Fだけを使用します。"
+  }
+]

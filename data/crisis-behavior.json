@@ -1,0 +1,108 @@
+{
+  "updatedAt": "2026-06-15T00:00:00Z",
+  "items": [
+    {
+      "id": "smart-money",
+      "name": "Smart Money",
+      "japaneseName": "著名投資家",
+      "level": "yellow",
+      "summary": "公開ポジションは中立からやや守り寄りです。",
+      "explanation": "著名投資家や大口運用会社が、四半期末時点でどのように持ち高を変えたかを見ます。",
+      "caution": "13Fは最大45日遅れで、現金・空売り・提出後の売買は分かりません。",
+      "evidence": [
+        "SEC 13Fの前四半期比較で守り判定の運用会社があります",
+        "大型テクノロジー株や高PER銘柄の増減を継続確認します"
+      ],
+      "sourceType": "manual",
+      "sourceUrls": [
+        "https://www.sec.gov/edgar/search/"
+      ]
+    },
+    {
+      "id": "insider-selling",
+      "name": "Insider Selling",
+      "japaneseName": "内部者売却",
+      "level": "yellow",
+      "summary": "役員売却は単発ではなく広がりを確認する段階です。",
+      "explanation": "CEOやCFOなど企業内部者による自社株売買が、特定企業だけでなく市場全体へ広がっているかを見ます。",
+      "caution": "税金、報酬計画、定期売却も多いため、単独では危機判断に使いません。",
+      "evidence": [
+        "大型テクノロジーと金融・不動産の売却動向を監視します",
+        "Form 4の売買目的と継続性を確認します"
+      ],
+      "sourceType": "manual",
+      "sourceUrls": [
+        "https://www.sec.gov/edgar/search/"
+      ]
+    },
+    {
+      "id": "escape-money",
+      "name": "Escape Money",
+      "japaneseName": "安全資産への逃避",
+      "level": "yellow",
+      "summary": "MMFなど安全性の高い置き場への資金移動に注意します。",
+      "explanation": "銀行預金やリスク資産から、MMF、短期国債、金、米ドルなどへ資金が逃げているかを見ます。",
+      "caution": "一つの資産価格だけで判断せず、複数の資金フローが同時に強まるかを確認します。",
+      "evidence": [
+        "MMF残高と銀行預金の組み合わせを確認します",
+        "金、短期国債、米ドルへの同時流入を監視します"
+      ],
+      "sourceType": "manual",
+      "sourceUrls": [
+        "https://fred.stlouisfed.org/",
+        "https://www.ici.org/research/stats/mmf"
+      ]
+    },
+    {
+      "id": "credit-escape",
+      "name": "Credit Escape",
+      "japaneseName": "信用市場からの逃避",
+      "level": "green",
+      "summary": "信用市場からの広範な逃避はまだ未点火です。",
+      "explanation": "HY債、IG債、レバレッジドローン、CLOなどから資金が一斉に逃げていないかを見ます。",
+      "caution": "ETF流出だけでなく、社債発行停止や借り換え困難が重なると重要度が上がります。",
+      "evidence": [
+        "信用スプレッドと社債発行市場を同時に確認します",
+        "CLO新規発行とローンファンドの資金フローを監視します"
+      ],
+      "sourceType": "manual",
+      "sourceUrls": [
+        "https://fred.stlouisfed.org/"
+      ]
+    },
+    {
+      "id": "corporate-defense",
+      "name": "Corporate Defense",
+      "japaneseName": "企業の防衛行動",
+      "level": "yellow",
+      "summary": "採用、設備投資、業績見通しの慎重化を監視中です。",
+      "explanation": "企業が採用停止、設備投資削減、自社株買い縮小などの守りへ移っているかを見ます。",
+      "caution": "特定業界の調整と、経済全体へ広がる防衛行動を分けて読みます。",
+      "evidence": [
+        "レイオフとWARN通知の広がりを確認します",
+        "設備投資と業績ガイダンスの下方修正を監視します"
+      ],
+      "sourceType": "manual",
+      "sourceUrls": [
+        "https://www.dol.gov/agencies/eta/layoffs/warn"
+      ]
+    },
+    {
+      "id": "policy-stress",
+      "name": "Policy Stress",
+      "japaneseName": "政策当局の緊急対応",
+      "level": "green",
+      "summary": "広範な緊急救済が必要な状態ではありません。",
+      "explanation": "中央銀行や政府が緊急流動性、銀行救済、預金保護拡大などへ移っているかを見ます。",
+      "caution": "警戒発言より、制度新設・利用急増・救済実行を重く評価します。",
+      "evidence": [
+        "Discount Windowと緊急流動性制度を確認します",
+        "銀行救済や預金保護拡大の有無を監視します"
+      ],
+      "sourceType": "manual",
+      "sourceUrls": [
+        "https://www.federalreserve.gov/releases/h41/"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+[
+  { "id": "spx", "name": "S&P 500", "value": "6,012.4", "change": 0.42 },
+  { "id": "ndx", "name": "NASDAQ 100", "value": "21,795", "change": 0.71 },
+  { "id": "us10y", "name": "US 10Y", "value": "4.39%", "change": 0.03 },
+  { "id": "vix", "name": "VIX", "value": "18.40", "change": 0.5 },
+  { "id": "dxy", "name": "DXY", "value": "99.18", "change": -0.21 },
+  { "id": "gold", "name": "GOLD", "value": "$3,318", "change": 0.36 },
+  { "id": "usdjpy", "name": "USD/JPY", "value": "144.62", "change": -0.18 },
+  { "id": "btc", "name": "BTC", "value": "$105,820", "change": 1.24 }
+]

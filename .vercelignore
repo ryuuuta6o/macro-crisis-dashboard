@@ -1,0 +1,7 @@
+.venv/
+.git/
+*.log
+.codex-dev-*.log
+STATE.md
+QUALITY_CHECK.md
+MEMORY_NOTES.md

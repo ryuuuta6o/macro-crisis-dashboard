@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/.venv/
 /.pnp
 .pnp.*
 .yarn/*
@@ -29,9 +30,14 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+*.log
+.codex-*
+__pycache__/
+*.pyc
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +45,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local production notes
+STATE.md
+QUALITY_CHECK.md
+MEMORY_NOTES.md
+
+.vercel

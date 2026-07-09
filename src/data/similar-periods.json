@@ -1,0 +1,36 @@
+[
+  {
+    "id": "2022-06",
+    "label": "2022年6月",
+    "conditions": {
+      "vix": "yellow_or_red",
+      "dgs10": "yellow_or_red",
+      "hyOas": "green_or_yellow"
+    },
+    "summary": "金利上昇と株式ボラティリティ上昇が同時に起きた局面。",
+    "note": "当時は株式市場の値動きが大きくなりました。未来予測ではなく、過去の参考局面です。"
+  },
+  {
+    "id": "2020-03",
+    "label": "2020年3月",
+    "conditions": {
+      "vix": "red",
+      "hyOas": "red",
+      "igOas": "red",
+      "sofr": "yellow_or_red"
+    },
+    "summary": "株式・信用・短期資金調達のストレスが同時に強まった局面。",
+    "note": "当時は市場流動性が急速に悪化しました。未来予測ではなく、過去の参考局面です。"
+  },
+  {
+    "id": "2023-03",
+    "label": "2023年3月",
+    "conditions": {
+      "vix": "yellow_or_red",
+      "hyOas": "green_or_yellow",
+      "sofr": "green"
+    },
+    "summary": "銀行不安が意識された一方、短期市場全体の機能は維持された局面。",
+    "note": "局所的な金融不安と市場全体への波及を分けて見るための参考例です。"
+  }
+]

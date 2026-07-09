@@ -1,0 +1,475 @@
+{
+  "updatedAt": "2026-06-15T00:00:00Z",
+  "gdpReference": {
+    "label": "名目GDP・米ドル建て（IMF推計）",
+    "year": 2026,
+    "sourceName": "IMF World Economic Outlook, April 2026",
+    "sourceUrl": "https://www.imf.org/external/datamapper/NGDPD@WEO"
+  },
+  "regions": [
+    {
+      "id": "united-states",
+      "code": "US",
+      "name": "United States",
+      "japaneseName": "米国",
+      "level": "orange",
+      "summary": "信用市場は機能していますが、CRE、Private Credit、長期金利、財政負担が重なっています。",
+      "mapX": 18,
+      "mapY": 38,
+      "memberships": ["gdp_top_10", "g7"],
+      "gdpRank": 1,
+      "gdpUsdTrillion": 32.38,
+      "risks": [
+        { "category": "credit", "label": "信用・Private Credit", "level": "orange", "summary": "借り換えと不透明な評価損失を確認します。" },
+        { "category": "real-estate", "label": "商業不動産", "level": "red", "summary": "オフィス延滞から銀行へ波及する経路が焦点です。" },
+        { "category": "interest", "label": "長期金利・財政", "level": "orange", "summary": "国債供給と利払い負担が市場金利を押し上げます。" },
+        { "category": "ai-semiconductor", "label": "AI設備投資", "level": "yellow", "summary": "巨額投資と収益化の時間差を確認します。" }
+      ],
+      "relatedIndicators": ["HY OAS", "U.S. 10Y Yield", "Office CMBS", "Private Credit Default Rate", "Treasury Auction Stress"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/USA", "https://www.federalreserve.gov/publications/financial-stability-report.htm"]
+    },
+    {
+      "id": "china",
+      "code": "CN",
+      "name": "China",
+      "japaneseName": "中国",
+      "level": "red",
+      "summary": "不動産、地方政府債務、内需減速が重なり、国内信用から世界需要への波及を監視する状態です。",
+      "mapX": 78,
+      "mapY": 42,
+      "memberships": ["gdp_top_10"],
+      "gdpRank": 2,
+      "gdpUsdTrillion": 20.85,
+      "risks": [
+        { "category": "real-estate", "label": "不動産", "level": "red", "summary": "販売、価格、開発会社の資金繰りを確認します。" },
+        { "category": "credit", "label": "地方政府債務", "level": "orange", "summary": "LGFVと地方財政の負担に注意します。" },
+        { "category": "credit", "label": "内需・雇用", "level": "orange", "summary": "家計心理と消費の弱さが企業信用へ波及します。" },
+        { "category": "geopolitical", "label": "貿易摩擦", "level": "orange", "summary": "輸出規制と供給網の分断を監視します。" }
+      ],
+      "relatedIndicators": ["China Property", "Local Government Debt", "China PMI", "Global Trade"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/CHN", "https://www.worldbank.org/en/country/china/overview"]
+    },
+    {
+      "id": "germany",
+      "code": "DE",
+      "name": "Germany",
+      "japaneseName": "ドイツ",
+      "level": "yellow",
+      "summary": "製造業、輸出、エネルギーコストの弱さが欧州全体の景気と信用へ波及するかを見ます。",
+      "mapX": 51,
+      "mapY": 32,
+      "memberships": ["gdp_top_10", "g7"],
+      "gdpRank": 3,
+      "gdpUsdTrillion": 5.45,
+      "risks": [
+        { "category": "credit", "label": "製造業景気", "level": "yellow", "summary": "受注と企業収益の回復力を確認します。" },
+        { "category": "geopolitical", "label": "エネルギー", "level": "yellow", "summary": "輸入価格と産業競争力への影響を見ます。" },
+        { "category": "credit", "label": "輸出需要", "level": "yellow", "summary": "中国・世界需要の減速に敏感です。" }
+      ],
+      "relatedIndicators": ["Germany PMI", "European Bank Stress", "Energy Prices"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/DEU"]
+    },
+    {
+      "id": "japan",
+      "code": "JP",
+      "name": "Japan",
+      "japaneseName": "日本",
+      "level": "orange",
+      "summary": "金利正常化、円相場、国債市場、キャリートレード巻き戻しが世界市場へ波及する経路に注意します。",
+      "mapX": 90,
+      "mapY": 40,
+      "memberships": ["gdp_top_10", "g7"],
+      "gdpRank": 4,
+      "gdpUsdTrillion": 4.38,
+      "risks": [
+        { "category": "interest", "label": "日銀・国債", "level": "orange", "summary": "金利正常化と国債市場の流動性を確認します。" },
+        { "category": "liquidity", "label": "円キャリー", "level": "orange", "summary": "急な巻き戻しは世界のリスク資産へ連鎖します。" },
+        { "category": "credit", "label": "実質所得・内需", "level": "yellow", "summary": "物価と賃金のバランスを見ます。" }
+      ],
+      "relatedIndicators": ["JPY", "JGB Yield", "MOVE", "VIX", "Carry Trade"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/JPN", "https://www.boj.or.jp/en/"]
+    },
+    {
+      "id": "united-kingdom",
+      "code": "GB",
+      "name": "United Kingdom",
+      "japaneseName": "英国",
+      "level": "yellow",
+      "summary": "高金利、住宅ローン更新、財政余力の小ささが家計と企業信用へ与える影響を確認します。",
+      "mapX": 46,
+      "mapY": 30,
+      "memberships": ["gdp_top_10", "g7"],
+      "gdpRank": 5,
+      "gdpUsdTrillion": 4.26,
+      "risks": [
+        { "category": "interest", "label": "住宅ローン金利", "level": "yellow", "summary": "固定金利更新時の家計負担を見ます。" },
+        { "category": "credit", "label": "企業信用", "level": "yellow", "summary": "高金利下の倒産と借り換えを確認します。" },
+        { "category": "interest", "label": "財政・国債", "level": "yellow", "summary": "政策余力と国債需要を監視します。" }
+      ],
+      "relatedIndicators": ["UK Gilt Yield", "UK Mortgage Rates", "UK PMI"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/GBR", "https://www.bankofengland.co.uk/"]
+    },
+    {
+      "id": "india",
+      "code": "IN",
+      "name": "India",
+      "japaneseName": "インド",
+      "level": "yellow",
+      "summary": "高成長が続く一方、原油輸入、金融機関の信用拡大、海外資金フローへの感応度を確認します。",
+      "mapX": 70,
+      "mapY": 54,
+      "memberships": ["gdp_top_10", "regional_focus"],
+      "gdpRank": 6,
+      "gdpUsdTrillion": 4.15,
+      "risks": [
+        { "category": "credit", "label": "信用拡大", "level": "yellow", "summary": "個人向け・ノンバンク融資の質を確認します。" },
+        { "category": "geopolitical", "label": "原油輸入", "level": "orange", "summary": "原油高は物価と経常収支へ波及します。" },
+        { "category": "liquidity", "label": "海外資金フロー", "level": "yellow", "summary": "ドル高時の資本流出と通貨を見ます。" }
+      ],
+      "relatedIndicators": ["India Credit Growth", "INR", "Oil", "Foreign Portfolio Flows"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/IND", "https://www.rbi.org.in/"]
+    },
+    {
+      "id": "france",
+      "code": "FR",
+      "name": "France",
+      "japaneseName": "フランス",
+      "level": "orange",
+      "summary": "財政赤字、国債スプレッド、政治不確実性が欧州の金融環境へ波及する経路に注意します。",
+      "mapX": 48,
+      "mapY": 37,
+      "memberships": ["gdp_top_10", "g7"],
+      "gdpRank": 7,
+      "gdpUsdTrillion": 3.6,
+      "risks": [
+        { "category": "interest", "label": "財政・国債", "level": "orange", "summary": "赤字と国債スプレッドを確認します。" },
+        { "category": "geopolitical", "label": "政策不確実性", "level": "yellow", "summary": "政策停滞が企業心理へ与える影響を見ます。" },
+        { "category": "credit", "label": "銀行・企業信用", "level": "yellow", "summary": "域内金利差からの波及を監視します。" }
+      ],
+      "relatedIndicators": ["France-Germany Spread", "European Bank Stress", "France PMI"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/FRA"]
+    },
+    {
+      "id": "italy",
+      "code": "IT",
+      "name": "Italy",
+      "japaneseName": "イタリア",
+      "level": "orange",
+      "summary": "高い政府債務と低成長が、国債スプレッドと銀行保有債券を通じて波及する可能性があります。",
+      "mapX": 52,
+      "mapY": 40,
+      "memberships": ["gdp_top_10", "g7"],
+      "gdpRank": 8,
+      "gdpUsdTrillion": 2.74,
+      "risks": [
+        { "category": "interest", "label": "政府債務", "level": "orange", "summary": "利払い負担と借り換えコストを見ます。" },
+        { "category": "credit", "label": "銀行・国債連鎖", "level": "orange", "summary": "銀行保有国債の評価変動を確認します。" },
+        { "category": "credit", "label": "低成長", "level": "yellow", "summary": "債務負担を吸収する成長力を見ます。" }
+      ],
+      "relatedIndicators": ["BTP-Bund Spread", "Italy Debt", "European Bank Stress"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/ITA"]
+    },
+    {
+      "id": "russia",
+      "code": "RU",
+      "name": "Russian Federation",
+      "japaneseName": "ロシア",
+      "level": "red",
+      "summary": "戦争、制裁、資源価格、インフレ、財政支出の組み合わせが欧州・エネルギー・商品市場へ影響します。",
+      "mapX": 65,
+      "mapY": 25,
+      "memberships": ["gdp_top_10", "regional_focus"],
+      "gdpRank": 9,
+      "gdpUsdTrillion": 2.66,
+      "risks": [
+        { "category": "geopolitical", "label": "戦争・制裁", "level": "red", "summary": "貿易、金融、供給網への長期的影響を確認します。" },
+        { "category": "interest", "label": "インフレ・金利", "level": "orange", "summary": "高い物価圧力と金融引き締めを見ます。" },
+        { "category": "geopolitical", "label": "資源供給", "level": "orange", "summary": "原油・ガス・金属の供給ショックに注意します。" }
+      ],
+      "relatedIndicators": ["Oil", "European Gas", "WUI", "Food Prices"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/RUS"]
+    },
+    {
+      "id": "brazil",
+      "code": "BR",
+      "name": "Brazil",
+      "japaneseName": "ブラジル",
+      "level": "yellow",
+      "summary": "高金利、財政運営、通貨、商品市況が南米最大の経済から地域へ波及する経路を見ます。",
+      "mapX": 29,
+      "mapY": 69,
+      "memberships": ["gdp_top_10", "regional_focus"],
+      "gdpRank": 10,
+      "gdpUsdTrillion": 2.64,
+      "risks": [
+        { "category": "interest", "label": "高金利", "level": "yellow", "summary": "企業と家計の借入負担を確認します。" },
+        { "category": "interest", "label": "財政", "level": "yellow", "summary": "財政目標と国債金利を見ます。" },
+        { "category": "liquidity", "label": "通貨・資本フロー", "level": "yellow", "summary": "ドル高と海外資金流出を監視します。" }
+      ],
+      "relatedIndicators": ["BRL", "Brazil Policy Rate", "Commodity Prices", "Capital Flows"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/BRA", "https://www.worldbank.org/en/country/brazil/overview"]
+    },
+    {
+      "id": "canada",
+      "code": "CA",
+      "name": "Canada",
+      "japaneseName": "カナダ",
+      "level": "yellow",
+      "summary": "家計債務、住宅価格、変動・更新金利、米国景気への依存度を確認します。",
+      "mapX": 18,
+      "mapY": 25,
+      "memberships": ["g7"],
+      "gdpRank": 11,
+      "gdpUsdTrillion": 2.51,
+      "risks": [
+        { "category": "real-estate", "label": "住宅市場", "level": "orange", "summary": "住宅価格とローン更新負担を確認します。" },
+        { "category": "credit", "label": "家計債務", "level": "orange", "summary": "所得に対する債務負担が大きい状態です。" },
+        { "category": "credit", "label": "対米依存", "level": "yellow", "summary": "米国需要と貿易政策の影響を見ます。" }
+      ],
+      "relatedIndicators": ["Canada Household Debt", "Canada Housing", "CAD"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/CAN", "https://www.bankofcanada.ca/"]
+    },
+    {
+      "id": "south-korea",
+      "code": "KR",
+      "name": "South Korea",
+      "japaneseName": "韓国",
+      "level": "orange",
+      "summary": "半導体輸出、家計債務、不動産、地政学がアジアの製造業サイクルへ影響します。",
+      "mapX": 85,
+      "mapY": 43,
+      "memberships": ["semiconductor", "regional_focus"],
+      "risks": [
+        { "category": "ai-semiconductor", "label": "半導体輸出", "level": "orange", "summary": "AI需要とメモリ価格の変動に敏感です。" },
+        { "category": "credit", "label": "家計債務", "level": "orange", "summary": "高い家計レバレッジを確認します。" },
+        { "category": "geopolitical", "label": "朝鮮半島", "level": "yellow", "summary": "地政学リスクと市場心理を監視します。" }
+      ],
+      "relatedIndicators": ["Semiconductor Exports", "KRW", "Korea Household Debt"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/KOR"]
+    },
+    {
+      "id": "taiwan",
+      "code": "TW",
+      "name": "Taiwan",
+      "japaneseName": "台湾",
+      "level": "orange",
+      "summary": "先端半導体の供給集中と地政学が、世界のAI・自動車・電子機器の生産へ直結します。",
+      "mapX": 83,
+      "mapY": 49,
+      "memberships": ["semiconductor", "regional_focus"],
+      "risks": [
+        { "category": "ai-semiconductor", "label": "先端半導体", "level": "orange", "summary": "世界供給の集中度が高い領域です。" },
+        { "category": "geopolitical", "label": "台湾海峡", "level": "orange", "summary": "物流・生産停止のテールリスクに注意します。" },
+        { "category": "credit", "label": "輸出サイクル", "level": "yellow", "summary": "世界の電子機器需要を確認します。" }
+      ],
+      "relatedIndicators": ["Foundry Utilization", "AI Capex", "Semiconductor Exports"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/TWN"]
+    },
+    {
+      "id": "saudi-arabia",
+      "code": "SA",
+      "name": "Saudi Arabia",
+      "japaneseName": "サウジアラビア",
+      "level": "orange",
+      "summary": "原油供給、地域地政学、大型開発投資が世界の物価・金利と中東資金フローへ影響します。",
+      "mapX": 60,
+      "mapY": 51,
+      "memberships": ["regional_focus"],
+      "risks": [
+        { "category": "geopolitical", "label": "原油供給", "level": "orange", "summary": "供給方針と価格急変を監視します。" },
+        { "category": "geopolitical", "label": "地域情勢", "level": "orange", "summary": "物流・エネルギーインフラへの影響を見ます。" },
+        { "category": "credit", "label": "大型投資", "level": "yellow", "summary": "政府系投資と資金調達の持続性を確認します。" }
+      ],
+      "relatedIndicators": ["Oil", "Shipping Costs", "Gulf Credit"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/SAU"]
+    },
+    {
+      "id": "united-arab-emirates",
+      "code": "AE",
+      "name": "United Arab Emirates",
+      "japaneseName": "UAE",
+      "level": "yellow",
+      "summary": "地域金融ハブとして、不動産、海外資金、原油、地政学の変化が流動性へ波及します。",
+      "mapX": 64,
+      "mapY": 52,
+      "memberships": ["regional_focus"],
+      "risks": [
+        { "category": "real-estate", "label": "不動産", "level": "yellow", "summary": "価格上昇と投機的資金を確認します。" },
+        { "category": "liquidity", "label": "国際資金フロー", "level": "yellow", "summary": "地域マネーの流入出を見ます。" },
+        { "category": "geopolitical", "label": "物流・原油", "level": "yellow", "summary": "海上輸送とエネルギーの影響を監視します。" }
+      ],
+      "relatedIndicators": ["Dubai Real Estate", "Oil", "Shipping Costs"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/ARE"]
+    },
+    {
+      "id": "israel",
+      "code": "IL",
+      "name": "Israel",
+      "japaneseName": "イスラエル",
+      "level": "red",
+      "summary": "軍事衝突と地域波及が、財政、通貨、投資、エネルギー・海上輸送へ影響するリスクがあります。",
+      "mapX": 57,
+      "mapY": 46,
+      "memberships": ["regional_focus"],
+      "risks": [
+        { "category": "geopolitical", "label": "軍事衝突", "level": "red", "summary": "地域拡大と供給網への影響を最優先で見ます。" },
+        { "category": "interest", "label": "財政負担", "level": "orange", "summary": "防衛支出と国債市場を確認します。" },
+        { "category": "liquidity", "label": "通貨・投資", "level": "orange", "summary": "通貨と海外投資の流れを監視します。" }
+      ],
+      "relatedIndicators": ["Oil", "Shipping Costs", "ILS", "WUI"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/ISR"]
+    },
+    {
+      "id": "iran",
+      "code": "IR",
+      "name": "Iran",
+      "japaneseName": "イラン",
+      "level": "red",
+      "summary": "地域紛争、制裁、原油輸送、インフレ、通貨不安が中東と世界のエネルギー市場へ波及します。",
+      "mapX": 65,
+      "mapY": 45,
+      "memberships": ["regional_focus"],
+      "risks": [
+        { "category": "geopolitical", "label": "地域紛争・制裁", "level": "red", "summary": "軍事・金融制裁の連鎖を確認します。" },
+        { "category": "geopolitical", "label": "原油輸送", "level": "red", "summary": "ホルムズ海峡と供給ショックに注意します。" },
+        { "category": "liquidity", "label": "通貨・インフレ", "level": "red", "summary": "国内購買力と資本逃避を見ます。" }
+      ],
+      "relatedIndicators": ["Oil", "Shipping Costs", "Inflation Expectations", "WUI"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/IRN"]
+    },
+    {
+      "id": "egypt",
+      "code": "EG",
+      "name": "Egypt",
+      "japaneseName": "エジプト",
+      "level": "orange",
+      "summary": "外貨不足、債務、通貨、紅海・スエズ運河の物流収入が金融安定へ影響します。",
+      "mapX": 55,
+      "mapY": 50,
+      "memberships": ["regional_focus"],
+      "risks": [
+        { "category": "liquidity", "label": "外貨・通貨", "level": "orange", "summary": "ドル調達と通貨下落を確認します。" },
+        { "category": "credit", "label": "政府債務", "level": "orange", "summary": "利払いと借り換え負担を見ます。" },
+        { "category": "geopolitical", "label": "スエズ・紅海", "level": "orange", "summary": "物流減少と外貨収入への影響を監視します。" }
+      ],
+      "relatedIndicators": ["Egypt FX", "Sovereign Spread", "Shipping Costs"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/EGY"]
+    },
+    {
+      "id": "nigeria",
+      "code": "NG",
+      "name": "Nigeria",
+      "japaneseName": "ナイジェリア",
+      "level": "orange",
+      "summary": "通貨、インフレ、原油収入、外貨調達がアフリカ最大級の人口・市場へ与える影響を見ます。",
+      "mapX": 50,
+      "mapY": 62,
+      "memberships": ["regional_focus"],
+      "risks": [
+        { "category": "liquidity", "label": "通貨・外貨", "level": "orange", "summary": "為替市場とドル流動性を確認します。" },
+        { "category": "interest", "label": "インフレ", "level": "red", "summary": "生活コストと金融引き締めに注意します。" },
+        { "category": "geopolitical", "label": "原油・治安", "level": "orange", "summary": "輸出収入と供給障害を監視します。" }
+      ],
+      "relatedIndicators": ["NGN", "Nigeria Inflation", "Oil", "Africa Sovereign Spread"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/NGA"]
+    },
+    {
+      "id": "south-africa",
+      "code": "ZA",
+      "name": "South Africa",
+      "japaneseName": "南アフリカ",
+      "level": "orange",
+      "summary": "電力・物流制約、財政、通貨、商品市況が南部アフリカの資本フローへ影響します。",
+      "mapX": 54,
+      "mapY": 79,
+      "memberships": ["regional_focus"],
+      "risks": [
+        { "category": "credit", "label": "電力・物流", "level": "orange", "summary": "生産と輸出を制約するインフラを確認します。" },
+        { "category": "interest", "label": "財政・国債", "level": "orange", "summary": "債務と利払い負担を見ます。" },
+        { "category": "liquidity", "label": "通貨・資本フロー", "level": "yellow", "summary": "ドル高時の資金流出を監視します。" }
+      ],
+      "relatedIndicators": ["ZAR", "South Africa Sovereign Spread", "Metals"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/ZAF"]
+    },
+    {
+      "id": "mexico",
+      "code": "MX",
+      "name": "Mexico",
+      "japaneseName": "メキシコ",
+      "level": "yellow",
+      "summary": "米国景気・通商政策、ペソ、製造業投資、財政が北米供給網へ与える影響を確認します。",
+      "mapX": 16,
+      "mapY": 50,
+      "memberships": ["regional_focus"],
+      "risks": [
+        { "category": "geopolitical", "label": "対米通商", "level": "yellow", "summary": "関税と供給網政策を確認します。" },
+        { "category": "liquidity", "label": "ペソ・資本フロー", "level": "yellow", "summary": "米金利変動への感応度を見ます。" },
+        { "category": "credit", "label": "製造業投資", "level": "yellow", "summary": "ニアショアリング投資の持続性を確認します。" }
+      ],
+      "relatedIndicators": ["MXN", "U.S. Manufacturing", "Mexico Sovereign Spread"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/MEX"]
+    },
+    {
+      "id": "argentina",
+      "code": "AR",
+      "name": "Argentina",
+      "japaneseName": "アルゼンチン",
+      "level": "red",
+      "summary": "インフレ、通貨、財政調整、外貨準備、債務再編リスクを南米の高ストレス例として確認します。",
+      "mapX": 26,
+      "mapY": 83,
+      "memberships": ["regional_focus"],
+      "risks": [
+        { "category": "interest", "label": "インフレ", "level": "red", "summary": "物価安定の持続性を確認します。" },
+        { "category": "liquidity", "label": "通貨・外貨準備", "level": "red", "summary": "ドル流動性と資本規制を見ます。" },
+        { "category": "credit", "label": "政府債務", "level": "orange", "summary": "財政調整と市場アクセスを監視します。" }
+      ],
+      "relatedIndicators": ["Argentina Inflation", "FX Reserves", "Sovereign Spread"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/ARG"]
+    },
+    {
+      "id": "indonesia",
+      "code": "ID",
+      "name": "Indonesia",
+      "japaneseName": "インドネシア",
+      "level": "yellow",
+      "summary": "ドル資金、通貨、商品輸出、国内信用が東南アジア最大の経済へ与える影響を見ます。",
+      "mapX": 78,
+      "mapY": 69,
+      "memberships": ["regional_focus"],
+      "risks": [
+        { "category": "liquidity", "label": "ドル資金・通貨", "level": "yellow", "summary": "米金利上昇時の資金流出を確認します。" },
+        { "category": "credit", "label": "国内信用", "level": "yellow", "summary": "銀行と企業の借入の質を見ます。" },
+        { "category": "geopolitical", "label": "商品・供給網", "level": "yellow", "summary": "資源価格と輸出規制を監視します。" }
+      ],
+      "relatedIndicators": ["IDR", "Capital Flows", "Nickel", "Coal"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/IDN"]
+    },
+    {
+      "id": "australia",
+      "code": "AU",
+      "name": "Australia",
+      "japaneseName": "オーストラリア",
+      "level": "yellow",
+      "summary": "住宅・家計債務、中国需要、資源価格が銀行と豪ドルへ与える影響を確認します。",
+      "mapX": 88,
+      "mapY": 79,
+      "memberships": ["regional_focus"],
+      "risks": [
+        { "category": "real-estate", "label": "住宅・家計債務", "level": "orange", "summary": "高金利下の返済負担を確認します。" },
+        { "category": "credit", "label": "中国需要", "level": "yellow", "summary": "資源輸出と景気への影響を見ます。" },
+        { "category": "liquidity", "label": "豪ドル", "level": "yellow", "summary": "商品価格とリスク選好への反応を監視します。" }
+      ],
+      "relatedIndicators": ["AUD", "Australia Housing", "Iron Ore", "China PMI"],
+      "sourceUrls": ["https://www.imf.org/external/datamapper/profile/AUS"]
+    }
+  ],
+  "moneyFlows": [
+    { "from": "株式", "to": "MMF", "level": "yellow", "summary": "リスク資産から待機資金への移動を確認します。" },
+    { "from": "銀行預金", "to": "MMF", "level": "yellow", "summary": "利回り差と安全志向による預金移動を確認します。" },
+    { "from": "リスク資産", "to": "金", "level": "yellow", "summary": "地政学・通貨不安による逃避を見ます。" },
+    { "from": "長期債", "to": "短期債", "level": "yellow", "summary": "デュレーション回避と現金化を確認します。" },
+    { "from": "新興国", "to": "米ドル", "level": "yellow", "summary": "ドル不足と資本流出の強まりを見ます。" },
+    { "from": "円キャリー", "to": "巻き戻し", "level": "orange", "summary": "レバレッジ解消が世界市場へ連鎖する経路です。" }
+  ]
+}

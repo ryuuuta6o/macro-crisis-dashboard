@@ -1,0 +1,41 @@
+[
+  {
+    "id": "fallback-cre",
+    "title": "商業不動産と銀行信用の波及を確認",
+    "summary": "オフィス向け融資の延滞は、銀行の融資姿勢と信用スプレッドへの波及有無が焦点です。",
+    "sourceName": "Federal Reserve",
+    "sourceUrl": "https://www.federalreserve.gov/publications/financial-stability-report.htm",
+    "publishedAt": "2026-06-08T00:00:00Z",
+    "impactLevel": "yellow",
+    "impactScore": 7,
+    "impactCategory": "CRE",
+    "relatedIndicators": ["Office CMBS", "CMBS全体", "HY OAS"],
+    "reason": "商業不動産の信用悪化が信用市場へ波及する可能性を確認する材料です。"
+  },
+  {
+    "id": "fallback-treasury",
+    "title": "米国債市場の需給と入札動向を確認",
+    "summary": "入札結果の弱さやテールの拡大は、超長期金利と市場流動性のストレス要因になります。",
+    "sourceName": "U.S. Treasury",
+    "sourceUrl": "https://home.treasury.gov/resource-center/data-chart-center/quarterly-refunding",
+    "publishedAt": "2026-06-08T00:00:00Z",
+    "impactLevel": "yellow",
+    "impactScore": 7,
+    "impactCategory": "米国債市場",
+    "relatedIndicators": ["DGS10", "DGS30", "MOVE"],
+    "reason": "米国債需要の弱さは長期金利と債券市場の不安度に影響します。"
+  },
+  {
+    "id": "fallback-fed",
+    "title": "FRBの政策スタンスと長期金利を確認",
+    "summary": "政策金利の見通しは、米国債利回りと信用市場の資金調達環境に影響します。",
+    "sourceName": "Federal Reserve",
+    "sourceUrl": "https://www.federalreserve.gov/newsevents/pressreleases.htm",
+    "publishedAt": "2026-06-08T00:00:00Z",
+    "impactLevel": "yellow",
+    "impactScore": 5,
+    "impactCategory": "金融政策",
+    "relatedIndicators": ["DGS10", "DGS30", "VIX", "IG OAS"],
+    "reason": "金融政策の変化が長期金利と企業の資金調達環境へ与える影響を確認する材料です。"
+  }
+]

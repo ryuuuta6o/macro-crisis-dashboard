@@ -1,0 +1,202 @@
+{
+  "move": {
+    "value": null,
+    "previousValue": null,
+    "observationDate": null,
+    "signal": "unavailable"
+  },
+  "treasury-auction": {
+    "value": 2.33,
+    "previousValue": 2.57,
+    "observationDate": "2026-06-11",
+    "signal": "green",
+    "previousSignal": "green",
+    "sourceLabel": "Manual fallback: U.S. Treasury Fiscal Data Auctions Query",
+    "sourceUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query",
+    "updateFrequency": "API失敗時の手動フォールバック"
+  },
+  "bank-deposit-outflow": {
+    "value": null,
+    "previousValue": null,
+    "observationDate": null,
+    "signal": "unavailable"
+  },
+  "mmf-assets": {
+    "value": null,
+    "previousValue": null,
+    "observationDate": null,
+    "signal": "unavailable"
+  },
+  "ted-spread": {
+    "value": 0.13,
+    "previousValue": 0.08,
+    "observationDate": "2026-06-11",
+    "signal": "green",
+    "previousSignal": "green",
+    "sourceLabel": "Manual fallback proxy: DCPF3M - DTB3",
+    "sourceUrl": "https://fred.stlouisfed.org/graph/?id=DCPF3M,DTB3",
+    "updateFrequency": "FRED自動取得失敗時のみ使用"
+  },
+  "fra-ois": {
+    "value": 16,
+    "previousValue": 13,
+    "observationDate": "2026-06-11",
+    "signal": "green",
+    "previousSignal": "green",
+    "sourceLabel": "Manual fallback proxy: DCPF3M - SOFR",
+    "sourceUrl": "https://fred.stlouisfed.org/graph/?id=DCPF3M,SOFR",
+    "updateFrequency": "FRED自動取得失敗時のみ使用"
+  },
+  "bank-cet1": {
+    "value": 12,
+    "previousValue": null,
+    "observationDate": "2026-03-31",
+    "signal": "green",
+    "sourceLabel": "Federal Reserve Supervision and Regulation Report",
+    "sourceUrl": "https://www.federalreserve.gov/publications/files/202606-supervision-and-regulation-report.pdf",
+    "updateFrequency": "半期"
+  },
+  "fdic-dif": {
+    "value": 157.4,
+    "previousValue": 153.9,
+    "observationDate": "2026-03-31",
+    "signal": "green",
+    "previousSignal": "green",
+    "sourceLabel": "FDIC Quarterly Banking Profile Q1 2026",
+    "sourceUrl": "https://www.fdic.gov/quarterly-banking-profile/quarterly-banking-profile-q1-2026",
+    "updateFrequency": "四半期"
+  },
+  "office-cmbs": {
+    "value": null,
+    "previousValue": null,
+    "observationDate": null,
+    "signal": "unavailable"
+  },
+  "cmbs-total": {
+    "value": null,
+    "previousValue": null,
+    "observationDate": null,
+    "signal": "unavailable"
+  },
+  "private-credit-default": {
+    "value": null,
+    "previousValue": null,
+    "observationDate": null,
+    "signal": "unavailable"
+  },
+  "pik-ratio": {
+    "value": null,
+    "previousValue": null,
+    "observationDate": null,
+    "signal": "unavailable"
+  },
+  "leveraged-loan-default": {
+    "value": null,
+    "previousValue": null,
+    "observationDate": null,
+    "signal": "unavailable"
+  },
+  "shiller-cape": {
+    "id": "shiller-cape",
+    "name": "Shiller CAPE",
+    "displayNameJa": "シラーPER",
+    "value": 42.18,
+    "previousValue": 41.43,
+    "observationDate": "2026-06-15",
+    "updatedAt": "2026-06-15",
+    "sourceName": "Multpl Shiller PE Ratio",
+    "sourceLabel": "Multpl Shiller PE Ratio",
+    "sourceUrl": "https://www.multpl.com/shiller-pe",
+    "updateFrequency": "市場営業日・手動確認",
+    "level": "red",
+    "type": "vulnerability",
+    "category": "Equity Vulnerability",
+    "importance": "A"
+  },
+  "buffett-indicator": {
+    "id": "buffett-indicator",
+    "name": "Buffett Indicator",
+    "displayNameJa": "バフェット指数",
+    "value": 229.7,
+    "previousValue": null,
+    "observationDate": "2026-06-03",
+    "updatedAt": "2026-06-03",
+    "sourceName": "Advisor Perspectives / dshort Buffett Indicator",
+    "sourceLabel": "Advisor Perspectives / dshort Buffett Indicator",
+    "sourceUrl": "https://www.advisorperspectives.com/dshort/updates/2026/06/03/buffett-valuation-indicator-may-2026",
+    "updateFrequency": "GDP公表後・手動確認",
+    "level": "red",
+    "type": "vulnerability",
+    "category": "Equity Vulnerability",
+    "importance": "A"
+  },
+  "margin-debt-gdp": {
+    "id": "margin-debt-gdp",
+    "name": "Margin Debt / GDP",
+    "displayNameJa": "信用取引残高 / GDP",
+    "value": 4.1,
+    "previousValue": 3.89,
+    "observationDate": "2026-04-30",
+    "updatedAt": "2026-04-30",
+    "sourceName": "GuruFocus / FINRA Margin Debt Relative to GDP",
+    "sourceLabel": "GuruFocus / FINRA Margin Debt Relative to GDP",
+    "sourceUrl": "https://www.gurufocus.com/economic_indicators/4266/finra-investor-margin-debt-relative-to-gdp",
+    "updateFrequency": "月次・手動確認",
+    "level": "red",
+    "type": "vulnerability",
+    "category": "Equity Vulnerability",
+    "importance": "A"
+  },
+  "_assetTemperatures": {
+    "stocks": {
+      "label": "株式",
+      "signal": "yellow",
+      "comment": "金利とボラティリティの変化を警戒"
+    },
+    "bonds": {
+      "label": "債券",
+      "signal": "yellow",
+      "comment": "長期金利とMOVE指数を確認"
+    },
+    "investmentGrade": {
+      "label": "投資適格社債",
+      "signal": "green",
+      "comment": "IG OASは安定圏を確認"
+    },
+    "highYield": {
+      "label": "ハイイールド債",
+      "signal": "yellow",
+      "comment": "HY OASの拡大速度を監視"
+    },
+    "realEstate": {
+      "label": "不動産",
+      "signal": "red",
+      "comment": "オフィス信用に局所ストレス"
+    },
+    "privateCredit": {
+      "label": "Private Credit",
+      "signal": "yellow",
+      "comment": "デフォルト・PIK比率を監視"
+    },
+    "gold": {
+      "label": "ゴールド",
+      "signal": "green",
+      "comment": "安全資産需要は通常範囲"
+    },
+    "oil": {
+      "label": "原油",
+      "signal": "green",
+      "comment": "需給ストレスは限定的"
+    },
+    "btc": {
+      "label": "BTC",
+      "signal": "yellow",
+      "comment": "リスク選好の変化に敏感"
+    },
+    "usdjpy": {
+      "label": "ドル円",
+      "signal": "yellow",
+      "comment": "日米金利差と政策変化を注視"
+    }
+  }
+}
