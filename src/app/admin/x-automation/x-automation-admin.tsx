@@ -27,6 +27,7 @@ export function XAutomationAdmin() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [draft, setDraft] = useState("");
+  const [copyFeedback, setCopyFeedback] = useState("");
 
   async function load() {
     const response = await fetch("/api/admin/x-automation", { cache: "no-store" });
@@ -83,6 +84,29 @@ export function XAutomationAdmin() {
     }
   }
 
+  async function copyDraft() {
+    const text = draft.trim();
+    if (!text) return;
+    setError("");
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopyFeedback("コピーしました");
+      window.setTimeout(() => setCopyFeedback(""), 2200);
+    } catch {
+      setError("コピーできませんでした。ブラウザのクリップボード許可を確認してください。");
+    }
+  }
+
+  function openXComposer() {
+    const text = draft.trim();
+    if (!text) return;
+    if (getXWeightedLength(text) > 280) {
+      setError("X文字数制限を超えています。280以内に調整してください。");
+      return;
+    }
+    window.open(`https://x.com/intent/post?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+  }
+
   if (!data) {
     return (
       <main className="min-h-screen bg-[#080b10] px-5 py-16 text-slate-100">
@@ -134,9 +158,21 @@ export function XAutomationAdmin() {
 
         {latest?.finalText && (
           <section className="mt-6 rounded-xl border border-white/10 bg-[#101620] p-5">
-            <div className="flex items-center justify-between"><h2 className="text-lg font-semibold">選定された投稿</h2><span className="font-mono text-xs text-slate-400">{getXWeightedLength(draft)} / 280</span></div>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 className="text-lg font-semibold">選定された投稿</h2>
+                <p className="mt-1 text-sm text-slate-400">内容と出典を確認し、コピーまたはX投稿画面から手動で公開します。</p>
+              </div>
+              <span className="font-mono text-xs text-slate-400">{getXWeightedLength(draft)} / 280</span>
+            </div>
             <textarea value={draft} onChange={(event) => setDraft(event.target.value)} rows={6} className="mt-4 w-full rounded-lg border border-white/10 bg-black/30 p-4 text-base leading-7 outline-none focus:border-cyan-400/40" />
-            <button disabled={busy} onClick={() => action({ action: "edit", runId: latest.id, text: draft })} className="mt-3 rounded-lg border border-white/10 px-4 py-2 text-sm hover:bg-white/5">手動修正を保存</button>
+            <div className="mt-3 flex flex-wrap items-center gap-3">
+              <button disabled={busy} onClick={() => action({ action: "edit", runId: latest.id, text: draft })} className="rounded-lg border border-white/10 px-4 py-2 text-sm hover:bg-white/5 disabled:opacity-50">手動修正を保存</button>
+              <button disabled={!draft.trim()} onClick={copyDraft} className="rounded-lg border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 hover:bg-cyan-400/15 disabled:opacity-40">投稿文をコピー</button>
+              <button disabled={!draft.trim() || getXWeightedLength(draft) > 280} onClick={openXComposer} className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-slate-200 disabled:opacity-40">Xで確認して投稿</button>
+              {copyFeedback && <span role="status" className="text-sm text-emerald-300">{copyFeedback}</span>}
+            </div>
+            <p className="mt-3 text-xs leading-5 text-slate-500">「Xで確認して投稿」は投稿文を入力したX画面を開くだけです。最後の投稿ボタンはご自身で押してください。</p>
           </section>
         )}
 
