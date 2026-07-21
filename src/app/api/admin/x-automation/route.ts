@@ -1,10 +1,11 @@
+import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/x-automation/admin-auth";
 import { runAutomationSlot } from "@/lib/x-automation/orchestrator";
 import { getNextPosting } from "@/lib/x-automation/schedule";
 import { getAutomationStore } from "@/lib/x-automation/storage";
 import { isValidXText } from "@/lib/x-automation/x-text";
-import { getXPostMetrics } from "@/lib/x-automation/x-client";
+import { createXPost, getXPostMetrics } from "@/lib/x-automation/x-client";
 import type { AutomationSettings, PostingSlot } from "@/types/x-automation";
 
 export const maxDuration = 120;
@@ -36,11 +37,12 @@ export async function GET() {
 export async function POST(request: Request) {
   if (!(await isAdminAuthenticated())) return unauthorized();
   const body = await request.json() as {
-    action?: "run" | "settings" | "edit" | "metrics";
+    action?: "run" | "settings" | "edit" | "metrics" | "postText";
     slot?: PostingSlot;
     settings?: AutomationSettings;
     runId?: string;
     text?: string;
+    confirmProductionPost?: boolean;
   };
   const store = getAutomationStore();
   if (body.action === "run" && body.slot) {
@@ -73,6 +75,52 @@ export async function POST(request: Request) {
       updated: results.filter((result) => result.status === "fulfilled").length,
       failed: results.filter((result) => result.status === "rejected").length,
     });
+  }
+  if (body.action === "postText" && body.text) {
+    if (!body.confirmProductionPost) {
+      return NextResponse.json({ error: "Production post confirmation is required." }, { status: 400 });
+    }
+    const text = body.text.trim();
+    if (!isValidXText(text)) {
+      return NextResponse.json({ error: "X文字数制限を超えています。" }, { status: 400 });
+    }
+    const now = new Date();
+    let postId: string;
+    try {
+      postId = await createXPost(text);
+    } catch (error) {
+      return NextResponse.json({
+        error: error instanceof Error ? error.message : "X post failed.",
+      }, { status: 502 });
+    }
+    const run = {
+      id: randomUUID(),
+      idempotencyKey: `manual-post:${postId}`,
+      slot: body.slot ?? "evening",
+      scheduledAt: now.toISOString(),
+      startedAt: now.toISOString(),
+      completedAt: now.toISOString(),
+      status: "posted" as const,
+      dryRun: false,
+      candidates: [],
+      drafts: [],
+      factChecks: [],
+      editorial: {
+        selected_index: 0,
+        final_text: text,
+        selection_reason: "Manual production post from admin API.",
+        viral_score: 0,
+        risk_score: 0,
+      },
+      finalText: text,
+      themeKey: "manual-market-update",
+      sources: [],
+      postId,
+      error: null,
+      metrics: null,
+    };
+    await store.saveRun(run);
+    return NextResponse.json({ ok: true, postId, runId: run.id });
   }
   return NextResponse.json({ error: "Invalid action" }, { status: 400 });
 }

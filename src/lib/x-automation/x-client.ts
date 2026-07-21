@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import { Client, OAuth1 } from "@xdevplatform/xdk";
 import { withExponentialBackoff } from "@/lib/x-automation/retry";
 
 function encode(value: string) {
@@ -41,32 +42,37 @@ function oauthHeader(url: string, method: string, requestParameters: Record<stri
 }
 
 export async function createXPost(text: string) {
-  const url = "https://api.x.com/2/tweets";
+  const apiKey = process.env.X_API_KEY;
+  const apiSecret = process.env.X_API_SECRET;
+  const accessToken = process.env.X_ACCESS_TOKEN;
+  const accessTokenSecret = process.env.X_ACCESS_TOKEN_SECRET;
+  if (!apiKey || !apiSecret || !accessToken || !accessTokenSecret) {
+    throw new Error("X API OAuth credentials are incomplete");
+  }
   const response = await withExponentialBackoff(async () => {
-    const result = await fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: oauthHeader(url, "POST"),
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text }),
-      signal: AbortSignal.timeout(20_000),
-    });
-    if (!result.ok) {
-      const body = await result.text();
-      const error = new Error(`X API failed: ${result.status} ${body.slice(0, 240)}`) as Error & { status?: number };
-      error.status = result.status;
+    try {
+      const client = new Client({
+        oauth1: new OAuth1({
+          apiKey,
+          apiSecret,
+          accessToken,
+          accessTokenSecret,
+          callback: `${process.env.SITE_URL ?? "https://macro-crisis-dashboard.vercel.app"}/api/auth/x/callback`,
+        }),
+      });
+      return await client.posts.create({ text }) as { data?: { id?: string } };
+    } catch (cause) {
+      const error = cause as Error & { status?: number; response?: { status?: number; data?: unknown } };
+      error.status = error.status ?? error.response?.status;
       throw error;
     }
-    return result;
   }, {
     attempts: 3,
     initialDelayMs: 800,
     shouldRetry: (error) => [429, 500, 502, 503, 504].includes((error as { status?: number }).status ?? 0),
   });
-  const payload = (await response.json()) as { data?: { id?: string } };
-  if (!payload.data?.id) throw new Error("X API returned no post ID");
-  return payload.data.id;
+  if (!response.data?.id) throw new Error("X API returned no post ID");
+  return response.data.id;
 }
 
 export async function getXPostMetrics(postId: string) {
