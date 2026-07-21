@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { DEFAULT_GENERATION_CRITERIA } from "@/config/x-automation";
 import { buildPostCandidates, buildRealtimeSnapshotCandidate } from "@/lib/x-automation/candidates";
 import { collectAutomationInput } from "@/lib/x-automation/collector";
 import {
@@ -21,6 +22,7 @@ import type {
   AutomationRun,
   EditorialResult,
   FactCheckResult,
+  GenerationCriteria,
   GenerationTopic,
   PostCandidate,
   PostingSlot,
@@ -52,13 +54,20 @@ const defaultDependencies = (): Dependencies => ({
   post: createXPost,
 });
 
-function emptyRun(slot: PostingSlot, now: Date, idempotencyKey: string, generationTopic: GenerationTopic): AutomationRun {
+function emptyRun(
+  slot: PostingSlot,
+  now: Date,
+  idempotencyKey: string,
+  generationTopic: GenerationTopic,
+  generationCriteria: GenerationCriteria,
+): AutomationRun {
   const startedAt = now.toISOString();
   return {
     id: randomUUID(),
     idempotencyKey,
     slot,
     generationTopic,
+    generationCriteria,
     scheduledAt: getSlotScheduledAt(slot, now),
     startedAt,
     completedAt: startedAt,
@@ -93,11 +102,13 @@ export async function runAutomationSlot(
     now?: Date;
     manual?: boolean;
     topic?: GenerationTopic;
+    criteria?: Partial<GenerationCriteria>;
     dependencies?: Partial<Dependencies>;
   } = {},
 ) {
   const now = options.now ?? new Date();
   const generationTopic = options.topic ?? "all";
+  const generationCriteria = { ...DEFAULT_GENERATION_CRITERIA, ...options.criteria };
   const deps = { ...defaultDependencies(), ...options.dependencies } as Dependencies;
   const dateKey = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit",
@@ -105,7 +116,7 @@ export async function runAutomationSlot(
   const idempotencyKey = options.manual
     ? `manual:${slot}:${now.toISOString()}`
     : `${dateKey}:${slot}`;
-  const run = emptyRun(slot, now, idempotencyKey, generationTopic);
+  const run = emptyRun(slot, now, idempotencyKey, generationTopic, generationCriteria);
 
   try {
     if (!options.manual && !isWithinPostingWindow(slot, now)) {
@@ -125,9 +136,21 @@ export async function runAutomationSlot(
     const state = await deps.store.getState();
     run.dryRun = state.settings.dryRun;
     const input = await deps.collect();
-    const topicalCandidates = filterCandidatesByTopic(deps.build(input, state.settings), generationTopic);
-    const fallbackCandidate = topicalCandidates.length === 0
-      ? buildRealtimeSnapshotCandidate(input, state.settings, generationTopic)
+    const effectiveSettings = {
+      ...state.settings,
+      requireTwoSources: generationCriteria.requireTwoSources,
+    };
+    let topicalCandidates = filterCandidatesByTopic(deps.build(input, effectiveSettings), generationTopic);
+    if (generationCriteria.requireMarketAnomaly || generationCriteria.requireSocialBuzz) {
+      topicalCandidates = topicalCandidates.filter((candidate) =>
+        (generationCriteria.requireMarketAnomaly && candidate.anomalyScore >= 45)
+        || (generationCriteria.requireSocialBuzz && candidate.category === "trend"),
+      );
+    }
+    const fallbackCandidate = topicalCandidates.length === 0 && generationCriteria.allowRoutineSnapshot
+      ? buildRealtimeSnapshotCandidate(input, effectiveSettings, generationTopic, {
+        includeContextIndicators: generationCriteria.includeContextIndicators,
+      })
       : null;
     const candidates = [...topicalCandidates, ...(fallbackCandidate ? [fallbackCandidate] : [])]
       .filter((candidate) => options.manual || !isDuplicateCandidate(candidate, state.runs, now))

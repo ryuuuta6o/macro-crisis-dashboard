@@ -254,6 +254,42 @@ export function buildPostCandidates(
     });
   }
 
+  for (const trend of input.socialTrends) {
+    const sources = distinctSources(trend.sources);
+    if (!sourceCountIsEnough(sources, settings)) continue;
+    candidates.push({
+      id: trend.id,
+      themeKey: `trend:${trend.topic.toLowerCase()}`,
+      title: `${trend.topic}の検索・報道量が急上昇`,
+      category: "trend",
+      summary: trend.summary,
+      facts: [
+        `急上昇キーワード ${trend.topic}`,
+        `概算検索数 ${trend.trafficLabel}`,
+        `話題スコア ${trend.score}/100`,
+        ...trend.headlines.slice(0, 2),
+      ],
+      watchNext: `${trend.relatedIndicators.join("・")}の実際の値動き`,
+      sourceIds: sources.map((source) => source.id),
+      sources,
+      relatedIndicators: trend.relatedIndicators,
+      anomalyScore: 0,
+      investorScore: 0,
+      viral: calculateViralScore({
+        category: "trend",
+        importance: Math.min(25, trend.score / 4),
+        freshness: freshnessScore(trend.publishedAt),
+        topicVelocity: Math.min(15, trend.score / 6),
+        japanRelevance: 15,
+        spillover: Math.min(10, trend.relatedIndicators.length * 2),
+        surprise: Math.min(10, trend.score / 10),
+        forwardInterest: 9,
+        penalties: 3,
+      }),
+      publishedAt: trend.publishedAt,
+    });
+  }
+
   const uniqueCandidates = [...new Map(
     candidates
       .sort((a, b) => b.viral.total - a.viral.total)
@@ -261,7 +297,7 @@ export function buildPostCandidates(
   ).values()];
   return uniqueCandidates
     .filter((candidate) => candidate.sources.length > 0)
-    .slice(0, 10);
+    .slice(0, 30);
 }
 
 const REALTIME_MARKET_IDS: Partial<Record<GenerationTopic, string[]>> = {
@@ -299,8 +335,9 @@ export function buildRealtimeSnapshotCandidate(
   input: AutomationInput,
   settings: AutomationSettings,
   topic: GenerationTopic,
+  options: { includeContextIndicators?: boolean } = {},
 ): PostCandidate | null {
-  if (topic === "influential_people" || topic === "economy_policy") return null;
+  if (topic === "influential_people" || topic === "economy_policy" || topic === "social_trends") return null;
 
   const marketIds = new Set(REALTIME_MARKET_IDS[topic] ?? REALTIME_MARKET_IDS.all);
   const indicatorIds = new Set(REALTIME_INDICATOR_IDS[topic] ?? REALTIME_INDICATOR_IDS.all);
@@ -308,7 +345,7 @@ export function buildRealtimeSnapshotCandidate(
     .filter((market) => marketIds?.has(market.id))
     .sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent))
     .slice(0, topic === "credit_rates" ? 0 : 3);
-  const indicators = input.indicators
+  const indicators = (options.includeContextIndicators === false ? [] : input.indicators)
     .filter((indicator) => indicatorIds?.has(indicator.id) && indicator.numericValue !== null)
     .sort((a, b) => {
       const severity = { unavailable: -1, green: 0, yellow: 1, orange: 2, red: 3 } as const;

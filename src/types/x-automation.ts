@@ -8,7 +8,15 @@ export type GenerationTopic =
   | "credit_rates"
   | "economy_policy"
   | "fx_commodities_crypto"
-  | "japan_asia";
+  | "japan_asia"
+  | "social_trends";
+export type GenerationCriteria = {
+  allowRoutineSnapshot: boolean;
+  requireMarketAnomaly: boolean;
+  requireSocialBuzz: boolean;
+  includeContextIndicators: boolean;
+  requireTwoSources: boolean;
+};
 export type CandidateCategory =
   | "market_anomaly"
   | "investor_signal"
@@ -51,6 +59,22 @@ export type AutomationInput = {
   news: MarketNewsItem[];
   newsMode: string;
   investorSignals: InvestorSignal[];
+  socialTrends: SocialTrendSignal[];
+  socialMode: "google_trends" | "news_density" | "x_api" | "mixed" | "unavailable";
+};
+
+export type SocialTrendSignal = {
+  id: string;
+  topic: string;
+  trafficLabel: string;
+  trafficEstimate: number;
+  publishedAt: string;
+  category: string;
+  score: number;
+  summary: string;
+  headlines: string[];
+  relatedIndicators: string[];
+  sources: AutomationSource[];
 };
 
 export type InvestorSignal = {
@@ -140,6 +164,7 @@ export type AutomationRun = {
   idempotencyKey: string;
   slot: PostingSlot;
   generationTopic?: GenerationTopic;
+  generationCriteria?: GenerationCriteria;
   scheduledAt: string;
   startedAt: string;
   completedAt: string;

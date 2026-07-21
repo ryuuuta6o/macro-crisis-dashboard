@@ -49,7 +49,7 @@ test("一時障害を指数バックオフで再試行する", async () => {
 
 test("古いニュースは候補から除外し一次情報を優先する", () => {
   const input: AutomationInput = {
-    collectedAt: "2026-07-20T00:00:00Z", indicators: [], markets: [], investorSignals: [], newsMode: "mixed",
+    collectedAt: "2026-07-20T00:00:00Z", indicators: [], markets: [], investorSignals: [], newsMode: "mixed", socialTrends: [], socialMode: "unavailable",
     news: [{ id: "old", title: "old inflation", summary: "", sourceName: "Source A", sourceUrl: "https://example.com/old", publishedAt: "2026-06-01T00:00:00Z", impactLevel: "red", impactScore: 20, impactCategory: "金融政策", relatedIndicators: ["VIX"], reason: "old" }],
   };
   assert.equal(buildPostCandidates(input, { ...DEFAULT_AUTOMATION_SETTINGS, requireTwoSources: false }).length, 0);

@@ -4,6 +4,7 @@ import { getSmartMoneyInvestors } from "@/lib/sec-13f";
 import { calculateInvestorSignalScore } from "@/lib/x-automation/scoring";
 import { getMarketSnapshots } from "@/lib/x-automation/market-data";
 import { getInfluentialVoiceNews } from "@/lib/x-automation/influential-news";
+import { getSocialTrendFeed } from "@/lib/x-automation/social-trends";
 import type {
   AutomationInput,
   AutomationSource,
@@ -54,12 +55,13 @@ async function collectInvestorSignals(): Promise<InvestorSignal[]> {
 }
 
 export async function collectAutomationInput(): Promise<AutomationInput> {
-  const [dashboardResult, marketResult, newsResult, investorResult, voiceResult] = await Promise.allSettled([
+  const [dashboardResult, marketResult, newsResult, investorResult, voiceResult, socialResult] = await Promise.allSettled([
     getDashboardData(),
     getMarketSnapshots(),
     getMarketImpactNewsFeed(),
     collectInvestorSignals(),
     getInfluentialVoiceNews(),
+    getSocialTrendFeed(),
   ]);
   const dashboard = dashboardResult.status === "fulfilled"
     ? dashboardResult.value
@@ -77,5 +79,7 @@ export async function collectAutomationInput(): Promise<AutomationInput> {
     ]),
     newsMode: news.mode,
     investorSignals: investorResult.status === "fulfilled" ? investorResult.value : [],
+    socialTrends: socialResult.status === "fulfilled" ? socialResult.value.items : [],
+    socialMode: socialResult.status === "fulfilled" ? socialResult.value.mode : "unavailable",
   };
 }

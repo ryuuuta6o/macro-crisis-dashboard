@@ -26,7 +26,7 @@ const candidate: PostCandidate = {
 function dependencies(store: MemoryStore, factPassed = true) {
   return {
     store,
-    collect: async () => ({ collectedAt: new Date().toISOString(), indicators: [], markets: [], news: [], newsMode: "mixed", investorSignals: [] }),
+    collect: async () => ({ collectedAt: new Date().toISOString(), indicators: [], markets: [], news: [], newsMode: "mixed", investorSignals: [], socialTrends: [], socialMode: "unavailable" as const }),
     build: () => [candidate],
     write: async () => [0, 1, 2].map((index) => ({ text: `市場が前日比-2.5%。株価だけでなくVIXを確認します。案${index}`, hook_type: "数字", angle: `案${index}`, facts_used: candidate.facts, source_ids: candidate.sourceIds })),
     factCheck: async (draft: { text: string }) => ({ passed: factPassed, risk_score: factPassed ? 5 : 90, issues: factPassed ? [] : ["未確認"], corrected_text: draft.text, verified_source_ids: candidate.sourceIds }),

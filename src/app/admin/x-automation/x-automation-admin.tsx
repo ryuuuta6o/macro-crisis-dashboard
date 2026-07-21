@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { GENERATION_TOPICS } from "@/config/x-automation";
+import { DEFAULT_GENERATION_CRITERIA, GENERATION_TOPICS } from "@/config/x-automation";
 import type {
   AutomationRun,
   AutomationSettings,
   AutomationState,
   EnvironmentStatus,
+  GenerationCriteria,
   GenerationTopic,
   PostingSlot,
 } from "@/types/x-automation";
@@ -73,6 +74,7 @@ export function XAutomationAdmin() {
   const [copyFeedback, setCopyFeedback] = useState("");
   const [generationTopic, setGenerationTopic] = useState<GenerationTopic>("all");
   const [generationSlot, setGenerationSlot] = useState<PostingSlot>(currentPostingSlot);
+  const [generationCriteria, setGenerationCriteria] = useState<GenerationCriteria>(DEFAULT_GENERATION_CRITERIA);
 
   async function load() {
     const response = await fetch("/api/admin/x-automation", { cache: "no-store" });
@@ -214,6 +216,40 @@ export function XAutomationAdmin() {
                 </button>
               ))}
             </div>
+            <p className="mt-5 text-xs font-semibold tracking-[0.12em] text-slate-400">生成条件</p>
+            <div className="mt-3 grid gap-2 sm:grid-cols-2">
+              <CriteriaToggle
+                label="条件に合わなくても定時概況を作る"
+                description="大きな変動や急上昇テーマがない時も、最新値から概況を作ります。"
+                checked={generationCriteria.allowRoutineSnapshot}
+                onChange={(allowRoutineSnapshot) => setGenerationCriteria({ ...generationCriteria, allowRoutineSnapshot })}
+              />
+              <CriteriaToggle
+                label="株価変動が大きい材料を条件にする"
+                description="異常値スコアが基準以上の市場材料へ絞ります。"
+                checked={generationCriteria.requireMarketAnomaly}
+                onChange={(requireMarketAnomaly) => setGenerationCriteria({ ...generationCriteria, requireMarketAnomaly })}
+              />
+              <CriteriaToggle
+                label="SNS・検索の話題上昇を条件にする"
+                description="無料運用ではGoogle Trendsと関連報道の増加を使います。"
+                checked={generationCriteria.requireSocialBuzz}
+                onChange={(requireSocialBuzz) => setGenerationCriteria({ ...generationCriteria, requireSocialBuzz })}
+              />
+              <CriteriaToggle
+                label="主要指数・米国債など周辺指標を含める"
+                description="株価だけでなくVIX、米国債、信用、流動性も一緒に確認します。"
+                checked={generationCriteria.includeContextIndicators}
+                onChange={(includeContextIndicators) => setGenerationCriteria({ ...generationCriteria, includeContextIndicators })}
+              />
+              <CriteriaToggle
+                label="異なる2情報源の確認を必須にする"
+                description="OFFでは単一ソースでも確認用の投稿案を作れます。"
+                checked={generationCriteria.requireTwoSources}
+                onChange={(requireTwoSources) => setGenerationCriteria({ ...generationCriteria, requireTwoSources })}
+              />
+            </div>
+            <p className="mt-3 text-xs leading-5 text-slate-500">X上の投稿・トレンドを直接読む機能は、X APIクレジットを設定した場合のみ追加できます。現在の無料モードではXと断定せず「検索で急上昇」と表現します。</p>
             <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
               <label className="text-xs text-slate-400">
                 投稿の切り口
@@ -221,7 +257,7 @@ export function XAutomationAdmin() {
                   {slots.map((slot) => <option key={slot.id} value={slot.id}>{slot.label}</option>)}
                 </select>
               </label>
-              <button disabled={busy} onClick={() => action({ action: "run", slot: generationSlot, topic: generationTopic })} className="self-end rounded-lg bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 hover:bg-cyan-200 disabled:cursor-wait disabled:opacity-50">
+              <button disabled={busy} onClick={() => action({ action: "run", slot: generationSlot, topic: generationTopic, criteria: generationCriteria })} className="self-end rounded-lg bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 hover:bg-cyan-200 disabled:cursor-wait disabled:opacity-50">
                 {busy ? "収集・検証中…" : `${generationTopicLabel(generationTopic)}で今すぐ生成`}
               </button>
             </div>
@@ -274,6 +310,10 @@ function Toggle({ label, checked, onChange }: { label: string; checked: boolean;
   return <label className="flex items-center justify-between text-sm text-slate-300"><span>{label}</span><input type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} className="size-4 accent-cyan-400" /></label>;
 }
 
+function CriteriaToggle({ label, description, checked, onChange }: { label: string; description: string; checked: boolean; onChange: (value: boolean) => void }) {
+  return <label className={`flex cursor-pointer gap-3 rounded-lg border p-3 transition-colors ${checked ? "border-cyan-300/35 bg-cyan-400/[0.07]" : "border-white/10 bg-black/15"}`}><input type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} className="mt-1 size-4 shrink-0 accent-cyan-400" /><span><strong className="block text-sm font-medium text-slate-200">{label}</strong><small className="mt-1 block text-xs leading-5 text-slate-500">{description}</small></span></label>;
+}
+
 function RunSummary({ run }: { run: AutomationRun }) {
-  return <div className="space-y-3 text-sm text-slate-300"><div className="flex flex-wrap gap-3 text-xs"><span className="rounded bg-white/5 px-2 py-1">{generationTopicLabel(run.generationTopic)}</span><span className="font-mono">状態={runStatusLabels[run.status]}</span><span className="font-mono">安全確認={run.dryRun ? "有効" : "無効"}</span><span className="font-mono">拡散度={run.editorial?.viral_score ?? "-"}</span><span className="font-mono">表現リスク={run.editorial?.risk_score ?? "-"}</span>{run.metrics && <><span className="font-mono">表示={run.metrics.impressions ?? "-"}</span><span className="font-mono">いいね={run.metrics.likes ?? "-"}</span><span className="font-mono">リポスト={run.metrics.reposts ?? "-"}</span></>}</div>{run.error && <p className="rounded-md bg-red-400/10 p-3 text-red-200">{run.error}</p>}{run.finalText && <p className="whitespace-pre-wrap rounded-md bg-black/25 p-4 text-base leading-7">{run.finalText}</p>}<p className="text-xs text-slate-500">候補 {run.candidates.length}件 / 出典 {run.sources.length}件 / X投稿ID {run.postId ?? "未投稿"}</p>{run.candidates.length > 0 && <ul className="space-y-2">{run.candidates.slice(0, 5).map((candidate) => <li key={candidate.id} className="rounded-md border border-white/5 p-3"><strong>{candidate.title}</strong><span className="ml-2 font-mono text-xs text-cyan-300">{candidate.viral.total}</span></li>)}</ul>}{run.sources.length > 0 && <div className="flex flex-wrap gap-2">{run.sources.map((source) => <a key={source.id} href={source.url} target="_blank" rel="noreferrer" className="text-xs text-cyan-300 underline decoration-cyan-300/30">{source.name}</a>)}</div>}</div>;
+  return <div className="space-y-3 text-sm text-slate-300"><div className="flex flex-wrap gap-3 text-xs"><span className="rounded bg-white/5 px-2 py-1">{generationTopicLabel(run.generationTopic)}</span><span className="font-mono">状態={runStatusLabels[run.status]}</span><span className="font-mono">安全確認={run.dryRun ? "有効" : "無効"}</span><span className="font-mono">拡散度={run.editorial?.viral_score ?? "-"}</span><span className="font-mono">表現リスク={run.editorial?.risk_score ?? "-"}</span>{run.generationCriteria?.requireMarketAnomaly && <span>株価変動条件</span>}{run.generationCriteria?.requireSocialBuzz && <span>話題上昇条件</span>}{run.metrics && <><span className="font-mono">表示={run.metrics.impressions ?? "-"}</span><span className="font-mono">いいね={run.metrics.likes ?? "-"}</span><span className="font-mono">リポスト={run.metrics.reposts ?? "-"}</span></>}</div>{run.error && <p className="rounded-md bg-red-400/10 p-3 text-red-200">{run.error}</p>}{run.finalText && <p className="whitespace-pre-wrap rounded-md bg-black/25 p-4 text-base leading-7">{run.finalText}</p>}<p className="text-xs text-slate-500">候補 {run.candidates.length}件 / 出典 {run.sources.length}件 / X投稿ID {run.postId ?? "未投稿"}</p>{run.candidates.length > 0 && <ul className="space-y-2">{run.candidates.slice(0, 5).map((candidate) => <li key={candidate.id} className="rounded-md border border-white/5 p-3"><strong>{candidate.title}</strong><span className="ml-2 font-mono text-xs text-cyan-300">{candidate.viral.total}</span></li>)}</ul>}{run.sources.length > 0 && <div className="flex flex-wrap gap-2">{run.sources.map((source) => <a key={source.id} href={source.url} target="_blank" rel="noreferrer" className="text-xs text-cyan-300 underline decoration-cyan-300/30">{source.name}</a>)}</div>}</div>;
 }

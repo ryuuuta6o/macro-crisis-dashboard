@@ -1,5 +1,6 @@
 import type {
   AutomationSettings,
+  GenerationCriteria,
   GenerationTopic,
   PostingSlot,
 } from "@/types/x-automation";
@@ -16,7 +17,16 @@ export const GENERATION_TOPICS: Array<{
   { id: "economy_policy", label: "経済・中央銀行", description: "経済指標、政策、中央銀行、地政学ニュース" },
   { id: "fx_commodities_crypto", label: "為替・商品・暗号資産", description: "ドル円、金、原油、Bitcoinなど" },
   { id: "japan_asia", label: "日本・アジア", description: "日本、中国、韓国、台湾と海外市場からの波及" },
+  { id: "social_trends", label: "話題・急上昇", description: "検索量と関連報道が同時に増えている金融テーマ" },
 ];
+
+export const DEFAULT_GENERATION_CRITERIA: GenerationCriteria = {
+  allowRoutineSnapshot: true,
+  requireMarketAnomaly: false,
+  requireSocialBuzz: false,
+  includeContextIndicators: true,
+  requireTwoSources: true,
+};
 
 export const POSTING_SLOTS: Record<
   PostingSlot,

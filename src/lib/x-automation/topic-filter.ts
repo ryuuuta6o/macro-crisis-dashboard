@@ -53,6 +53,7 @@ export function candidateMatchesTopic(candidate: PostCandidate, topic: Generatio
     return JAPAN_ASIA_MARKETS.has(candidate.themeKey)
       || JAPAN_ASIA_TERMS.some((term) => text.includes(term));
   }
+  if (topic === "social_trends") return candidate.category === "trend";
   return false;
 }
 
