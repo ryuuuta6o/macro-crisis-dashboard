@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type {
   IndicatorValue,
   OverallSignal,
@@ -82,6 +83,15 @@ export function DashboardHero({
           <span>
             SIGNAL <b className="text-white">{signal.toUpperCase()}</b>
           </span>
+        </div>
+
+        <div className="mt-5 flex justify-center">
+          <Link
+            href="/weather"
+            className="inline-flex min-h-10 items-center rounded-full border border-cyan-200/20 bg-cyan-200/[0.075] px-4 py-2 text-xs font-bold text-cyan-100 backdrop-blur-md transition hover:border-cyan-200/35 hover:bg-cyan-200/[0.12]"
+          >
+            数字を使わない初心者向け「世界経済天気予報」へ →
+          </Link>
         </div>
 
         <div className="premium-readable-hero__pulses">

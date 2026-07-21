@@ -1,0 +1,21 @@
+{
+  "settings": {
+    "autoPostEnabled": false,
+    "dryRun": true,
+    "includeSiteUrl": true,
+    "requireTwoSources": true,
+    "schedules": { "morning": "07:15", "midday": "12:10", "evening": "21:30" },
+    "thresholds": {
+      "equityDailyPercent": 2,
+      "equityShortPercent": 1,
+      "vixDailyPercent": 20,
+      "yieldBasisPoints": 10,
+      "usdJpyAbsolute": 1.5,
+      "commodityDailyPercent": 4,
+      "cryptoDailyPercent": 4,
+      "zScore": 2
+    }
+  },
+  "runs": [],
+  "updatedAt": "2026-07-20T00:00:00.000Z"
+}

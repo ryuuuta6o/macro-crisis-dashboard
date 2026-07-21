@@ -1,0 +1,66 @@
+name: X post schedule
+
+on:
+  schedule:
+    - cron: "15 22 * * *" # 07:15 JST
+    - cron: "10 3 * * *"  # 12:10 JST
+    - cron: "30 12 * * *" # 21:30 JST
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: Posting slot
+        required: true
+        default: morning
+        type: choice
+        options:
+          - morning
+          - midday
+          - evening
+
+permissions:
+  contents: read
+
+concurrency:
+  group: x-post-${{ github.event.schedule || inputs.slot }}
+  cancel-in-progress: false
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Resolve posting slot
+        id: slot
+        shell: bash
+        env:
+          EVENT_SCHEDULE: ${{ github.event.schedule }}
+          MANUAL_SLOT: ${{ inputs.slot }}
+        run: |
+          if [ -n "$MANUAL_SLOT" ]; then
+            slot="$MANUAL_SLOT"
+          elif [ "$EVENT_SCHEDULE" = "15 22 * * *" ]; then
+            slot="morning"
+          elif [ "$EVENT_SCHEDULE" = "10 3 * * *" ]; then
+            slot="midday"
+          elif [ "$EVENT_SCHEDULE" = "30 12 * * *" ]; then
+            slot="evening"
+          else
+            echo "Unknown schedule: $EVENT_SCHEDULE" >&2
+            exit 1
+          fi
+          echo "slot=$slot" >> "$GITHUB_OUTPUT"
+
+      - name: Trigger protected Vercel endpoint
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          SITE_URL: ${{ vars.SITE_URL }}
+          SLOT: ${{ steps.slot.outputs.slot }}
+        run: |
+          test -n "$CRON_SECRET"
+          test -n "$SITE_URL"
+          curl --fail-with-body \
+            --retry 3 \
+            --retry-all-errors \
+            --max-time 150 \
+            --header "Authorization: Bearer $CRON_SECRET" \
+            "$SITE_URL/api/cron/x-post/$SLOT"

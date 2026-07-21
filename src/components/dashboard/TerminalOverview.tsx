@@ -50,6 +50,8 @@ export function TerminalOverview({
   news,
   newsFeed,
   comment,
+  riskComposition,
+  riskCompositionSignal,
   updateRadar,
   nextUpdateWatch,
   crisisRiskRange,
@@ -71,6 +73,8 @@ export function TerminalOverview({
   items3d: SafetyValve3DItem[];
   links: ContagionLink[];
   comment: string;
+  riskComposition: ReactNode;
+  riskCompositionSignal: Signal;
   updateRadar: ReactNode;
   nextUpdateWatch: ReactNode;
   crisisRiskRange: ReactNode;
@@ -93,6 +97,9 @@ export function TerminalOverview({
       </div>
       <PublicSectionFold className="metrics-risk" id="overall-risk" eyebrow="OVERALL RISK STATUS" title="市場ストレス水準" description="いま金融全体が安全か危険か、ひとことで見る" signal={level} defaultOpen>
         <OverallRiskStatus level={level} signal={signal} comment={comment} unavailableCount={unavailableCount} />
+      </PublicSectionFold>
+      <PublicSectionFold className="metrics-composition" id="risk-composition-fold" eyebrow="RISK COMPOSITION" title="現在のリスク構成" description="現在の警戒圧力をカテゴリ別に分け、個別指標まで掘る" signal={riskCompositionSignal} defaultOpen>
+        {riskComposition}
       </PublicSectionFold>
       <PublicSectionFold className="metrics-update-radar" id="update-radar-fold" eyebrow="UPDATE RADAR" title="今日の更新レーダー" description="今日なにが変わったかを最初に見る" signal={ignitionSignal} defaultOpen>
         {updateRadar}

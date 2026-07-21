@@ -40,6 +40,13 @@ export function HiddenGemsPanel() {
     return () => controller.abort();
   }, [reloadToken]);
 
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setReloadToken((value) => value + 1);
+    }, 15 * 60 * 1000);
+    return () => window.clearInterval(interval);
+  }, []);
+
   if (loadState.status === "loading") {
     return <HiddenGemsLoading />;
   }
@@ -71,6 +78,10 @@ export function HiddenGemsPanel() {
       setThemeFilter={setThemeFilter}
       regionFilter={regionFilter}
       setRegionFilter={setRegionFilter}
+      onReload={() => {
+        setLoadState({ status: "loading" });
+        setReloadToken((value) => value + 1);
+      }}
     />
   );
 }
@@ -81,12 +92,14 @@ function HiddenGemsResults({
   setThemeFilter,
   regionFilter,
   setRegionFilter,
+  onReload,
 }: {
   data: HiddenGemsData;
   themeFilter: string;
   setThemeFilter: (value: string) => void;
   regionFilter: SectorRegion | "all";
   setRegionFilter: (value: SectorRegion | "all") => void;
+  onReload: () => void;
 }) {
   const themes = useMemo(() => {
     const map = new Map<string, string>();
@@ -129,6 +142,7 @@ function HiddenGemsResults({
           <Metric label="判定対象" value={`${data.evaluatedCompanies}`} />
           <Metric label="足切り通過" value={`${data.eligibleCompanies}`} />
           <Metric label="データ源" value={data.dataSource === "free" ? "Free batch" : "FMP"} />
+          <Metric label="算出" value={formatDateTime(data.generatedAt)} />
         </div>
       </div>
 
@@ -172,6 +186,9 @@ function HiddenGemsResults({
               ? "日次計算済み"
               : "データ未取得"}
         </span>
+        <button type="button" className="sector-refresh-button" onClick={onReload}>
+          再取得
+        </button>
       </div>
 
       {stale && (
@@ -338,4 +355,16 @@ function isStale(generatedAt: string) {
   const generated = new Date(generatedAt).getTime();
   if (!Number.isFinite(generated)) return true;
   return Date.now() - generated > 3 * 24 * 60 * 60 * 1000;
+}
+
+function formatDateTime(value: string) {
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime())) return "unavailable";
+  return new Intl.DateTimeFormat("ja-JP", {
+    timeZone: "Asia/Tokyo",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
 }

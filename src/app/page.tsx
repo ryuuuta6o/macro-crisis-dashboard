@@ -14,6 +14,7 @@ import {
 import { RiskTrendChart } from "@/components/dashboard/RiskTrendChart";
 import { UpdateRadar } from "@/components/dashboard/UpdateRadar";
 import { NextUpdateWatch } from "@/components/dashboard/NextUpdateWatch";
+import { RiskCompositionPanel } from "@/components/dashboard/RiskCompositionPanel";
 import { SmartMoneyDashboardSection } from "@/components/dashboard/SmartMoneyDashboardSection";
 import { BehaviorDashboardSummary } from "@/components/dashboard/BehaviorDashboardSummary";
 import { GlobalRiskDashboardSummary } from "@/components/dashboard/GlobalRiskDashboardSummary";
@@ -30,6 +31,7 @@ import { buildEarlyWarningModel } from "@/lib/early-warning";
 import { buildBubbleTriggerModel } from "@/lib/bubble-trigger";
 import { buildUpdateRadarData } from "@/lib/update-radar";
 import { buildNextUpdateWatchData } from "@/lib/next-update-watch";
+import { buildRiskComposition } from "@/lib/risk-composition";
 import { getAutomatedConditions } from "@/lib/free-macro-data";
 import { getContagionWatchData } from "@/lib/contagion-watch";
 import { getGlobalRiskData } from "@/lib/global-risk";
@@ -115,9 +117,10 @@ export default async function Home() {
   const news = newsFeed.items;
   const overallSignal = getOverallSignal(data.indicators);
   const riskLevel = toRiskLevel(overallSignal);
+  const globalRisk = getGlobalRiskData();
   const globeData = buildGlobeHeroData(
     data.indicators,
-    getGlobalRiskData(),
+    globalRisk,
     riskLevel,
     data.fetchedAt,
     contagionWatch.signal,
@@ -135,6 +138,12 @@ export default async function Home() {
   const bubbleTrigger = buildBubbleTriggerModel(data.indicators);
   const updateRadar = buildUpdateRadarData(data.indicators, news, data.fetchedAt);
   const nextUpdateWatch = buildNextUpdateWatchData(data.indicators);
+  const riskComposition = buildRiskComposition(
+    data.indicators,
+    globalRisk,
+    data.fetchedAt,
+    automatedConditions,
+  );
   const vulnerabilityLayer = earlyWarning.layers.find((layer) => layer.id === "vulnerability");
 
   return (
@@ -152,6 +161,8 @@ export default async function Home() {
           items3d={items3d}
           links={links}
           comment={riskComment}
+          riskComposition={<RiskCompositionPanel model={riskComposition} />}
+          riskCompositionSignal={riskComposition.signal}
           updateRadar={<UpdateRadar data={updateRadar} />}
           nextUpdateWatch={<NextUpdateWatch data={nextUpdateWatch} />}
           crisisRiskRange={<CrisisRiskRange model={earlyWarning} />}

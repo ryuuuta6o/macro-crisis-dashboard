@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { getConfiguredHiddenGemsData } from "@/lib/hidden-gems-source";
+import { getSectorMomentumData } from "@/lib/sector-momentum";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 export async function GET() {
-  const data = await getConfiguredHiddenGemsData();
+  const data = await getSectorMomentumData();
+
   return NextResponse.json(data, {
     headers: {
       "Cache-Control": "no-store",

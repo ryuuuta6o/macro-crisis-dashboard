@@ -4,6 +4,16 @@
 
 現行機能、判定ロジック、データソース、API、運用手順は [システム仕様書](docs/SPECIFICATION.md) を参照してください。
 
+## X自動投稿
+
+市場・ニュース・SEC 13Fを使ったX投稿候補の自動生成、別AIによるファクトチェック、編集長選定、Vercel Cron、DRY_RUN、管理画面を実装しています。初期設定ではXへ投稿されません。
+
+- 管理画面: `/admin/x-automation`
+- 運用仕様: [`docs/X_AUTOMATION.md`](docs/X_AUTOMATION.md)
+- 環境変数: [`.env.example`](.env.example)
+
+実行前に`DRY_RUN=true`と`AUTO_POST_ENABLED=false`を確認してください。
+
 ## ローカル起動
 
 ```bash

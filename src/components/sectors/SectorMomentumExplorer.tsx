@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { HiddenGemsPanel } from "@/components/sectors/HiddenGemsPanel";
 import type {
   SectorCompanyData,
@@ -32,6 +32,7 @@ type ThemeFamilyFilter = "all" | "growth" | "pickaxe";
 type SectorViewMode = SectorDisplayMode | "hidden-gems";
 
 export function SectorMomentumExplorer({ data }: { data: SectorMomentumData }) {
+  const [sectorData, setSectorData] = useState(data);
   const [displayMode, setDisplayMode] = useState<SectorViewMode>("sector");
   const [regionFilter, setRegionFilter] = useState<SectorRegion | "all">("all");
   const [themeFamilyFilter, setThemeFamilyFilter] = useState<ThemeFamilyFilter>("all");
@@ -43,9 +44,89 @@ export function SectorMomentumExplorer({ data }: { data: SectorMomentumData }) {
   const [chartRange, setChartRange] = useState<ChartRange>("1y");
   const [financialsByTicker, setFinancialsByTicker] = useState<Record<string, SectorCompanyGrowthData>>({});
   const [financialErrorTickers, setFinancialErrorTickers] = useState<string[]>([]);
+  const [lastSectorRefreshAt, setLastSectorRefreshAt] = useState(data.generatedAt);
+  const [autoRefreshState, setAutoRefreshState] = useState<"idle" | "refreshing" | "error">("idle");
+
+  const fetchSectorMomentum = useCallback(async (signal?: AbortSignal) => {
+    const response = await fetch(`/api/sectors/momentum?t=${Date.now()}`, {
+      signal,
+      cache: "no-store",
+    });
+    if (!response.ok) throw new Error("Sector momentum refresh failed");
+    const refreshed = (await response.json()) as SectorMomentumData;
+    setSectorData(refreshed);
+  }, []);
+
+  const fetchCompanyFinancials = useCallback(async (signal?: AbortSignal) => {
+    const response = await fetch(`/api/sectors/company-financials?all=1&schema=free-v2&t=${Date.now()}`, {
+      signal,
+      cache: "no-store",
+    });
+    if (!response.ok) throw new Error("Company financials refresh failed");
+    const financials = (await response.json()) as Record<string, SectorCompanyGrowthData>;
+    setFinancialsByTicker((current) => ({ ...current, ...financials }));
+  }, []);
+
+  const refreshAllData = useCallback(async (signal?: AbortSignal) => {
+    setAutoRefreshState("refreshing");
+    try {
+      await Promise.all([
+        fetchSectorMomentum(signal),
+        fetchCompanyFinancials(signal),
+      ]);
+      setLastSectorRefreshAt(new Date().toISOString());
+      setAutoRefreshState("idle");
+    } catch (error) {
+      if (!signal?.aborted && !(error instanceof DOMException && error.name === "AbortError")) {
+        setAutoRefreshState("error");
+      }
+    }
+  }, [fetchCompanyFinancials, fetchSectorMomentum]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`/api/sectors/company-financials?all=1&schema=free-v2&t=${Date.now()}`, {
+      signal: controller.signal,
+      cache: "no-store",
+    })
+      .then((response) => {
+        if (!response.ok) return null;
+        return response.json() as Promise<Record<string, SectorCompanyGrowthData>>;
+      })
+      .then((financials) => {
+        if (financials) {
+          setFinancialsByTicker((current) => ({ ...current, ...financials }));
+        }
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      void refreshAllData();
+    }, 15 * 60 * 1000);
+    return () => window.clearInterval(interval);
+  }, [refreshAllData]);
+
+  const financialDataSummary = useMemo(() => {
+    const records = Object.values(financialsByTicker);
+    const available = records.filter((record) => record.status !== "unavailable");
+    const latestTimestamp = available.reduce<number | null>((latest, record) => {
+      if (!record.updatedAt) return latest;
+      const timestamp = new Date(record.updatedAt).getTime();
+      if (!Number.isFinite(timestamp)) return latest;
+      return latest === null ? timestamp : Math.max(latest, timestamp);
+    }, null);
+    return {
+      available: available.length,
+      total: records.length,
+      updatedAt: latestTimestamp === null ? null : new Date(latestTimestamp).toISOString(),
+    };
+  }, [financialsByTicker]);
 
   const visibleSectors = useMemo(() => {
-    return data.sectors
+    return sectorData.sectors
       .filter((sector) => sector.displayMode === displayMode)
       .filter((sector) =>
         displayMode !== "theme" || themeFamilyFilter === "all"
@@ -57,7 +138,7 @@ export function SectorMomentumExplorer({ data }: { data: SectorMomentumData }) {
           ? true
           : sector.companies.some((company) => company.region === regionFilter),
       );
-  }, [data.sectors, displayMode, regionFilter, themeFamilyFilter]);
+  }, [sectorData.sectors, displayMode, regionFilter, themeFamilyFilter]);
 
   const sortedSectors = useMemo(() => {
     return [...visibleSectors].sort((a, b) => compareNullable(sectorSortValue(a, sortKey), sectorSortValue(b, sortKey), descending));
@@ -100,7 +181,7 @@ export function SectorMomentumExplorer({ data }: { data: SectorMomentumData }) {
       return;
     }
     const controller = new AbortController();
-    fetch(`/api/sectors/company-financials?symbol=${encodeURIComponent(ticker)}`, {
+    fetch(`/api/sectors/company-financials?symbol=${encodeURIComponent(ticker)}&schema=free-v2`, {
       signal: controller.signal,
     })
       .then((response) => {
@@ -132,18 +213,59 @@ export function SectorMomentumExplorer({ data }: { data: SectorMomentumData }) {
   return (
     <div className="sector-terminal space-y-5">
       <section className="sector-hero-panel">
-        <div>
+        <div className="sector-hero-copy">
           <p className="sector-eyebrow">SECTOR MOMENTUM TERMINAL</p>
-          <h1>Sector Momentum / セクター動向</h1>
+          <h1>
+            <span>Sector Momentum</span>
+            <span>セクター動向</span>
+          </h1>
           <p>
             危機監視とは別に、各セクターの上昇率、相対的な強さ、期待度の高まりを可視化します。
             これは投資助言ではなく、市場状態の整理です。
           </p>
         </div>
-        <div className="sector-hero-stats">
-          <Stat label="更新" value={formatDateTime(data.generatedAt)} />
-          <Stat label="比較対象" value={data.benchmark.symbol} />
-          <Stat label="取得方式" value="Yahoo/FMP + Manual" />
+        <div className="sector-refresh-cluster">
+          <span className={`sector-live-refresh is-${autoRefreshState}`} aria-live="polite">
+            {autoRefreshState === "refreshing"
+              ? "再取得中"
+              : autoRefreshState === "error"
+                ? "再取得失敗"
+                : "AUTO 15M"}
+          </span>
+          <button
+            type="button"
+            className="sector-refresh-button"
+            onClick={() => void refreshAllData()}
+            disabled={autoRefreshState === "refreshing"}
+          >
+            {autoRefreshState === "refreshing" ? "更新中" : "今すぐ更新"}
+          </button>
+        </div>
+        <div className="sector-freshness-grid">
+          <FreshnessCell
+            label="市場データ"
+            value={formatDateTime(sectorData.benchmark.observedAt ?? sectorData.generatedAt)}
+            detail="価格・騰落率 / 15分間隔"
+            tone={autoRefreshState === "error" ? "error" : "current"}
+          />
+          <FreshnessCell
+            label="財務データ"
+            value={financialDataSummary.updatedAt ? formatDateTime(financialDataSummary.updatedAt) : "取得中"}
+            detail="CAGR・ROE・ROIC / 日次バッチ"
+            tone={financialDataSummary.updatedAt ? "batch" : "loading"}
+          />
+          <FreshnessCell
+            label="取得カバレッジ"
+            value={financialDataSummary.total > 0 ? `${financialDataSummary.available} / ${financialDataSummary.total}` : "確認中"}
+            detail="取得不可は推測値で補完しません"
+            tone={financialDataSummary.total > 0 ? "neutral" : "loading"}
+          />
+          <FreshnessCell
+            label="再取得確認"
+            value={formatDateTime(lastSectorRefreshAt)}
+            detail={`比較対象 ${sectorData.benchmark.symbol}`}
+            tone="neutral"
+          />
         </div>
       </section>
 
@@ -184,7 +306,7 @@ export function SectorMomentumExplorer({ data }: { data: SectorMomentumData }) {
               Region
               <select value={regionFilter} onChange={(event) => setRegionFilter(event.target.value as SectorRegion | "all")}>
                 <option value="all">全地域</option>
-                {data.availableRegions.map((region) => (
+                  {sectorData.availableRegions.map((region) => (
                   <option key={region.id} value={region.id}>{region.label}</option>
                 ))}
               </select>
@@ -218,6 +340,7 @@ export function SectorMomentumExplorer({ data }: { data: SectorMomentumData }) {
             <button
               type="button"
               key={sector.id}
+              data-sector-id={sector.id}
               className={`sector-heatmap-row ${sector.id === selectedSector?.id ? "is-active" : ""}`}
               onClick={() => selectSector(sector)}
             >
@@ -281,6 +404,7 @@ export function SectorMomentumExplorer({ data }: { data: SectorMomentumData }) {
                 <button
                   type="button"
                   key={company.ticker}
+                  data-ticker={company.ticker}
                   className={`sector-company-row ${company.ticker === selectedCompany?.ticker ? "is-active" : ""}`}
                   onClick={() => setSelectedTicker(company.ticker)}
                 >
@@ -325,12 +449,12 @@ export function SectorMomentumExplorer({ data }: { data: SectorMomentumData }) {
       )}
 
       <section className="sector-panel sector-disclaimer">
-        <p>{data.disclaimer}</p>
+        <p>{sectorData.disclaimer}</p>
         <p>
-          期待度スコア比率: SNS/検索 {Math.round(data.scoreWeights.socialSearchGrowth * 100)}%、
-          アナリスト予想 {Math.round(data.scoreWeights.analystRevision * 100)}%、
-          相対モメンタム {Math.round(data.scoreWeights.relativeMomentum * 100)}%、
-          資金フロー {Math.round(data.scoreWeights.fundFlow * 100)}%。
+          期待度スコア比率: SNS/検索 {Math.round(sectorData.scoreWeights.socialSearchGrowth * 100)}%、
+          アナリスト予想 {Math.round(sectorData.scoreWeights.analystRevision * 100)}%、
+          相対モメンタム {Math.round(sectorData.scoreWeights.relativeMomentum * 100)}%、
+          資金フロー {Math.round(sectorData.scoreWeights.fundFlow * 100)}%。
         </p>
       </section>
     </div>
@@ -400,7 +524,7 @@ function CompanyDetail({
             </div>
           ) : (
             <>
-              <DataLine label="直近売上高" value={formatMoney(growth?.revenueLatest ?? null)} />
+          <DataLine label="直近売上高" value={formatMoney(growth?.revenueLatest ?? null, growth?.financialCurrency)} />
               <DataLine label="売上高 YoY" value={formatPercent(growth?.revenueGrowthYoY ?? null)} />
               <DataLine label="売上高 5年CAGR" value={formatPercent(growth?.revenueCagr5y ?? null)} />
               <DataLine label="EPS YoY" value={formatPercent(growth?.epsGrowthYoY ?? null)} />
@@ -422,12 +546,22 @@ function CompanyDetail({
           <DataLine label="ROE" value={formatPercent(growth?.roe ?? null)} />
           <DataLine label="ROIC" value={formatPercent(growth?.roic ?? null)} />
           <DataLine label="営業利益率" value={formatPercent(growth?.operatingMargin ?? null)} />
-          <DataLine label="フリーキャッシュフロー" value={formatMoney(growth?.freeCashFlow ?? null)} />
+          <DataLine label="粗利率" value={formatPercent(growth?.grossMargin ?? null)} />
+          <DataLine label="フリーキャッシュフロー" value={formatMoney(growth?.freeCashFlow ?? null, growth?.financialCurrency)} />
           <DataLine label="配当利回り" value={formatPercent(growth?.dividendYield ?? null)} />
-          <DataLine label="自社株買い" value={formatMoney(growth?.shareRepurchases ?? null)} />
+          <DataLine label="自社株買い" value={formatMoney(growth?.shareRepurchases ?? null, growth?.financialCurrency)} />
         </InfoBlock>
 
         <InfoBlock title="市場ポジショニング">
+          <DataLine label="実態スコア" value={formatScore(growth?.fundamentalScore ?? null)} />
+          <DataLine label="注目スコア" value={formatScore(growth?.attentionScore ?? null)} />
+          <DataLine label="Gem Score" value={formatSignedNumber(growth?.gemScore ?? null)} />
+          <DataLine label="テーマ中央値比" value={formatRatio(growth?.valuationToThemeMedian ?? null)} />
+          <DataLine label="3ヶ月騰落率" value={formatPercent(growth?.return3m ?? null)} />
+          <DataLine label="6ヶ月騰落率" value={formatPercent(growth?.return6m ?? null)} />
+          <DataLine label="PER" value={formatMultiple(growth?.peRatio ?? null)} />
+          <DataLine label="PSR" value={formatMultiple(growth?.priceToSalesRatio ?? null)} />
+          <DataLine label="アナリストカバー" value={formatCount(growth?.analystCoverage ?? null, "社")} />
           <DataLine label="機関投資家保有比率" value={formatPercent(growth?.institutionalOwnership ?? null)} />
           <DataLine label="空売り比率" value={formatPercent(growth?.shortInterest ?? null)} />
           <DataLine label="ベータ値" value={formatDecimal(growth?.beta ?? null)} />
@@ -437,12 +571,13 @@ function CompanyDetail({
         </InfoBlock>
 
         <InfoBlock title="業績指標">
-          <DataLine label="売上高成長率 YoY" value={formatPercent(company.fundamentals.revenueGrowthYoY)} />
-          <DataLine label="純利益" value={formatMoney(company.fundamentals.netIncome)} />
-          <DataLine label="EPS成長率" value={formatPercent(company.fundamentals.epsGrowthYoY)} />
-          <DataLine label="予想PER" value={formatMultiple(company.fundamentals.forwardPE)} />
+          <DataLine label="売上高成長率 YoY" value={formatPercent(growth?.revenueGrowthYoY ?? company.fundamentals.revenueGrowthYoY)} />
+          <DataLine label="純利益" value={formatMoney(growth?.netIncomeLatest ?? company.fundamentals.netIncome, growth?.financialCurrency)} />
+          <DataLine label="EPS成長率" value={formatPercent(growth?.epsGrowthYoY ?? company.fundamentals.epsGrowthYoY)} />
+          <DataLine label="EPS CAGR" value={formatPercent(growth?.epsCagr5y ?? null)} />
+          <DataLine label="PER" value={formatMultiple(growth?.peRatio ?? company.fundamentals.forwardPE)} />
           <DataLine label="予想売上成長" value={formatPercent(company.fundamentals.forwardRevenueGrowth)} />
-          <DataLine label="粗利率" value={formatPercent(company.fundamentals.grossMargin)} />
+          <DataLine label="粗利率" value={formatPercent(growth?.grossMargin ?? company.fundamentals.grossMargin)} />
         </InfoBlock>
 
         <InfoBlock title="決算・レンジ">
@@ -453,12 +588,14 @@ function CompanyDetail({
           <DataLine label="セクター相対強度" value={formatPercent(sector.relativeStrength)} />
         </InfoBlock>
 
-        <InfoBlock title="期待度の内訳">
-          <DataLine label="SNS/検索の伸び" value={formatScore(company.expectation.socialSearchGrowth)} />
-          <DataLine label="アナリスト上方修正" value={formatScore(company.expectation.analystRevision)} />
-          <DataLine label="相対モメンタム" value={formatScore(company.expectation.relativeMomentum)} />
-          <DataLine label="資金フロー" value={formatScore(company.expectation.fundFlow)} />
-          <p className="sector-note">{company.expectation.sourceNote}</p>
+        <InfoBlock title="期待度の内訳(取得可能範囲)">
+          <DataLine label="SNS/検索の伸び" value={company.expectation.socialSearchGrowth === null ? "無料取得対象外" : formatScore(company.expectation.socialSearchGrowth)} />
+          <DataLine label="アナリスト上方修正" value={company.expectation.analystRevision === null ? "無料取得対象外" : formatScore(company.expectation.analystRevision)} />
+          <DataLine label="相対モメンタム" value={formatPercent(growth?.return3m ?? null)} />
+          <DataLine label="資金フロー" value={company.expectation.fundFlow === null ? "無料取得対象外" : formatScore(company.expectation.fundFlow)} />
+          <p className="sector-note">
+            無料構成では、検証可能な価格・財務・保有データだけを表示します。SNS、予想修正、ETF資金フローは推測しません。
+          </p>
         </InfoBlock>
 
         <InfoBlock title="関連キーワード">
@@ -475,6 +612,26 @@ function CompanyDetail({
 
 function Stat({ label, value }: { label: string; value: string }) {
   return <div className="sector-stat"><span>{label}</span><strong>{value}</strong></div>;
+}
+
+function FreshnessCell({
+  label,
+  value,
+  detail,
+  tone,
+}: {
+  label: string;
+  value: string;
+  detail: string;
+  tone: "current" | "batch" | "neutral" | "loading" | "error";
+}) {
+  return (
+    <div className={`sector-freshness-cell is-${tone}`}>
+      <span>{label}</span>
+      <strong>{value}</strong>
+      <small>{detail}</small>
+    </div>
+  );
 }
 
 function ScoreCell({ value, label, compact = false }: { value: number | null; label?: string; compact?: boolean }) {
@@ -609,15 +766,29 @@ function formatDecimal(value: number | null) {
   return value === null ? "unavailable" : value.toFixed(2);
 }
 
-function formatMoney(value: number | null) {
+function formatMoney(value: number | null, currency?: string | null) {
   if (value === null) return "unavailable";
-  if (Math.abs(value) >= 1_000_000_000) return `$${(value / 1_000_000_000).toFixed(1)}B`;
-  if (Math.abs(value) >= 1_000_000) return `$${(value / 1_000_000).toFixed(1)}M`;
-  return `$${value.toLocaleString("en-US")}`;
+  const prefix = currency ? `${currency} ` : "$";
+  if (Math.abs(value) >= 1_000_000_000_000) return `${prefix}${(value / 1_000_000_000_000).toFixed(1)}T`;
+  if (Math.abs(value) >= 1_000_000_000) return `${prefix}${(value / 1_000_000_000).toFixed(1)}B`;
+  if (Math.abs(value) >= 1_000_000) return `${prefix}${(value / 1_000_000).toFixed(1)}M`;
+  return `${prefix}${value.toLocaleString("en-US")}`;
 }
 
 function formatMarketCap(value: number | null) {
   return formatMoney(value);
+}
+
+function formatSignedNumber(value: number | null) {
+  return value === null ? "unavailable" : `${value >= 0 ? "+" : ""}${value}`;
+}
+
+function formatRatio(value: number | null) {
+  return value === null ? "unavailable" : `${value.toFixed(2)}x`;
+}
+
+function formatCount(value: number | null, suffix: string) {
+  return value === null ? "unavailable" : `${Math.round(value)}${suffix}`;
 }
 
 function marketCapClass(value: number | null) {

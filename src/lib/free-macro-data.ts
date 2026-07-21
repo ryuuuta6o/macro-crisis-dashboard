@@ -1,5 +1,6 @@
 import { NFP_REVISION_CONFIG } from "@/config/manual-data";
 import { fetchFredSeries, type NumericObservation } from "@/lib/fred";
+import type { IndicatorHistoryPoint } from "@/types/indicator";
 
 export type AutomatedConditionStatus =
   | "met"
@@ -10,6 +11,9 @@ export type AutomatedConditionStatus =
 export type AutomatedConditionId =
   | "recession-probability"
   | "consumer-sentiment"
+  | "housing-supply"
+  | "term-premium"
+  | "sofr-iorb"
   | "economic-activity"
   | "sahm-rule"
   | "nfp-revision"
@@ -28,6 +32,7 @@ export type AutomatedCondition = {
   observedAt: string | null;
   updateFrequency: string;
   provisional?: boolean;
+  history?: IndicatorHistoryPoint[];
 };
 
 export type AutomatedConditionsData = {
@@ -80,6 +85,30 @@ const fredDefinitions: FredConditionDefinition[] = [
         note: `ミシガン大学消費者信頼感。約3カ月変化 ${decline >= 0 ? "+" : ""}${decline.toFixed(1)}pt。`,
       };
     },
+  },
+  {
+    id: "housing-supply",
+    seriesId: "MSACSR",
+    label: "新築住宅供給月数",
+    updateFrequency: "月次公表時",
+    evaluate: ([latest]) => ({
+      status: latest.value >= 9 ? "met" : latest.value >= 7 ? "watch" : "not_met",
+      numericValue: latest.value,
+      displayValue: `${latest.value.toFixed(1)}カ月`,
+      note: "新築住宅の販売ペースに対する供給月数。7カ月以上で在庫圧力、9カ月以上で強い圧力として扱います。",
+    }),
+  },
+  {
+    id: "term-premium",
+    seriesId: "THREEFYTP10",
+    label: "米10年タームプレミアム",
+    updateFrequency: "日次公表時",
+    evaluate: ([latest]) => ({
+      status: latest.value >= 1.5 ? "met" : latest.value >= 1 ? "watch" : "not_met",
+      numericValue: latest.value,
+      displayValue: `${latest.value.toFixed(2)}%`,
+      note: "FRB Kim-Wrightモデル。1.0%以上で長期債保有の上乗せ負担を注意、1.5%以上で強い圧力として扱います。",
+    }),
   },
   {
     id: "economic-activity",
@@ -163,9 +192,64 @@ async function fetchFredCondition(
       sourceUrl: `https://fred.stlouisfed.org/series/${definition.seriesId}`,
       observedAt: observations[0]?.date ?? null,
       updateFrequency: definition.updateFrequency,
+      history: observations.slice(0, 60).map((item) => ({
+        date: item.date,
+        value: item.value,
+      })),
     };
   } catch {
     return unavailableCondition(definition);
+  }
+}
+
+async function fetchSofrIorbSpread(): Promise<AutomatedCondition> {
+  const sourceUrl = "https://fred.stlouisfed.org/graph/?g=1BwmT";
+  try {
+    const [sofr, iorb] = await Promise.all([
+      fetchFredSeries("SOFR"),
+      fetchFredSeries("IORB"),
+    ]);
+    const iorbByDate = new Map(iorb.map((item) => [item.date, item.value]));
+    const history = sofr.flatMap((item) => {
+      const benchmark = iorbByDate.get(item.date);
+      return benchmark === undefined
+        ? []
+        : [{ date: item.date, value: (item.value - benchmark) * 100 }];
+    });
+    if (!history.length) throw new Error("SOFR and IORB have no aligned observations");
+    const latest = history[0];
+    const status: AutomatedConditionStatus = latest.value >= 25
+      ? "met"
+      : latest.value >= 10
+        ? "watch"
+        : "not_met";
+    return {
+      id: "sofr-iorb",
+      label: "SOFR-IORBスプレッド",
+      status,
+      numericValue: latest.value,
+      displayValue: `${latest.value.toFixed(0)}bp`,
+      note: "担保付き翌日物調達金利と準備預金金利の差。10bp以上で注意、25bp以上で強い短期資金圧力として扱います。",
+      sourceName: "FRED SOFR / IORB",
+      sourceUrl,
+      observedAt: latest.date,
+      updateFrequency: "営業日ごと",
+      history: history.slice(0, 60),
+    };
+  } catch {
+    return {
+      id: "sofr-iorb",
+      label: "SOFR-IORBスプレッド",
+      status: "unavailable",
+      numericValue: null,
+      displayValue: "取得不可",
+      note: "FREDのSOFRとIORBを同じ観測日で照合できませんでした。推測値では補完しません。",
+      sourceName: "FRED SOFR / IORB",
+      sourceUrl,
+      observedAt: null,
+      updateFrequency: "営業日ごと",
+      history: [],
+    };
   }
 }
 
@@ -272,6 +356,7 @@ function manualNfpRevisionCondition(): AutomatedCondition {
 export async function getAutomatedConditions(): Promise<AutomatedConditionsData> {
   const items = await Promise.all([
     ...fredDefinitions.map(fetchFredCondition),
+    fetchSofrIorbSpread(),
     Promise.resolve(manualNfpRevisionCondition()),
     fetchBankFailures(),
   ]);

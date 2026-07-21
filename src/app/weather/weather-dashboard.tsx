@@ -2,6 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { WeatherRiskComposition } from "@/components/weather/WeatherRiskComposition";
+import { buildRiskComposition } from "@/lib/risk-composition";
+import type {
+  AutomatedCondition,
+  AutomatedConditionsData,
+} from "@/lib/free-macro-data";
+import type { GlobalRiskData } from "@/types/global-risk";
 import type { DashboardData, IndicatorId, IndicatorValue, MarketNewsItem, Signal } from "@/types/indicator";
 
 type WeatherKind = "sunny" | "cloudy" | "rainy" | "storm";
@@ -131,6 +138,29 @@ function isDashboardData(value: unknown): value is DashboardData {
 
 function isNewsArray(value: unknown): value is MarketNewsItem[] {
   return Array.isArray(value);
+}
+
+function isGlobalRiskData(value: unknown): value is GlobalRiskData {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    Array.isArray((value as GlobalRiskData).regions)
+  );
+}
+
+function isAutomatedConditionsData(value: unknown): value is AutomatedConditionsData {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    Array.isArray((value as AutomatedConditionsData).items)
+  );
+}
+
+function signalFromCondition(condition?: AutomatedCondition): Signal {
+  if (!condition || condition.status === "unavailable") return "unavailable";
+  if (condition.status === "met") return "red";
+  if (condition.status === "watch") return "yellow";
+  return "green";
 }
 
 function formatValue(item?: IndicatorValue | SyntheticIndicator) {
@@ -352,22 +382,27 @@ type SyntheticIndicator = {
   observationDate: string | null;
 };
 
-function buildCards(indicators: IndicatorValue[], news: MarketNewsItem[], newsSignal: Signal): Array<IndicatorValue | SyntheticIndicator> {
+function buildCards(
+  indicators: IndicatorValue[],
+  news: MarketNewsItem[],
+  newsSignal: Signal,
+  sahmCondition?: AutomatedCondition,
+): Array<IndicatorValue | SyntheticIndicator> {
   const newsScore = news.length ? Math.round(news.slice(0, 3).reduce((sum, item) => sum + item.impactScore, 0) / Math.min(3, news.length)) : null;
   const synthetic: Record<string, SyntheticIndicator> = {
     "sahm-rule": {
       id: "sahm-rule",
       name: "サームルール",
-      value: "データ待ち",
-      numericValue: null,
+      value: sahmCondition?.numericValue ?? "データ待ち",
+      numericValue: sahmCondition?.numericValue ?? null,
       previousNumericValue: null,
       decimals: 2,
       unit: "",
-      signal: "unavailable",
+      signal: signalFromCondition(sahmCondition),
       thresholdLabel: "0.50以上で景気後退シグナルとして警戒",
-      sourceName: "通常指標APIでは未提供",
-      sourceUrl: "https://fred.stlouisfed.org/series/SAHMREALTIME",
-      observationDate: null,
+      sourceName: sahmCondition?.sourceName ?? "FRED SAHMREALTIME",
+      sourceUrl: sahmCondition?.sourceUrl ?? "https://fred.stlouisfed.org/series/SAHMREALTIME",
+      observationDate: sahmCondition?.observedAt ?? null,
     },
     news: {
       id: "news",
@@ -398,6 +433,9 @@ function buildCards(indicators: IndicatorValue[], news: MarketNewsItem[], newsSi
 export function WeatherDashboard() {
   const [dashboard, setDashboard] = useState<DashboardData | null>(null);
   const [news, setNews] = useState<MarketNewsItem[]>([]);
+  const [globalRisk, setGlobalRisk] = useState<GlobalRiskData | null>(null);
+  const [automatedConditions, setAutomatedConditions] =
+    useState<AutomatedConditionsData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -405,16 +443,33 @@ export function WeatherDashboard() {
     let active = true;
     async function load() {
       try {
-        const [indicatorResponse, newsResponse] = await Promise.all([
+        const [
+          indicatorResponse,
+          newsResponse,
+          globalRiskResponse,
+          automatedResponse,
+        ] = await Promise.all([
           fetch("/api/indicators", { cache: "no-store" }),
           fetch("/api/news", { cache: "no-store" }),
+          fetch("/api/global-risk", { cache: "no-store" }),
+          fetch("/api/automated-conditions", { cache: "no-store" }),
         ]);
         if (!indicatorResponse.ok) throw new Error("指標APIの取得に失敗しました");
         const indicatorJson: unknown = await indicatorResponse.json();
         const newsJson: unknown = newsResponse.ok ? await newsResponse.json() : [];
+        const globalRiskJson: unknown = globalRiskResponse.ok
+          ? await globalRiskResponse.json()
+          : null;
+        const automatedJson: unknown = automatedResponse.ok
+          ? await automatedResponse.json()
+          : null;
         if (!active) return;
         setDashboard(isDashboardData(indicatorJson) ? indicatorJson : null);
         setNews(isNewsArray(newsJson) ? newsJson : []);
+        setGlobalRisk(isGlobalRiskData(globalRiskJson) ? globalRiskJson : null);
+        setAutomatedConditions(
+          isAutomatedConditionsData(automatedJson) ? automatedJson : null,
+        );
         setError(isDashboardData(indicatorJson) ? null : "指標データ形式を確認中です");
       } catch (caught) {
         if (!active) return;
@@ -431,12 +486,27 @@ export function WeatherDashboard() {
 
   const indicators = useMemo(() => dashboard?.indicators ?? [], [dashboard]);
   const newsSignal = useMemo(() => newsSignalFromItems(news), [news]);
-  const sahmSignal: Signal = "unavailable";
+  const sahmCondition = automatedConditions?.items.find(
+    (condition) => condition.id === "sahm-rule",
+  );
+  const sahmSignal = signalFromCondition(sahmCondition);
   const weather = useMemo(() => weatherFromData(indicators, newsSignal, sahmSignal), [indicators, newsSignal, sahmSignal]);
   const score = useMemo(() => scoreFromData(indicators, newsSignal, sahmSignal), [indicators, newsSignal, sahmSignal]);
   const points = useMemo(() => weatherPoints(indicators, news, newsSignal, sahmSignal), [indicators, news, newsSignal, sahmSignal]);
-  const cards = useMemo(() => buildCards(indicators, news, newsSignal), [indicators, news, newsSignal]);
+  const cards = useMemo(
+    () => buildCards(indicators, news, newsSignal, sahmCondition),
+    [indicators, news, newsSignal, sahmCondition],
+  );
   const distances = useMemo(() => distanceRows(indicators, sahmSignal), [indicators, sahmSignal]);
+  const riskComposition = useMemo(
+    () => buildRiskComposition(
+      indicators,
+      globalRisk ?? undefined,
+      dashboard?.fetchedAt,
+      automatedConditions ?? undefined,
+    ),
+    [automatedConditions, dashboard?.fetchedAt, globalRisk, indicators],
+  );
   const flowGroups = useMemo(() => [
     { title: "信用市場", desc: "企業がお金を借りる時のストレス", signal: worstSignal(["hy-oas", "ig-oas", "baa-aaa"].map((id) => getById(indicators, id))) },
     { title: "短期資金市場", desc: "銀行や金融機関同士のお金の流れ", signal: worstSignal(["sofr", "fra-ois", "ted-spread"].map((id) => getById(indicators, id))) },
@@ -536,6 +606,8 @@ export function WeatherDashboard() {
           </div>
         </BentoCard>
 
+        <WeatherRiskComposition model={riskComposition} />
+
         <BentoCard title="お金の流れメーター" eyebrow="LIQUIDITY FLOW">
           <p className="mb-5 text-sm leading-7 text-slate-400">
             金融危機は、株価が下がるだけではなく「お金の流れ」が詰まることで深刻化します。ここでは、企業・銀行・短期金融市場・国債市場のお金の流れを確認します。
@@ -573,9 +645,9 @@ export function WeatherDashboard() {
             <div className="space-y-3">
               <EmploymentRow
                 title="サームルール"
-                status="データ待ち"
-                desc="失業率の3か月平均が、過去12か月の最低値から0.5ポイント以上上昇すると景気後退シグナルとして警戒されます。"
-                signal="unavailable"
+                status={sahmCondition?.displayValue ?? "データ待ち"}
+                desc="失業率の3か月平均が、過去12か月の最低値から0.5ポイント以上上昇すると景気後退シグナルとして警戒されます。公表後に改定される可能性があります。"
+                signal={sahmSignal}
               />
               <EmploymentRow
                 title="米失業率"

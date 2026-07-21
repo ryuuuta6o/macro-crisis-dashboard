@@ -52,3 +52,4 @@ QUALITY_CHECK.md
 MEMORY_NOTES.md
 
 .vercel
+.env*.local

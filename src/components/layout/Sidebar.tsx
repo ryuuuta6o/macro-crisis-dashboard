@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 const items = [
   { href: "/#dashboard", label: "ダッシュボード", short: "ホーム", icon: "HM" },
+  { href: "/weather", label: "初心者向け天気予報", short: "入門", icon: "EZ" },
   { href: "/#crisis-risk-range-fold", label: "危機警戒レンジ", short: "総合", icon: "RR" },
   { href: "/#liquidity-core-fold", label: "流動性コア", short: "流動性", icon: "LQ" },
   { href: "/#classification-summary-fold", label: "3分類サマリー", short: "3分類", icon: "3T" },
@@ -21,7 +22,8 @@ const mobileItems = [
   items[1],
   items[2],
   items[3],
-  items[6],
+  items[4],
+  items[7],
 ] as const;
 
 export function Sidebar() {

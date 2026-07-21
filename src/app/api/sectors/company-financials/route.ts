@@ -30,9 +30,9 @@ function jsonResponse(data: unknown) {
     headers: {
       "Cache-Control": "no-store",
       "CDN-Cache-Control":
-        "public, s-maxage=86400, stale-while-revalidate=86400",
+        "public, s-maxage=900, stale-while-revalidate=300",
       "Vercel-CDN-Cache-Control":
-        "public, s-maxage=86400, stale-while-revalidate=86400",
+        "public, s-maxage=900, stale-while-revalidate=300",
     },
   });
 }

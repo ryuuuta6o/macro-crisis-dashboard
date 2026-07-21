@@ -302,7 +302,7 @@ def fetch_company(ref: CompanyRef) -> dict[str, Any]:
         record["grossMargin"] = ratio_percent(safe_float(info.get("grossMargins")))
         record["roic"] = compute_roic(income, balance)
         record["roe"] = ratio_percent(safe_float(info.get("returnOnEquity")))
-        record["dividendYield"] = ratio_percent(safe_float(info.get("dividendYield")))
+        record["dividendYield"] = safe_float(info.get("dividendYield"))
         record["institutionalOwnership"] = ratio_percent(
             safe_float(info.get("heldPercentInstitutions"))
         )
