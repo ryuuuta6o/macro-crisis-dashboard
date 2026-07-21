@@ -170,6 +170,8 @@ export type AutomationRun = {
   completedAt: string;
   status: RunStatus;
   dryRun: boolean;
+  generationMode?: "ai" | "template_fallback";
+  warning?: string | null;
   candidates: PostCandidate[];
   drafts: WriterCandidate[];
   factChecks: FactCheckResult[];

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { DEFAULT_AUTOMATION_SETTINGS } from "@/config/x-automation";
+import { LlmRequestError } from "@/lib/x-automation/llm";
 import { runAutomationSlot } from "@/lib/x-automation/orchestrator";
 import type { AutomationStore } from "@/lib/x-automation/storage";
 import type { AutomationRun, AutomationState, PostCandidate } from "@/types/x-automation";
@@ -51,6 +52,27 @@ test("ファクトチェック不合格時は投稿停止", async () => {
   const run = await runAutomationSlot("morning", { manual: true, dependencies: dependencies(store, false) });
   assert.equal(run.status, "failed");
   assert.match(run.error ?? "", /ファクトチェック/);
+});
+
+test("LLMの利用残高不足時は取得済み事実だけの定型案へ退避する", async () => {
+  const store = new MemoryStore();
+  const deps = {
+    ...dependencies(store),
+    write: async () => {
+      throw new LlmRequestError({
+        status: 429,
+        code: "insufficient_quota",
+        errorType: "insufficient_quota",
+        message: "You exceeded your current quota.",
+      });
+    },
+  };
+  const run = await runAutomationSlot("morning", { manual: true, dependencies: deps });
+  assert.equal(run.status, "generated");
+  assert.equal(run.generationMode, "template_fallback");
+  assert.match(run.warning ?? "", /利用残高/);
+  assert.match(run.finalText ?? "", /市場変動/);
+  assert.equal(run.factChecks[0]?.passed, true);
 });
 
 test("同じ投稿枠の二重実行をidempotency keyで防ぐ", async () => {

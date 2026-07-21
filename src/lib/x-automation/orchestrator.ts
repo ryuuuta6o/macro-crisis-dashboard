@@ -9,6 +9,8 @@ import {
 } from "@/lib/x-automation/dedupe";
 import {
   factCheckDraft,
+  getLlmUserMessage,
+  isLlmServiceError,
   selectEditorialDraft,
   writePostDrafts,
 } from "@/lib/x-automation/llm";
@@ -17,6 +19,7 @@ import { getAutomationStore, type AutomationStore } from "@/lib/x-automation/sto
 import { createXPost } from "@/lib/x-automation/x-client";
 import { isValidXText } from "@/lib/x-automation/x-text";
 import { filterCandidatesByTopic } from "@/lib/x-automation/topic-filter";
+import { buildTemplateFallback } from "@/lib/x-automation/template-fallback";
 import type {
   AutomationInput,
   AutomationRun,
@@ -73,6 +76,8 @@ function emptyRun(
     completedAt: startedAt,
     status: "generated",
     dryRun: true,
+    generationMode: "ai",
+    warning: null,
     candidates: [],
     drafts: [],
     factChecks: [],
@@ -163,21 +168,35 @@ export async function runAutomationSlot(
 
     const recentPosts = state.runs.flatMap((item) => item.finalText ? [item.finalText] : []).slice(0, 10);
     const mayUseSiteUrl = state.settings.includeSiteUrl && !siteUrlWasUsedToday(state.runs, now);
-    const drafts = await deps.write(candidates.slice(0, 3), {
-      slot,
-      recentPosts,
-      generationTopic,
-      siteUrl: mayUseSiteUrl ? process.env.SITE_URL : undefined,
-    });
-    run.drafts = drafts;
-    const factChecks = await Promise.all(
-      drafts.map((draft) => deps.factCheck(draft, candidates.slice(0, 3))),
-    );
-    run.factChecks = factChecks;
-    if (!factChecks.some((check) => check.passed)) {
-      throw new Error("すべての投稿案がファクトチェック不合格でした。");
+    let drafts: WriterCandidate[];
+    let factChecks: FactCheckResult[];
+    let editorial: EditorialResult;
+    try {
+      drafts = await deps.write(candidates.slice(0, 3), {
+        slot,
+        recentPosts,
+        generationTopic,
+        siteUrl: mayUseSiteUrl ? process.env.SITE_URL : undefined,
+      });
+      factChecks = [];
+      for (const draft of drafts) {
+        factChecks.push(await deps.factCheck(draft, candidates.slice(0, 3)));
+      }
+      if (!factChecks.some((check) => check.passed)) {
+        throw new Error("すべての投稿案がファクトチェック不合格でした。");
+      }
+      editorial = await deps.edit({ drafts, factChecks, recentPosts });
+    } catch (error) {
+      if (!isLlmServiceError(error)) throw error;
+      const fallback = buildTemplateFallback(candidates[0]);
+      drafts = fallback.drafts;
+      factChecks = fallback.factChecks;
+      editorial = fallback.editorial;
+      run.generationMode = "template_fallback";
+      run.warning = getLlmUserMessage(error);
     }
-    const editorial = await deps.edit({ drafts, factChecks, recentPosts });
+    run.drafts = drafts;
+    run.factChecks = factChecks;
     run.editorial = editorial;
     const selectedCheck = factChecks[editorial.selected_index];
     if (!selectedCheck?.passed) throw new Error("編集長AIが不合格案を選択したため停止しました。");

@@ -1,6 +1,11 @@
 export async function withExponentialBackoff<T>(
   operation: () => Promise<T>,
-  options: { attempts?: number; initialDelayMs?: number; shouldRetry?: (error: unknown) => boolean } = {},
+  options: {
+    attempts?: number;
+    initialDelayMs?: number;
+    shouldRetry?: (error: unknown) => boolean;
+    getDelayMs?: (error: unknown, attempt: number) => number;
+  } = {},
 ) {
   const attempts = options.attempts ?? 3;
   let lastError: unknown;
@@ -10,7 +15,9 @@ export async function withExponentialBackoff<T>(
     } catch (error) {
       lastError = error;
       if (attempt === attempts - 1 || (options.shouldRetry && !options.shouldRetry(error))) throw error;
-      await new Promise((resolve) => setTimeout(resolve, (options.initialDelayMs ?? 400) * 2 ** attempt));
+      const delayMs = options.getDelayMs?.(error, attempt)
+        ?? (options.initialDelayMs ?? 400) * 2 ** attempt;
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
     }
   }
   throw lastError;
