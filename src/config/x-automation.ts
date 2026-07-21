@@ -1,7 +1,22 @@
 import type {
   AutomationSettings,
+  GenerationTopic,
   PostingSlot,
 } from "@/types/x-automation";
+
+export const GENERATION_TOPICS: Array<{
+  id: GenerationTopic;
+  label: string;
+  description: string;
+}> = [
+  { id: "all", label: "自動選定", description: "重要度が最も高い材料を横断して選ぶ" },
+  { id: "stock_market", label: "株価・指数", description: "日米株、半導体、主要国指数の値動き" },
+  { id: "influential_people", label: "著名人・投資家", description: "著名投資家、金融機関、政策当局者の発言・開示" },
+  { id: "credit_rates", label: "金利・信用・流動性", description: "国債金利、信用スプレッド、資金市場" },
+  { id: "economy_policy", label: "経済・中央銀行", description: "経済指標、政策、中央銀行、地政学ニュース" },
+  { id: "fx_commodities_crypto", label: "為替・商品・暗号資産", description: "ドル円、金、原油、Bitcoinなど" },
+  { id: "japan_asia", label: "日本・アジア", description: "日本、中国、韓国、台湾と海外市場からの波及" },
+];
 
 export const POSTING_SLOTS: Record<
   PostingSlot,

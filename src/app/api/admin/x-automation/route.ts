@@ -6,7 +6,7 @@ import { getNextPosting } from "@/lib/x-automation/schedule";
 import { getAutomationStore } from "@/lib/x-automation/storage";
 import { isValidXText } from "@/lib/x-automation/x-text";
 import { createXPost, getXPostMetrics } from "@/lib/x-automation/x-client";
-import type { AutomationSettings, PostingSlot } from "@/types/x-automation";
+import type { AutomationSettings, GenerationTopic, PostingSlot } from "@/types/x-automation";
 
 export const maxDuration = 120;
 export const dynamic = "force-dynamic";
@@ -39,6 +39,7 @@ export async function POST(request: Request) {
   const body = await request.json() as {
     action?: "run" | "settings" | "edit" | "metrics" | "postText";
     slot?: PostingSlot;
+    topic?: GenerationTopic;
     settings?: AutomationSettings;
     runId?: string;
     text?: string;
@@ -46,7 +47,7 @@ export async function POST(request: Request) {
   };
   const store = getAutomationStore();
   if (body.action === "run" && body.slot) {
-    return NextResponse.json(await runAutomationSlot(body.slot, { manual: true }));
+    return NextResponse.json(await runAutomationSlot(body.slot, { manual: true, topic: body.topic ?? "all" }));
   }
   if (body.action === "settings" && body.settings) {
     await store.updateSettings(body.settings);

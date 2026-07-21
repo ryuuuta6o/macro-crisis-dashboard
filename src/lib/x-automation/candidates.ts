@@ -7,6 +7,7 @@ import type {
   AutomationInput,
   AutomationSettings,
   AutomationSource,
+  GenerationTopic,
   PostCandidate,
 } from "@/types/x-automation";
 
@@ -261,4 +262,118 @@ export function buildPostCandidates(
   return uniqueCandidates
     .filter((candidate) => candidate.sources.length > 0)
     .slice(0, 10);
+}
+
+const REALTIME_MARKET_IDS: Partial<Record<GenerationTopic, string[]>> = {
+  all: ["nikkei", "topix", "sp500", "nasdaq", "sox", "vix-market", "usd-jpy", "gold", "oil", "bitcoin"],
+  stock_market: ["nikkei", "topix", "sp500", "nasdaq", "sox", "kospi", "taiwan", "shanghai", "sp-future", "nasdaq-future"],
+  fx_commodities_crypto: ["usd-jpy", "eur-usd", "gold", "oil", "bitcoin"],
+  japan_asia: ["nikkei", "topix", "kospi", "taiwan", "shanghai", "usd-jpy"],
+};
+
+const REALTIME_INDICATOR_IDS: Partial<Record<GenerationTopic, string[]>> = {
+  all: ["vix", "dgs10", "hy-oas", "sofr"],
+  stock_market: ["vix", "hy-oas", "dgs10"],
+  credit_rates: ["dgs10", "dgs30", "hy-oas", "ig-oas", "ccc-oas", "baa-aaa", "sofr", "treasury-auction"],
+  fx_commodities_crypto: ["dgs10", "dgs30", "sofr"],
+  japan_asia: ["dgs10", "vix", "hy-oas"],
+};
+
+function indicatorAutomationSource(
+  indicator: AutomationInput["indicators"][number],
+  fetchedAt: string,
+): AutomationSource {
+  const url = indicator.sourceUrl
+    ?? (indicator.fredSeries[0] ? `https://fred.stlouisfed.org/series/${indicator.fredSeries[0]}` : "https://macro-crisis-dashboard.vercel.app/");
+  return {
+    id: `snapshot-indicator-${indicator.id}-${indicator.observationDate ?? "latest"}`,
+    name: indicator.sourceName ?? indicator.sourceLabel ?? indicator.source,
+    url,
+    kind: indicator.source === "FRED" || indicator.source === "treasury" || indicator.source === "ny-fed" || indicator.source === "fiscal-data" ? "official" : "market_data",
+    publishedAt: indicator.observationDate ? `${indicator.observationDate}T00:00:00Z` : fetchedAt,
+    fetchedAt,
+  };
+}
+
+export function buildRealtimeSnapshotCandidate(
+  input: AutomationInput,
+  settings: AutomationSettings,
+  topic: GenerationTopic,
+): PostCandidate | null {
+  if (topic === "influential_people" || topic === "economy_policy") return null;
+
+  const marketIds = new Set(REALTIME_MARKET_IDS[topic] ?? REALTIME_MARKET_IDS.all);
+  const indicatorIds = new Set(REALTIME_INDICATOR_IDS[topic] ?? REALTIME_INDICATOR_IDS.all);
+  const markets = input.markets
+    .filter((market) => marketIds?.has(market.id))
+    .sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent))
+    .slice(0, topic === "credit_rates" ? 0 : 3);
+  const indicators = input.indicators
+    .filter((indicator) => indicatorIds?.has(indicator.id) && indicator.numericValue !== null)
+    .sort((a, b) => {
+      const severity = { unavailable: -1, green: 0, yellow: 1, orange: 2, red: 3 } as const;
+      return severity[b.signal] - severity[a.signal];
+    })
+    .slice(0, topic === "credit_rates" ? 4 : 2);
+
+  if (markets.length === 0 && indicators.length === 0) return null;
+
+  const marketSources: AutomationSource[] = markets.map((market) => ({
+    id: `snapshot-market-${market.id}-${market.observedAt}`,
+    name: "Yahoo Finance Chart",
+    url: market.sourceUrl,
+    kind: "market_data",
+    publishedAt: market.observedAt,
+    fetchedAt: input.collectedAt,
+  }));
+  const sources = distinctSources([
+    ...marketSources,
+    ...indicators.map((indicator) => indicatorAutomationSource(indicator, input.collectedAt)),
+  ]);
+  if (!sourceCountIsEnough(sources, settings)) return null;
+
+  const facts = [
+    ...markets.map((market) => `${market.name} ${market.value.toLocaleString("ja-JP", { maximumFractionDigits: 2 })}（前日比${market.changePercent >= 0 ? "+" : ""}${market.changePercent.toFixed(2)}%）`),
+    ...indicators.map((indicator) => `${indicator.name} ${indicator.value}${indicator.unit}（信号 ${indicator.signal}）`),
+  ];
+  const newestPublishedAt = [...sources]
+    .map((source) => source.publishedAt)
+    .sort((a, b) => b.localeCompare(a))[0] ?? input.collectedAt;
+  const averageMove = markets.length > 0
+    ? markets.reduce((sum, market) => sum + Math.abs(market.changePercent), 0) / markets.length
+    : 0;
+  const topicName = topic === "credit_rates" ? "金利・信用・流動性"
+    : topic === "stock_market" ? "株価・指数"
+      : topic === "fx_commodities_crypto" ? "為替・商品・暗号資産"
+        : topic === "japan_asia" ? "日本・アジア市場"
+          : "主要市場";
+
+  return {
+    id: `realtime-${topic}-${input.collectedAt}`,
+    themeKey: `realtime:${topic}:${input.collectedAt.slice(0, 13)}`,
+    title: `${topicName}の最新概況`,
+    category: "market_anomaly",
+    summary: "最新の市場値と公式指標を組み合わせた定時概況です。異常や原因を断定せず、複数市場の組み合わせを確認します。",
+    facts,
+    watchNext: topic === "credit_rates"
+      ? "信用スプレッドと短期流動性が同時に悪化するか"
+      : "株価・VIX・信用市場が同じ方向へ動くか",
+    sourceIds: sources.map((source) => source.id),
+    sources,
+    relatedIndicators: [...markets.map((market) => market.name), ...indicators.map((indicator) => indicator.name)],
+    anomalyScore: Math.round(Math.min(100, 30 + averageMove * 12)),
+    investorScore: 0,
+    viral: calculateViralScore({
+      category: "market_anomaly",
+      importance: 15,
+      freshness: 15,
+      topicVelocity: 5,
+      japanRelevance: topic === "japan_asia" || markets.some((market) => ["nikkei", "topix", "usd-jpy"].includes(market.id)) ? 15 : 10,
+      spillover: markets.length > 1 || indicators.length > 1 ? 8 : 4,
+      surprise: Math.min(10, averageMove * 2),
+      forwardInterest: 8,
+      penalties: 5,
+    }),
+    publishedAt: newestPublishedAt,
+  };
 }

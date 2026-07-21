@@ -1,6 +1,14 @@
 import type { IndicatorValue, MarketNewsItem } from "@/types/indicator";
 
 export type PostingSlot = "morning" | "midday" | "evening";
+export type GenerationTopic =
+  | "all"
+  | "stock_market"
+  | "influential_people"
+  | "credit_rates"
+  | "economy_policy"
+  | "fx_commodities_crypto"
+  | "japan_asia";
 export type CandidateCategory =
   | "market_anomaly"
   | "investor_signal"
@@ -131,6 +139,7 @@ export type AutomationRun = {
   id: string;
   idempotencyKey: string;
   slot: PostingSlot;
+  generationTopic?: GenerationTopic;
   scheduledAt: string;
   startedAt: string;
   completedAt: string;

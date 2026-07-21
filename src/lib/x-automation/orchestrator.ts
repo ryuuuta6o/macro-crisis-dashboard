@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { buildPostCandidates } from "@/lib/x-automation/candidates";
+import { buildPostCandidates, buildRealtimeSnapshotCandidate } from "@/lib/x-automation/candidates";
 import { collectAutomationInput } from "@/lib/x-automation/collector";
 import {
   isDuplicateCandidate,
@@ -15,11 +15,13 @@ import { getSlotScheduledAt, isWithinPostingWindow } from "@/lib/x-automation/sc
 import { getAutomationStore, type AutomationStore } from "@/lib/x-automation/storage";
 import { createXPost } from "@/lib/x-automation/x-client";
 import { isValidXText } from "@/lib/x-automation/x-text";
+import { filterCandidatesByTopic } from "@/lib/x-automation/topic-filter";
 import type {
   AutomationInput,
   AutomationRun,
   EditorialResult,
   FactCheckResult,
+  GenerationTopic,
   PostCandidate,
   PostingSlot,
   WriterCandidate,
@@ -50,12 +52,13 @@ const defaultDependencies = (): Dependencies => ({
   post: createXPost,
 });
 
-function emptyRun(slot: PostingSlot, now: Date, idempotencyKey: string): AutomationRun {
+function emptyRun(slot: PostingSlot, now: Date, idempotencyKey: string, generationTopic: GenerationTopic): AutomationRun {
   const startedAt = now.toISOString();
   return {
     id: randomUUID(),
     idempotencyKey,
     slot,
+    generationTopic,
     scheduledAt: getSlotScheduledAt(slot, now),
     startedAt,
     completedAt: startedAt,
@@ -89,10 +92,12 @@ export async function runAutomationSlot(
   options: {
     now?: Date;
     manual?: boolean;
+    topic?: GenerationTopic;
     dependencies?: Partial<Dependencies>;
   } = {},
 ) {
   const now = options.now ?? new Date();
+  const generationTopic = options.topic ?? "all";
   const deps = { ...defaultDependencies(), ...options.dependencies } as Dependencies;
   const dateKey = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit",
@@ -100,7 +105,7 @@ export async function runAutomationSlot(
   const idempotencyKey = options.manual
     ? `manual:${slot}:${now.toISOString()}`
     : `${dateKey}:${slot}`;
-  const run = emptyRun(slot, now, idempotencyKey);
+  const run = emptyRun(slot, now, idempotencyKey, generationTopic);
 
   try {
     if (!options.manual && !isWithinPostingWindow(slot, now)) {
@@ -120,18 +125,25 @@ export async function runAutomationSlot(
     const state = await deps.store.getState();
     run.dryRun = state.settings.dryRun;
     const input = await deps.collect();
-    const candidates = deps.build(input, state.settings)
-      .filter((candidate) => !isDuplicateCandidate(candidate, state.runs, now))
+    const topicalCandidates = filterCandidatesByTopic(deps.build(input, state.settings), generationTopic);
+    const fallbackCandidate = topicalCandidates.length === 0
+      ? buildRealtimeSnapshotCandidate(input, state.settings, generationTopic)
+      : null;
+    const candidates = [...topicalCandidates, ...(fallbackCandidate ? [fallbackCandidate] : [])]
+      .filter((candidate) => options.manual || !isDuplicateCandidate(candidate, state.runs, now))
       .slice(0, 10);
     run.candidates = candidates;
     run.sources = [...new Map(candidates.flatMap((item) => item.sources).map((source) => [source.id, source])).values()];
-    if (candidates.length === 0) throw new Error("出典・鮮度・重複条件を満たす投稿候補がありません。");
+    if (candidates.length === 0) {
+      throw new Error("選択カテゴリーで、異なる2情報源による確認が取れた最新材料がありません。");
+    }
 
     const recentPosts = state.runs.flatMap((item) => item.finalText ? [item.finalText] : []).slice(0, 10);
     const mayUseSiteUrl = state.settings.includeSiteUrl && !siteUrlWasUsedToday(state.runs, now);
     const drafts = await deps.write(candidates.slice(0, 3), {
       slot,
       recentPosts,
+      generationTopic,
       siteUrl: mayUseSiteUrl ? process.env.SITE_URL : undefined,
     });
     run.drafts = drafts;

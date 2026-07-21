@@ -7,6 +7,7 @@ import { withExponentialBackoff } from "@/lib/x-automation/retry";
 import type {
   EditorialResult,
   FactCheckResult,
+  GenerationTopic,
   PostCandidate,
   WriterCandidate,
 } from "@/types/x-automation";
@@ -70,7 +71,7 @@ const stringArray = { type: "array", items: { type: "string" } };
 
 export async function writePostDrafts(
   candidates: PostCandidate[],
-  context: { slot: string; recentPosts: string[]; siteUrl?: string },
+  context: { slot: string; recentPosts: string[]; generationTopic?: GenerationTopic; siteUrl?: string },
 ) {
   const result = await structuredResponse<{ candidates: WriterCandidate[] }>({
     system: WRITER_SYSTEM_PROMPT,
