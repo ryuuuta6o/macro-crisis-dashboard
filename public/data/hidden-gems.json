@@ -10482,6 +10482,13 @@
           "operatingIncome": 1527106000.0,
           "netIncome": 1352446000.0,
           "eps": 1.0675
+        },
+        {
+          "year": "2021",
+          "revenue": null,
+          "operatingIncome": null,
+          "netIncome": null,
+          "eps": null
         }
       ],
       "marketCapLocal": 222381916160.0,
@@ -23423,13 +23430,6 @@
           "operatingIncome": 7070522000.0,
           "netIncome": 5330344000.0,
           "eps": 390.47
-        },
-        {
-          "year": "2021",
-          "revenue": null,
-          "operatingIncome": null,
-          "netIncome": null,
-          "eps": null
         }
       ],
       "marketCapLocal": 155369193472.0,
