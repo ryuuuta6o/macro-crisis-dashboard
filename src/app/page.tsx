@@ -1,6 +1,7 @@
 import { AppShell } from "@/components/layout/AppShell";
 import { TerminalOverview } from "@/components/dashboard/TerminalOverview";
 import { PublicSectionFold } from "@/components/dashboard/PublicSectionFold";
+import { ContagionWatch } from "@/components/dashboard/ContagionWatch";
 import { ApocalypseCommandCenter } from "@/components/dashboard/ApocalypseCommandCenter";
 import {
   BubbleTriggerMonitor,
@@ -145,6 +146,20 @@ export default async function Home() {
     automatedConditions,
   );
   const vulnerabilityLayer = earlyWarning.layers.find((layer) => layer.id === "vulnerability");
+  const contagionSectionSignal: Signal =
+    contagionWatch.privateCreditLiquidity.creditSignal === "red" ||
+    contagionWatch.signal === "red"
+      ? "red"
+      : contagionWatch.privateCreditLiquidity.liquiditySignal === "red" ||
+          contagionWatch.privateCreditLiquidity.liquiditySignal === "yellow"
+        ? "yellow"
+        : contagionWatch.signal;
+  const contagionSectionStatus =
+    contagionWatch.privateCreditLiquidity.creditSignal === "red"
+      ? "信用市場へ波及"
+      : contagionWatch.privateCreditLiquidity.liquiditySignal === "red"
+        ? "流動性ストレス"
+        : contagionWatch.status;
 
   return (
     <AppShell>
@@ -183,6 +198,18 @@ export default async function Home() {
           status={vulnerabilityLayer?.status}
         >
           <ThreeLayerSummary model={earlyWarning} contagion={contagionWatch} />
+        </PublicSectionFold>
+
+        <PublicSectionFold
+          id="contagion-watch-fold"
+          eyebrow="PRIVATE CREDIT CONTAGION"
+          title="染み出しウォッチ"
+          description="ファンドの解約圧力と、信用市場への波及を分けて監視"
+          signal={contagionSectionSignal}
+          status={contagionSectionStatus}
+          defaultOpen
+        >
+          <ContagionWatch data={contagionWatch} />
         </PublicSectionFold>
 
         <PublicSectionFold

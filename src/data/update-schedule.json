@@ -109,9 +109,9 @@
     "updateFrequency": "quarterly",
     "sourceName": "Manual review of public filings",
     "sourceUrl": "https://www.sec.gov/edgar/search/",
-    "whyItMatters": "プライベート信用の損失が銀行・信用市場へ染み出していないかを見る。",
-    "watchLine": "BDC非発生率5%超、NAV連続マイナスで警戒",
+    "whyItMatters": "解約圧力が資産売却・NAV切り下げを経て、銀行やHY市場へ染み出していないかを見る。",
+    "watchLine": "買戻し請求が上限の2倍、BDC非発生率5%超、株価/NAV -20%以下、HY OAS 400bp超を段階監視",
     "status": "upcoming",
-    "relatedIndicators": ["private-credit-default", "pik-ratio", "office-cmbs"]
+    "relatedIndicators": ["private-credit-default", "pik-ratio", "office-cmbs", "hy-oas"]
   }
 ]

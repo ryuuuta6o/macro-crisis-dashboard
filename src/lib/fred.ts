@@ -15,6 +15,7 @@ import type {
 } from "@/types/indicator";
 
 const FRED_API_URL = "https://api.stlouisfed.org/fred/series/observations";
+const FRED_CSV_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv";
 const NY_FED_SOFR_URL =
   "https://markets.newyorkfed.org/api/rates/secured/sofr/last/2.json";
 const TREASURY_YIELD_URL =
@@ -45,13 +46,45 @@ export type NumericObservation = {
   value: number;
 };
 
+async function fetchFredCsvSeries(
+  seriesId: string,
+): Promise<NumericObservation[]> {
+  const params = new URLSearchParams({ id: seriesId });
+  const response = await fetch(`${FRED_CSV_URL}?${params}`, {
+    next: { revalidate: 900 },
+    headers: { "User-Agent": "macro-crisis-dashboard/1.0" },
+  });
+  if (!response.ok) {
+    throw new Error(`FRED CSV request failed for ${seriesId}: ${response.status}`);
+  }
+
+  const rows = (await response.text()).trim().split(/\r?\n/).slice(1);
+  const observations = rows
+    .flatMap((row) => {
+      const separator = row.indexOf(",");
+      if (separator < 0) return [];
+      const date = row.slice(0, separator).trim();
+      const numericValue = Number(row.slice(separator + 1).trim());
+      return /^\d{4}-\d{2}-\d{2}$/.test(date) && Number.isFinite(numericValue)
+        ? [{ date, value: numericValue }]
+        : [];
+    })
+    .sort((left, right) => right.date.localeCompare(left.date))
+    .slice(0, 90);
+
+  if (observations.length === 0) {
+    throw new Error(`No valid FRED CSV observations: ${seriesId}`);
+  }
+  return observations;
+}
+
 export async function fetchFredSeries(
   seriesId: string,
 ): Promise<NumericObservation[]> {
   const apiKey = process.env.FRED_API_KEY;
 
-  if (!apiKey) {
-    throw new Error("FRED_API_KEY is not configured");
+  if (!apiKey || !/^[a-z0-9]{32}$/.test(apiKey)) {
+    return fetchFredCsvSeries(seriesId);
   }
 
   const params = new URLSearchParams({
@@ -67,13 +100,13 @@ export async function fetchFredSeries(
   });
 
   if (!response.ok) {
-    throw new Error(`FRED request failed for ${seriesId}: ${response.status}`);
+    return fetchFredCsvSeries(seriesId);
   }
 
   const data = (await response.json()) as FredResponse;
 
   if (data.error_code || !data.observations) {
-    throw new Error(data.error_message ?? `Invalid FRED response: ${seriesId}`);
+    return fetchFredCsvSeries(seriesId);
   }
 
   const observations = data.observations
@@ -81,7 +114,7 @@ export async function fetchFredSeries(
     .map((item) => ({ date: item.date, value: Number(item.value) }));
 
   if (observations.length === 0) {
-    throw new Error(`No valid FRED observations: ${seriesId}`);
+    return fetchFredCsvSeries(seriesId);
   }
 
   return observations;

@@ -4,19 +4,20 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { WeatherRiskComposition } from "@/components/weather/WeatherRiskComposition";
 import { buildRiskComposition } from "@/lib/risk-composition";
+import { getOverallSignal } from "@/lib/indicators";
 import type {
   AutomatedCondition,
   AutomatedConditionsData,
 } from "@/lib/free-macro-data";
 import type { GlobalRiskData } from "@/types/global-risk";
-import type { DashboardData, IndicatorId, IndicatorValue, MarketNewsItem, Signal } from "@/types/indicator";
+import type { DashboardData, IndicatorId, IndicatorValue, MarketNewsItem, OverallSignal, Signal } from "@/types/indicator";
 
-type WeatherKind = "sunny" | "cloudy" | "rainy" | "storm";
+type WeatherKind = "sunny" | "cloudy" | "rainy" | "storm" | "pending";
 type FlowStatus = "正常" | "注意" | "警戒" | "危険" | "データ待ち";
 
 type WeatherState = {
   kind: WeatherKind;
-  label: "晴れ" | "くもり" | "雨" | "嵐";
+  label: "晴れ" | "くもり" | "雨" | "嵐" | "観測待ち";
   tone: string;
   accent: string;
   headline: string;
@@ -188,38 +189,18 @@ function getById(indicators: IndicatorValue[], id: string) {
   return indicators.find((item) => item.id === id);
 }
 
-function weatherFromData(indicators: IndicatorValue[], newsSignal: Signal, sahmSignal: Signal): WeatherState {
-  const signals = [...indicators.map((item) => item.signal), newsSignal, sahmSignal].filter((signal) => signal !== "unavailable");
-  const redCount = signals.filter((signal) => signal === "red").length;
-  const orangeCount = signals.filter((signal) => signal === "orange").length;
-  const yellowCount = signals.filter((signal) => signal === "yellow").length;
-  const credit = worstSignal(["hy-oas", "ig-oas", "baa-aaa"].map((id) => getById(indicators, id)));
-  const funding = worstSignal(["sofr", "fra-ois", "ted-spread"].map((id) => getById(indicators, id)));
-  const bank = worstSignal(["bank-deposit-outflow", "discount-window", "btfp", "bank-cet1"].map((id) => getById(indicators, id)));
-  const criticalIds = ["hy-oas", "ig-oas", "baa-aaa", "sofr"];
-  const criticalRed = criticalIds.filter((id) => getById(indicators, id)?.signal === "red").length;
-  const criticalYellow = ["hy-oas", "ig-oas", "baa-aaa", "sofr", "vix"].filter((id) => {
-    const signal = getById(indicators, id)?.signal;
-    return signal && signalRank[signal] >= 1;
-  }).length;
-  const ratesOrange = ["dgs10", "dgs30"].some((id) => {
-    const signal = getById(indicators, id)?.signal;
-    return signal && signalRank[signal] >= 2;
-  });
-  const claims = getById(indicators, "icsa");
-  let claimsWorsening = false;
-  if (claims && claims.numericValue !== null && claims.previousNumericValue !== null) {
-    claimsWorsening = claims.numericValue > claims.previousNumericValue;
+function weatherFromOverallSignal(signal: OverallSignal): WeatherState {
+  if (signal === "unavailable") {
+    return {
+      kind: "pending",
+      label: "観測待ち",
+      tone: "from-slate-500/20 via-slate-400/10 to-slate-950",
+      accent: "#94a3b8",
+      headline: "重要な信用指標の更新を待っています。取得できた指標だけで安全・危険を断定しません。",
+    };
   }
 
-  if (
-    redCount >= 2 ||
-    credit === "red" ||
-    funding === "red" ||
-    bank === "red" ||
-    criticalRed >= 2 ||
-    (sahmSignal === "red" && (credit === "yellow" || getById(indicators, "vix")?.signal === "yellow"))
-  ) {
+  if (signal === "crisis" || signal === "red") {
     return {
       kind: "storm",
       label: "嵐",
@@ -229,31 +210,23 @@ function weatherFromData(indicators: IndicatorValue[], newsSignal: Signal, sahmS
     };
   }
 
-  if (orangeCount >= 2 || criticalYellow >= 2 || ratesOrange || sahmSignal === "yellow") {
+  if (signal === "localized") {
     return {
       kind: "rainy",
       label: "雨",
-      tone: "from-sky-500/20 via-indigo-400/15 to-slate-950",
-      accent: "#60a5fa",
-      headline: "市場は完全な悪天候ではありませんが、金利・信用・雇用の一部に注意が必要です。",
+      tone: "from-orange-500/20 via-amber-400/12 to-slate-950",
+      accent: "#fb923c",
+      headline: "一部の脆弱性で雲が厚くなっています。ただし、信用・流動性の点火はまだ別段階です。",
     };
   }
 
-  if (
-    yellowCount >= 2 ||
-    ["dgs10", "dgs30", "vix"].some((id) => {
-      const signal = getById(indicators, id)?.signal;
-      return signal && signalRank[signal] >= 1;
-    }) ||
-    newsSignal !== "green" ||
-    claimsWorsening
-  ) {
+  if (signal === "yellow" || signal === "green-yellow") {
     return {
       kind: "cloudy",
       label: "くもり",
       tone: "from-cyan-400/18 via-blue-500/10 to-slate-950",
       accent: "#67e8f9",
-      headline: "株価は落ち着いていても、長期金利・ニュース・一部指標に注意して見る環境です。",
+      headline: "市場全体は危機状態ではありませんが、金利・信用・雇用など一部の変化に注意する環境です。",
     };
   }
 
@@ -490,7 +463,8 @@ export function WeatherDashboard() {
     (condition) => condition.id === "sahm-rule",
   );
   const sahmSignal = signalFromCondition(sahmCondition);
-  const weather = useMemo(() => weatherFromData(indicators, newsSignal, sahmSignal), [indicators, newsSignal, sahmSignal]);
+  const overallSignal = useMemo(() => getOverallSignal(indicators), [indicators]);
+  const weather = useMemo(() => weatherFromOverallSignal(overallSignal), [overallSignal]);
   const score = useMemo(() => scoreFromData(indicators, newsSignal, sahmSignal), [indicators, newsSignal, sahmSignal]);
   const points = useMemo(() => weatherPoints(indicators, news, newsSignal, sahmSignal), [indicators, news, newsSignal, sahmSignal]);
   const cards = useMemo(
@@ -578,7 +552,10 @@ export function WeatherDashboard() {
             </div>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-[220px_1fr]">
-              <ScoreMeter score={loading ? 0 : score} accent={weather.accent} />
+              <ScoreMeter
+                score={loading || overallSignal === "unavailable" ? null : score}
+                accent={weather.accent}
+              />
               <div className="rounded-3xl border border-white/10 bg-black/20 p-4">
                 <p className="text-xs font-bold tracking-[0.16em] text-slate-400">TODAY&apos;S CONCLUSION</p>
                 <h3 className="mt-2 text-xl font-bold">今日の結論</h3>
@@ -737,26 +714,40 @@ function WeatherGlyph({ kind, color }: { kind: WeatherKind; color: string }) {
           <div className="absolute left-12 top-16 h-16 w-7 skew-x-[-18deg] bg-amber-300 shadow-[0_0_24px_rgba(251,191,36,0.65)] [clip-path:polygon(40%_0,100%_0,62%_42%,100%_42%,18%_100%,40%_52%,0_52%)]" />
         </div>
       )}
+      {kind === "pending" && (
+        <div className="grid size-24 place-items-center rounded-full border border-dashed border-slate-300/40 bg-slate-400/[0.08]">
+          <div className="flex gap-2">
+            {[0, 1, 2].map((item) => (
+              <i key={item} className="size-2 rounded-full bg-slate-300/70" />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
-function ScoreMeter({ score, accent }: { score: number; accent: string }) {
+function ScoreMeter({ score, accent }: { score: number | null; accent: string }) {
+  const meterScore = score ?? 0;
   return (
     <div className="rounded-3xl border border-white/10 bg-black/20 p-5 text-center">
       <div
         className="mx-auto grid size-36 place-items-center rounded-full"
-        style={{ background: `conic-gradient(${accent} ${score * 3.6}deg, rgba(255,255,255,0.08) 0deg)` }}
+        style={{ background: `conic-gradient(${accent} ${meterScore * 3.6}deg, rgba(255,255,255,0.08) 0deg)` }}
       >
         <div className="grid size-28 place-items-center rounded-full bg-[#06101f]">
           <div>
-            <strong className="font-mono text-3xl">{score}</strong>
-            <span className="font-mono text-slate-500"> / 100</span>
+            <strong className="font-mono text-3xl">{score ?? "--"}</strong>
+            <span className="font-mono text-slate-500">{score === null ? "" : " / 100"}</span>
           </div>
         </div>
       </div>
       <p className="mt-4 text-sm font-bold">世界経済危険度</p>
-      <p className="mt-2 text-xs leading-5 text-slate-500">数値が高いほど、市場環境の警戒度が高い状態を示します。売買判断ではありません。</p>
+      <p className="mt-2 text-xs leading-5 text-slate-500">
+        {score === null
+          ? "重要な信用指標が揃うまで数値判定を保留します。"
+          : "数値が高いほど、市場環境の警戒度が高い状態を示します。売買判断ではありません。"}
+      </p>
     </div>
   );
 }

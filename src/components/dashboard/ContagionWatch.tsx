@@ -37,7 +37,7 @@ const signalStyle: Record<
     border: "border-rose-400/30",
     background: "bg-rose-400/[0.06]",
     bar: "bg-rose-400",
-    label: "危険",
+    label: "強い警戒",
   },
   unavailable: {
     dot: "bg-slate-600",
@@ -48,6 +48,32 @@ const signalStyle: Record<
     label: "未取得",
   },
 };
+
+function ContagionStateCard({
+  eyebrow,
+  title,
+  signal,
+  description,
+}: {
+  eyebrow: string;
+  title: string;
+  signal: ContagionSignal;
+  description: string;
+}) {
+  const style = signalStyle[signal];
+  return (
+    <article className={`rounded-lg border ${style.border} ${style.background} p-4`}>
+      <p className="text-[9px] font-bold tracking-[0.16em] text-slate-500">
+        {eyebrow}
+      </p>
+      <div className={`mt-2 flex items-center gap-2 ${style.text}`}>
+        <i className={`size-2 rounded-full ${style.dot}`} />
+        <strong className="text-base">{title}</strong>
+      </div>
+      <p className="mt-2 text-[11px] leading-5 text-slate-400">{description}</p>
+    </article>
+  );
+}
 
 function ContagionMetricCard({ item }: { item: ContagionIndicator }) {
   const style = signalStyle[item.signal];
@@ -121,7 +147,15 @@ function ContagionMetricCard({ item }: { item: ContagionIndicator }) {
 }
 
 export function ContagionWatch({ data }: { data: ContagionWatchData }) {
-  const style = signalStyle[data.signal];
+  const privateCredit = data.privateCreditLiquidity;
+  const panelSignal: ContagionSignal =
+    privateCredit.creditSignal === "red" || data.signal === "red"
+      ? "red"
+      : privateCredit.liquiditySignal === "red" ||
+          privateCredit.liquiditySignal === "yellow"
+        ? "yellow"
+        : data.signal;
+  const style = signalStyle[panelSignal];
 
   return (
     <section
@@ -144,7 +178,7 @@ export function ContagionWatch({ data }: { data: ContagionWatchData }) {
             染み出しウォッチ
           </h2>
           <p className="mt-2 max-w-3xl text-xs leading-6 text-slate-400">
-            Private Creditの慢性悪化が銀行を経由し、HY OASなどの信用市場へ急性化する橋を監視します。
+            ファンドの解約圧力と、借り手の信用悪化を分離して監視します。解約が増えただけでは金融危機の点火とは判定しません。
           </p>
         </div>
         <div className={`rounded-lg border ${style.border} bg-[#16181D] px-4 py-3`}>
@@ -161,9 +195,62 @@ export function ContagionWatch({ data }: { data: ContagionWatchData }) {
         </div>
       </div>
 
+      <div className="relative mt-6 grid gap-3 lg:grid-cols-2">
+        <ContagionStateCard
+          eyebrow="FUND LIQUIDITY / 解約・換金"
+          title={privateCredit.liquidityStatus}
+          signal={privateCredit.liquiditySignal}
+          description="投資家が換金を求め、ゲートや資産売却が必要になっているかを見ます。これは流動性の取付であり、債務不履行とは別です。"
+        />
+        <ContagionStateCard
+          eyebrow="CREDIT SPILLOVER / 信用への波及"
+          title={privateCredit.creditStatus}
+          signal={privateCredit.creditSignal}
+          description="BDC非発生率、売却価格、HY OASが同時に悪化し、信用市場へ火が移ったかを見ます。"
+        />
+      </div>
+
+      <div className="mt-5">
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <p className="text-[9px] font-bold tracking-[0.16em] text-cyan-300/80">
+              PRIVATE CREDIT LIQUIDITY RUN
+            </p>
+            <h3 className="mt-1 text-base font-bold text-white">
+              解約圧力から信用波及まで
+            </h3>
+          </div>
+          <p className="text-[10px] text-slate-500">
+            解約 → 価格発見 → NAV乖離 → HY OAS
+          </p>
+        </div>
+        <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+          {privateCredit.indicators.map((item) => (
+            <ContagionMetricCard key={item.id} item={item} />
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-5">
+        <p className="text-[9px] font-bold tracking-[0.16em] text-slate-500">
+          LISTED BDC PRICE / NAV
+        </p>
+        <h3 className="mt-1 text-base font-bold text-white">
+          上場BDCのNAV評価
+        </h3>
+        <p className="mt-1 text-[11px] leading-5 text-slate-500">
+          ARCC・OBDC・FSK・BXSLの株価を直近公表NAVと比較します。株価は日次、NAVは四半期更新です。
+        </p>
+        <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+          {privateCredit.bdcDiscounts.map((item) => (
+            <ContagionMetricCard key={item.id} item={item} />
+          ))}
+        </div>
+      </div>
+
       <div className="relative mt-6 flex items-center justify-between gap-4 text-[9px] font-bold tracking-[0.14em] text-slate-500">
-        <span>VULNERABILITY / PRIVATE CREDIT</span>
-        <span>IGNITION / HY OAS</span>
+        <span>BANK BRIDGE / PRIVATE CREDIT</span>
+        <span>IGNITION / PUBLIC CREDIT</span>
       </div>
 
       <div className="relative mt-3 grid gap-3 lg:grid-cols-3">
@@ -174,6 +261,9 @@ export function ContagionWatch({ data }: { data: ContagionWatchData }) {
 
       <div className={`mt-4 rounded-md border ${style.border} bg-[#16181D] p-3`}>
         <p className="text-xs leading-6 text-slate-300">{data.description}</p>
+        <p className="mt-1 text-xs leading-6 text-slate-400">
+          {privateCredit.description}
+        </p>
         <p className="mt-1 text-[10px] text-slate-600">
           この表示は伝播条件の監視であり、金融危機の発生や時期を断定するものではありません。
         </p>

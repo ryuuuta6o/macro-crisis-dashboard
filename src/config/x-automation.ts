@@ -76,6 +76,11 @@ export const MARKET_WATCHLIST = [
   ["shanghai", "上海総合", "000001.SS", "equity"],
   ["sp-future", "S&P 500先物", "ES=F", "equity"],
   ["nasdaq-future", "NASDAQ先物", "NQ=F", "equity"],
+  ["owl", "Blue Owl Capital", "OWL", "equity"],
+  ["arcc", "Ares Capital", "ARCC", "equity"],
+  ["obdc", "Blue Owl Capital Corporation", "OBDC", "equity"],
+  ["fsk", "FS KKR Capital", "FSK", "equity"],
+  ["bxsl", "Blackstone Secured Lending Fund", "BXSL", "equity"],
 ] as const;
 
 export const TRUSTED_INVESTOR_NAMES = [

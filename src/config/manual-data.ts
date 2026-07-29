@@ -28,6 +28,87 @@ export const CONTAGION_WATCH_CONFIG = {
     sourceUrl: "https://www.bcred.com/",
     updateFrequency: "月次報告公表後に手動更新",
   },
+  semiliquidRedemptions: {
+    fundName: "Blackstone Private Credit Fund (BCRED)",
+    requestPct: 10,
+    previousRequestPct: 7.9,
+    fulfilledPct: 5,
+    quarterlyCapPct: 5,
+    fundAumBillionUsd: 79,
+    observationDate: "2026-06-04",
+    sourceName: "BCRED shareholder notice / SEC Exhibit 99",
+    sourceUrl:
+      "https://www.sec.gov/Archives/edgar/data/1803498/000121390026065024/ea0292864-01_ex99a1vii.htm",
+    updateFrequency: "四半期・買戻し結果公表後に手動更新",
+    warningMultipleOfCap: 1,
+    redMultipleOfCap: 2,
+  },
+  privateCreditAssetSale: {
+    issuerName: "Blue Owl BDCs / OBDC II",
+    saleAmountBillionUsd: 1.4,
+    pricePctOfPar: 99.7,
+    observationDate: "2026-02-18",
+    sourceName: "Blue Owl BDCs SEC Exhibit 99.1",
+    sourceUrl:
+      "https://www.sec.gov/Archives/edgar/data/1655887/000162828026009025/exhibit991-obdciix8xk21826.htm",
+    updateFrequency: "資産売却・四半期開示後に手動更新",
+    warningBelowParPct: 99,
+    redBelowParPct: 95,
+  },
+  listedPrivateCredit: {
+    owl: {
+      ticker: "OWL",
+      name: "Blue Owl Capital",
+      warningYtdPct: -15,
+      redYtdPct: -30,
+    },
+    bdcNav: [
+      {
+        ticker: "ARCC",
+        name: "Ares Capital",
+        navPerShareUsd: 19.59,
+        observationDate: "2026-03-31",
+        sourceName: "Ares Capital 2026 Q1 Form 10-Q",
+        sourceUrl:
+          "https://www.sec.gov/Archives/edgar/data/1287750/000162828026027688/arcc-20260331.htm",
+      },
+      {
+        ticker: "OBDC",
+        name: "Blue Owl Capital Corporation",
+        navPerShareUsd: 14.41,
+        observationDate: "2026-03-31",
+        sourceName: "OBDC 2026 Q1 results / SEC Exhibit 99.1",
+        sourceUrl:
+          "https://www.sec.gov/Archives/edgar/data/1655888/000165588826000034/exhibit991-obdcxpressrelea.htm",
+      },
+      {
+        ticker: "FSK",
+        name: "FS KKR Capital",
+        navPerShareUsd: 18.83,
+        observationDate: "2026-03-31",
+        sourceName: "FSK 2026 Q1 tender materials / SEC",
+        sourceUrl:
+          "https://www.sec.gov/Archives/edgar/data/1422183/000114036126020704/ny20072853x2_exa1a.htm",
+      },
+      {
+        ticker: "BXSL",
+        name: "Blackstone Secured Lending Fund",
+        navPerShareUsd: 26.26,
+        observationDate: "2026-03-31",
+        sourceName: "BXSL 2026 Q1 Form 10-Q",
+        sourceUrl:
+          "https://www.sec.gov/Archives/edgar/data/1736035/000173603526000010/bxsl-20260331.htm",
+      },
+    ],
+    navDiscountWarningPct: -10,
+    navDiscountRedPct: -20,
+    updateFrequency: "株価は5分キャッシュ / NAVは四半期開示",
+  },
+  hyOasSpillover: {
+    seriesId: "BAMLH0A0HYM2",
+    warningBp: 400,
+    redBp: 600,
+  },
 } as const;
 
 export const MARGIN_DEBT_M2_CONFIG = {

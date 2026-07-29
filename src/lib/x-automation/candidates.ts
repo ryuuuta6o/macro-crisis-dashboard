@@ -303,6 +303,7 @@ export function buildPostCandidates(
 const REALTIME_MARKET_IDS: Partial<Record<GenerationTopic, string[]>> = {
   all: ["nikkei", "topix", "sp500", "nasdaq", "sox", "vix-market", "usd-jpy", "gold", "oil", "bitcoin"],
   stock_market: ["nikkei", "topix", "sp500", "nasdaq", "sox", "kospi", "taiwan", "shanghai", "sp-future", "nasdaq-future"],
+  credit_rates: ["owl", "arcc", "obdc", "fsk", "bxsl"],
   fx_commodities_crypto: ["usd-jpy", "eur-usd", "gold", "oil", "bitcoin"],
   japan_asia: ["nikkei", "topix", "kospi", "taiwan", "shanghai", "usd-jpy"],
 };
@@ -344,7 +345,7 @@ export function buildRealtimeSnapshotCandidate(
   const markets = input.markets
     .filter((market) => marketIds?.has(market.id))
     .sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent))
-    .slice(0, topic === "credit_rates" ? 0 : 3);
+    .slice(0, 3);
   const indicators = (options.includeContextIndicators === false ? [] : input.indicators)
     .filter((indicator) => indicatorIds?.has(indicator.id) && indicator.numericValue !== null)
     .sort((a, b) => {
