@@ -215,5 +215,236 @@
         "price": null
       }
     ]
+  },
+  {
+    "date": "2026-07-30",
+    "generatedAt": "2026-07-29T21:40:54.187805+00:00",
+    "methodologyVersion": "hidden-gems-free-v1",
+    "entries": [
+      {
+        "ticker": "RMBS",
+        "gemScore": 53,
+        "fundamentalScore": 79,
+        "attentionScore": 26,
+        "price": null
+      },
+      {
+        "ticker": "6920.T",
+        "gemScore": 46,
+        "fundamentalScore": 81,
+        "attentionScore": 35,
+        "price": null
+      },
+      {
+        "ticker": "012450.KS",
+        "gemScore": 45,
+        "fundamentalScore": 76,
+        "attentionScore": 31,
+        "price": null
+      },
+      {
+        "ticker": "8473.T",
+        "gemScore": 44,
+        "fundamentalScore": 68,
+        "attentionScore": 24,
+        "price": null
+      },
+      {
+        "ticker": "PLTR",
+        "gemScore": 40,
+        "fundamentalScore": 100,
+        "attentionScore": 60,
+        "price": null
+      },
+      {
+        "ticker": "ANET",
+        "gemScore": 33,
+        "fundamentalScore": 84,
+        "attentionScore": 51,
+        "price": null
+      },
+      {
+        "ticker": "ISRG",
+        "gemScore": 33,
+        "fundamentalScore": 66,
+        "attentionScore": 33,
+        "price": null
+      },
+      {
+        "ticker": "VRT",
+        "gemScore": 32,
+        "fundamentalScore": 72,
+        "attentionScore": 40,
+        "price": null
+      },
+      {
+        "ticker": "NVDA",
+        "gemScore": 31,
+        "fundamentalScore": 79,
+        "attentionScore": 48,
+        "price": null
+      },
+      {
+        "ticker": "5803.T",
+        "gemScore": 30,
+        "fundamentalScore": 63,
+        "attentionScore": 33,
+        "price": null
+      },
+      {
+        "ticker": "6857.T",
+        "gemScore": 29,
+        "fundamentalScore": 95,
+        "attentionScore": 66,
+        "price": null
+      },
+      {
+        "ticker": "207940.KS",
+        "gemScore": 29,
+        "fundamentalScore": 77,
+        "attentionScore": 48,
+        "price": null
+      },
+      {
+        "ticker": "TSM",
+        "gemScore": 27,
+        "fundamentalScore": 83,
+        "attentionScore": 56,
+        "price": null
+      },
+      {
+        "ticker": "2330.TW",
+        "gemScore": 23,
+        "fundamentalScore": 83,
+        "attentionScore": 60,
+        "price": null
+      },
+      {
+        "ticker": "6146.T",
+        "gemScore": 22,
+        "fundamentalScore": 61,
+        "attentionScore": 39,
+        "price": null
+      },
+      {
+        "ticker": "AVGO",
+        "gemScore": 20,
+        "fundamentalScore": 76,
+        "attentionScore": 56,
+        "price": null
+      },
+      {
+        "ticker": "MSFT",
+        "gemScore": 20,
+        "fundamentalScore": 65,
+        "attentionScore": 45,
+        "price": null
+      },
+      {
+        "ticker": "ASML",
+        "gemScore": 13,
+        "fundamentalScore": 69,
+        "attentionScore": 56,
+        "price": null
+      },
+      {
+        "ticker": "ENR.DE",
+        "gemScore": 12,
+        "fundamentalScore": 50,
+        "attentionScore": 38,
+        "price": null
+      },
+      {
+        "ticker": "GOOGL",
+        "gemScore": 11,
+        "fundamentalScore": 65,
+        "attentionScore": 54,
+        "price": null
+      },
+      {
+        "ticker": "LLY",
+        "gemScore": 11,
+        "fundamentalScore": 93,
+        "attentionScore": 82,
+        "price": null
+      },
+      {
+        "ticker": "NVO",
+        "gemScore": 9,
+        "fundamentalScore": 62,
+        "attentionScore": 53,
+        "price": null
+      },
+      {
+        "ticker": "7012.T",
+        "gemScore": 8,
+        "fundamentalScore": 28,
+        "attentionScore": 20,
+        "price": null
+      },
+      {
+        "ticker": "NOVO-B.CO",
+        "gemScore": 7,
+        "fundamentalScore": 62,
+        "attentionScore": 55,
+        "price": null
+      },
+      {
+        "ticker": "COIN",
+        "gemScore": 7,
+        "fundamentalScore": 57,
+        "attentionScore": 50,
+        "price": null
+      },
+      {
+        "ticker": "6266.T",
+        "gemScore": 3,
+        "fundamentalScore": 40,
+        "attentionScore": 37,
+        "price": null
+      },
+      {
+        "ticker": "4568.T",
+        "gemScore": 2,
+        "fundamentalScore": 46,
+        "attentionScore": 44,
+        "price": null
+      },
+      {
+        "ticker": "BWXT",
+        "gemScore": 1,
+        "fundamentalScore": 36,
+        "attentionScore": 35,
+        "price": null
+      },
+      {
+        "ticker": "CCJ",
+        "gemScore": -5,
+        "fundamentalScore": 49,
+        "attentionScore": 54,
+        "price": null
+      },
+      {
+        "ticker": "4543.T",
+        "gemScore": -15,
+        "fundamentalScore": 38,
+        "attentionScore": 53,
+        "price": null
+      },
+      {
+        "ticker": "7203.T",
+        "gemScore": -20,
+        "fundamentalScore": 22,
+        "attentionScore": 42,
+        "price": null
+      },
+      {
+        "ticker": "AMD",
+        "gemScore": -45,
+        "fundamentalScore": 49,
+        "attentionScore": 94,
+        "price": null
+      }
+    ]
   }
 ]

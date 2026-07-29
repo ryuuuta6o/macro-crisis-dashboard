@@ -15,7 +15,12 @@ if (data.status !== "ready") {
 
 const filePath = path.join(process.cwd(), "data", "hidden-gems-history.json");
 const current = JSON.parse(await readFile(filePath, "utf8"));
-const date = data.generatedAt.slice(0, 10);
+const date = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Asia/Tokyo",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+}).format(new Date(data.generatedAt));
 const snapshot = {
   date,
   generatedAt: data.generatedAt,
@@ -29,7 +34,9 @@ const snapshot = {
   })),
 };
 const next = [
-  ...current.filter((entry) => entry.date !== date),
+  ...current.filter(
+    (entry) => entry.date !== date && entry.generatedAt !== data.generatedAt,
+  ),
   snapshot,
 ].slice(-365);
 
