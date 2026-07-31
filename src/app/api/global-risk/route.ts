@@ -1,6 +1,7 @@
 import { getLiveGlobalRiskData } from "@/lib/global-risk";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET() {
   return Response.json(await getLiveGlobalRiskData(), {

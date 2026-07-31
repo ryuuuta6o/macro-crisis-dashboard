@@ -1,6 +1,7 @@
 import { getMarketImpactNewsFeed } from "@/lib/news";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET() {
   const feed = await getMarketImpactNewsFeed();
