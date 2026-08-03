@@ -1,6 +1,10 @@
 import { MARGIN_DEBT_M2_CONFIG } from "@/config/manual-data";
 import type { IndicatorHistoryPoint, ManualIndicator, Signal } from "@/types/indicator";
 import type { NumericObservation } from "@/lib/fred";
+import {
+  FINRA_MARGIN_SOURCE,
+  type FinraMarginObservation,
+} from "@/lib/finra-margin";
 
 type MarginDebtPoint = {
   date: string;
@@ -41,8 +45,9 @@ function findM2ForMarginMonth(
 
 export function buildMarginDebtM2History(
   m2Observations: NumericObservation[],
+  marginDebtHistory: readonly MarginDebtPoint[] = MARGIN_DEBT_M2_CONFIG.marginDebtHistory,
 ): MarginDebtM2Point[] {
-  return MARGIN_DEBT_M2_CONFIG.marginDebtHistory.flatMap((point) => {
+  return marginDebtHistory.flatMap((point) => {
     const m2 = findM2ForMarginMonth(point, m2Observations);
     if (!m2) return [];
     const ratio = (point.marginDebtMillionUsd / (m2.value * 1_000)) * 100;
@@ -106,8 +111,9 @@ export function detectMarginDebtM2Peakout(
 
 export function buildMarginDebtM2IndicatorData(
   m2Observations: NumericObservation[],
+  marginDebtHistory?: FinraMarginObservation[],
 ): { data: ManualIndicator; signal: Signal; previousSignal: Signal } {
-  const history = buildMarginDebtM2History(m2Observations);
+  const history = buildMarginDebtM2History(m2Observations, marginDebtHistory);
   if (history.length < 2) {
     throw new Error("Margin Debt / M2 has insufficient aligned history");
   }
@@ -118,10 +124,10 @@ export function buildMarginDebtM2IndicatorData(
       previousValue: history[1].value,
       observationDate: history[0].date,
       history: history.slice(0, 12),
-      sourceLabel: `${MARGIN_DEBT_M2_CONFIG.sourceName} / FRED ${MARGIN_DEBT_M2_CONFIG.m2SeriesId}`,
-      sourceName: MARGIN_DEBT_M2_CONFIG.sourceName,
-      sourceUrl: MARGIN_DEBT_M2_CONFIG.sourceUrl,
-      updateFrequency: MARGIN_DEBT_M2_CONFIG.updateFrequency,
+      sourceLabel: `${FINRA_MARGIN_SOURCE.name} / FRED ${MARGIN_DEBT_M2_CONFIG.m2SeriesId}`,
+      sourceName: `${FINRA_MARGIN_SOURCE.name} + FRED`,
+      sourceUrl: FINRA_MARGIN_SOURCE.url,
+      updateFrequency: `${FINRA_MARGIN_SOURCE.updateFrequency} / M2はFRED自動取得`,
     },
     signal: signalForMarginDebtM2(history[0].value),
     previousSignal: signalForMarginDebtM2(history[1].value),

@@ -71,6 +71,7 @@ export type AnnualFinancialPoint = {
 };
 
 export type SectorCompanyGrowthData = {
+  marketCapUsd: number | null;
   financialCurrency: string | null;
   revenueLatest: number | null;
   netIncomeLatest: number | null;
@@ -174,8 +175,9 @@ export type SectorMarketSeries = {
 export type SectorCompanyData = SectorCompanyConfig & {
   market: SectorMarketSeries;
   expectationScore: number | null;
+  expectationCoverage: number;
   expectationLevel: SectorMomentumLevel;
-  profileSource: "fmp" | "manual" | "unavailable";
+  profileSource: "fmp" | "batch" | "manual" | "unavailable";
 };
 
 export type SectorMomentumDataItem = Omit<SectorDefinition, "companies"> & {
@@ -183,6 +185,7 @@ export type SectorMomentumDataItem = Omit<SectorDefinition, "companies"> & {
   companies: SectorCompanyData[];
   momentumScore: number | null;
   expectationScore: number | null;
+  expectationCoverage: number;
   expectationLevel: SectorMomentumLevel;
   relativeStrength: number | null;
   shortTermAverageReturn3m: number | null;

@@ -366,7 +366,7 @@ export const INDICATOR_CONFIGS: IndicatorConfig[] = [
   },
   {
     id: "bank-cet1",
-    name: "銀行CET1比率",
+    name: "銀行Tier 1資本比率（CET1代替）",
     shortName: "銀行自己資本",
     type: "safety_valve",
     category: "bank-capital",
@@ -374,10 +374,10 @@ export const INDICATOR_CONFIGS: IndicatorConfig[] = [
     unit: "%",
     decimals: 1,
     description:
-      "損失を最初に吸収する普通株式等Tier1資本の厚さ",
+      "FREDの規制Tier 1資本/リスクアセット比率で銀行資本の厚さを確認する。CET1そのものではない代替系列",
     thresholdLabel: "10%以上：緑 / 8〜10%未満：黄 / 8%未満または急低下：赤",
-    fredSeries: [],
-    mode: "manual",
+    fredSeries: ["BOGZ1FL010000016Q"],
+    mode: "fred",
     threshold: { yellowAt: 10, redAt: 8 },
     thresholdDirection: "lower-is-worse",
   },
@@ -390,12 +390,12 @@ export const INDICATOR_CONFIGS: IndicatorConfig[] = [
     importance: "important",
     unit: "$B",
     decimals: 1,
-    description:
-      "銀行破綻時に保護対象預金を支えるDeposit Insurance Fundの残高",
-    thresholdLabel: "増加・安定：緑 / 低下傾向：黄 / 銀行破綻増加で急減：赤",
-    fredSeries: [],
-    mode: "manual",
-    thresholdDirection: "lower-is-worse",
+      description:
+        "銀行破綻時に保護対象預金を支えるDeposit Insurance Fundの残高",
+      thresholdLabel: "増加・安定：緑 / 低下傾向：黄 / 銀行破綻増加で急減：赤",
+      fredSeries: [],
+      mode: "fdic-dif",
+      thresholdDirection: "lower-is-worse",
   },
   {
     id: "household-debt-gdp",
@@ -590,8 +590,8 @@ export const INDICATOR_CONFIGS: IndicatorConfig[] = [
     dangerScenario:
       "株価下落時に追証や強制売却が連鎖し、下落が自己増幅する可能性があります。",
     thresholdLabel: "2.0%未満：緑 / 2.0〜2.5%未満：黄 / 2.5〜3.0%未満：橙 / 3.0%以上：赤",
-    fredSeries: [],
-    mode: "manual",
+    fredSeries: ["GDP"],
+    mode: "margin-debt-gdp",
     threshold: { yellowAt: 2, orangeAt: 2.5, redAt: 3 },
   },
   {

@@ -41,6 +41,7 @@ type FmpRatios = {
 type FmpProfile = {
   beta?: number;
   currency?: string;
+  mktCap?: number;
 };
 
 export async function getCompanyFinancials(
@@ -92,6 +93,7 @@ export async function getCompanyFinancials(
     Boolean(keyMetrics || ratio || companyProfile);
 
   const result: SectorCompanyGrowthData = {
+    marketCapUsd: finite(companyProfile?.mktCap),
     financialCurrency: companyProfile?.currency ?? null,
     revenueLatest: finite(latest?.revenue),
     netIncomeLatest: finite(latest?.netIncome),
@@ -160,6 +162,7 @@ async function fetchFmp<T>(url: string): Promise<T | null> {
 
 function unavailableFinancials(): SectorCompanyGrowthData {
   return {
+    marketCapUsd: null,
     financialCurrency: null,
     revenueLatest: null,
     netIncomeLatest: null,

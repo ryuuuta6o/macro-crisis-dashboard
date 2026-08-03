@@ -1,6 +1,8 @@
 import { sectorDefinitions, SECTOR_SCORE_WEIGHTS } from "@/config/sector-momentum";
 import { thematicDefinitions } from "@/config/themes";
 import { companyBusinessNotes } from "@/config/company-notes";
+import { readFreeHiddenGemsSnapshot } from "@/lib/hidden-gems-source";
+import type { HiddenGemUniverseRecord } from "@/types/hidden-gems";
 import type {
   ReturnMap,
   SectorCompanyConfig,
@@ -80,15 +82,31 @@ export async function getSectorMomentumData(): Promise<SectorMomentumData> {
     new Set(definitions.flatMap((sector) => sector.companies.map((company) => company.ticker))),
   );
   const symbols = Array.from(new Set([...sectorSymbols, ...companySymbols]));
-  const [marketEntries, profileEntries] = await Promise.all([
+  const [marketEntries, profileEntries, financialSnapshot] = await Promise.all([
     Promise.all(symbols.map(async (symbol) => [symbol, await fetchMarketSeries(symbol)] as const)),
     fetchFmpProfiles(companySymbols),
+    readFreeHiddenGemsSnapshot(),
   ]);
   const markets = new Map(marketEntries);
   const profiles = new Map(profileEntries);
+  const financials = new Map(
+    (financialSnapshot.records ?? []).map((record) => [record.ticker, record]),
+  );
 
   const sectors: SectorMomentumDataItem[] = definitions.map((sector) => {
-    const market = markets.get(sector.benchmarkSymbol) ?? unavailableSeries(sector.benchmarkSymbol);
+    const benchmarkMarket =
+      markets.get(sector.benchmarkSymbol) ?? unavailableSeries(sector.benchmarkSymbol);
+    const market =
+      sector.displayMode === "theme"
+        ? buildEqualWeightBasket(
+            sector.id,
+            sector.companies.map(
+              (company) =>
+                markets.get(company.ticker) ?? unavailableSeries(company.ticker),
+            ),
+            benchmarkMarket,
+          )
+        : benchmarkMarket;
     const relativeStrength = computeRelativeStrength(market, benchmark);
     const companies = sector.companies.map((company) =>
       buildCompanyData(
@@ -96,10 +114,11 @@ export async function getSectorMomentumData(): Promise<SectorMomentumData> {
         markets.get(company.ticker) ?? unavailableSeries(company.ticker),
         relativeStrength,
         profiles.get(company.ticker),
+        financials.get(company.ticker),
       ),
     );
     const momentumScore = computeMomentumScore(market);
-    const expectationScore = computeSectorExpectationScore(companies, relativeStrength);
+    const expectation = computeSectorExpectationScore(companies);
     const marketCapUsd = sumNullable(companies.map((company) => company.marketCapUsd));
     const shortTermAverageReturn3m = averageNullable(
       companies.map((company) => company.market.returns["3m"]),
@@ -111,8 +130,9 @@ export async function getSectorMomentumData(): Promise<SectorMomentumData> {
       market,
       companies,
       momentumScore,
-      expectationScore,
-      expectationLevel: expectationLevel(expectationScore),
+      expectationScore: expectation.score,
+      expectationCoverage: expectation.coverage,
+      expectationLevel: expectationLevel(expectation.score),
       relativeStrength,
       shortTermAverageReturn3m,
       isOverheated:
@@ -129,7 +149,7 @@ export async function getSectorMomentumData(): Promise<SectorMomentumData> {
     availableRegions: buildAvailableRegions(sectors),
     scoreWeights: SECTOR_SCORE_WEIGHTS,
     disclaimer:
-      "これは投資助言ではなく、価格データ、FMP企業概要、手動テーマ設定に基づくセクター状態の可視化です。取得不可データは推測で補完しません。",
+      "これは投資助言ではなく、Yahoo Financeの価格、日次財務スナップショット、手動テーマ設定に基づく状態表示です。テーマ騰落率は構成銘柄の等ウェイト集計で、取得不可データは推測で補完しません。",
   };
 }
 
@@ -229,6 +249,66 @@ function unavailableSeries(symbol: string): SectorMarketSeries {
   };
 }
 
+function buildEqualWeightBasket(
+  id: string,
+  members: SectorMarketSeries[],
+  fallback: SectorMarketSeries,
+): SectorMarketSeries {
+  const available = members.filter(
+    (member) => member.status === "live" && member.history.length > 1,
+  );
+  if (available.length === 0) return fallback;
+
+  const normalizedByDate = new Map<string, number[]>();
+  available.forEach((member) => {
+    const latest = member.history.at(-1)?.value;
+    if (!latest) return;
+    member.history.forEach((point) => {
+      const values = normalizedByDate.get(point.date) ?? [];
+      values.push((point.value / latest) * 100);
+      normalizedByDate.set(point.date, values);
+    });
+  });
+  const minimumCoverage = Math.max(1, Math.ceil(available.length * 0.35));
+  const history = Array.from(normalizedByDate.entries())
+    .filter(([, values]) => values.length >= minimumCoverage)
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([date, values]) => ({
+      date,
+      value: values.reduce((total, value) => total + value, 0) / values.length,
+    }));
+  const points = history.map((point) => ({
+    date: new Date(`${point.date}T00:00:00.000Z`),
+    close: point.value,
+  }));
+  const observedAt = available
+    .map((member) => member.observedAt)
+    .filter((value): value is string => Boolean(value))
+    .sort()
+    .at(-1) ?? null;
+
+  return {
+    symbol: `BASKET:${id}`,
+    price: 100,
+    currency: null,
+    observedAt,
+    returns: Object.fromEntries(
+      periods.map((period) => [
+        period,
+        averageNullable(available.map((member) => member.returns[period])),
+      ]),
+    ) as ReturnMap,
+    rangePosition:
+      points.length > 1
+        ? computeRangePosition(points)
+        : { week52: null, fiveYearHighDistance: null },
+    history,
+    sourceName: `Yahoo Finance 構成銘柄等ウェイト (${available.length}/${members.length}銘柄)`,
+    sourceUrl: fallback.sourceUrl,
+    status: "live",
+  };
+}
+
 function computeReturns(points: PricePoint[]): ReturnMap {
   const latest = points[points.length - 1];
   const year = latest.date.getUTCFullYear();
@@ -297,14 +377,22 @@ function buildCompanyData(
   market: SectorMarketSeries,
   sectorRelativeStrength: number | null,
   profile: FmpProfile | undefined,
+  financial: HiddenGemUniverseRecord | undefined,
 ): SectorCompanyData {
-  const expectationScore = computeExpectationScore(company.expectation, sectorRelativeStrength);
+  const expectation = computeExpectationScore(
+    company.expectation,
+    sectorRelativeStrength,
+  );
   const manualNote = companyBusinessNotes[company.ticker];
   const fmpDescription = profile?.description ? shortenDescription(profile.description) : null;
-  const businessSummary = manualNote ?? fmpDescription ?? company.businessSummary;
+  const batchDescription = financial?.businessSummary
+    ? shortenDescription(financial.businessSummary)
+    : null;
+  const businessSummary =
+    manualNote ?? fmpDescription ?? batchDescription ?? company.businessSummary;
   const marketCapUsd = Number.isFinite(profile?.mktCap)
     ? (profile?.mktCap as number)
-    : company.marketCapUsd;
+    : (financial?.marketCapUsd ?? company.marketCapUsd);
   return {
     ...company,
     name: profile?.companyName ?? company.name,
@@ -312,29 +400,49 @@ function buildCompanyData(
     countryCode: profile?.country ?? company.countryCode,
     businessSummary,
     marketCapUsd,
+    fundamentals: {
+      ...company.fundamentals,
+      revenueGrowthYoY:
+        financial?.revenueGrowthYoY ?? company.fundamentals.revenueGrowthYoY,
+      netIncome: financial?.netIncomeLatest ?? company.fundamentals.netIncome,
+      epsGrowthYoY:
+        financial?.epsGrowthYoY ?? company.fundamentals.epsGrowthYoY,
+      forwardPE: financial?.peRatio ?? company.fundamentals.forwardPE,
+      grossMargin: financial?.grossMargin ?? company.fundamentals.grossMargin,
+    },
     market,
-    expectationScore,
-    expectationLevel: expectationLevel(expectationScore),
-    profileSource: manualNote ? "manual" : fmpDescription ? "fmp" : "unavailable",
+    expectationScore: expectation.score,
+    expectationCoverage: expectation.coverage,
+    expectationLevel: expectationLevel(expectation.score),
+    profileSource: manualNote
+      ? "manual"
+      : fmpDescription
+        ? "fmp"
+        : batchDescription
+          ? "batch"
+          : "unavailable",
   };
 }
 
-function computeSectorExpectationScore(
-  companies: SectorCompanyData[],
-  relativeStrength: number | null,
-) {
+function computeSectorExpectationScore(companies: SectorCompanyData[]) {
   const companyScores = companies
-    .map((company) => company.expectationScore)
-    .filter((value): value is number => value !== null);
-  const averageCompanyScore =
-    companyScores.length > 0
-      ? companyScores.reduce((total, value) => total + value, 0) / companyScores.length
-      : null;
-  const relativeScore = scoreReturn(relativeStrength, -12, 18);
-  if (averageCompanyScore === null && relativeScore === null) return null;
-  if (averageCompanyScore === null) return Math.round(relativeScore!);
-  if (relativeScore === null) return Math.round(averageCompanyScore);
-  return Math.round((averageCompanyScore * 0.66) + (relativeScore * 0.34));
+    .filter((company) => company.expectationScore !== null);
+  if (companyScores.length === 0) {
+    return {
+      score: null,
+      coverage: averageNullable(companies.map((company) => company.expectationCoverage)) ?? 0,
+    };
+  }
+  return {
+    score: Math.round(
+      companyScores.reduce(
+        (total, company) => total + (company.expectationScore ?? 0),
+        0,
+      ) / companyScores.length,
+    ),
+    coverage:
+      averageNullable(companyScores.map((company) => company.expectationCoverage)) ?? 0,
+  };
 }
 
 function computeExpectationScore(
@@ -348,11 +456,15 @@ function computeExpectationScore(
     [normalizeInput(expectation.fundFlow), SECTOR_SCORE_WEIGHTS.fundFlow],
   ] as const;
   const available = parts.filter((part): part is readonly [number, number] => part[0] !== null);
-  if (available.length === 0) return null;
   const weightTotal = available.reduce((total, [, weight]) => total + weight, 0);
-  return Math.round(
-    available.reduce((total, [value, weight]) => total + value * weight, 0) / weightTotal,
-  );
+  if (weightTotal < 0.5) return { score: null, coverage: weightTotal };
+  return {
+    score: Math.round(
+      available.reduce((total, [value, weight]) => total + value * weight, 0) /
+        weightTotal,
+    ),
+    coverage: weightTotal,
+  };
 }
 
 function normalizeInput(value: number | null) {

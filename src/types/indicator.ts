@@ -116,6 +116,8 @@ export type IndicatorConfig = {
     | "bank-deposits"
     | "mmf"
     | "emergency-lending"
+    | "fdic-dif"
+    | "margin-debt-gdp"
     | "margin-debt-m2"
     | "treasury-auction";
   threshold?: NumericThreshold;

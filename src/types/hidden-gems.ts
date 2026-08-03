@@ -69,6 +69,11 @@ export type HiddenGemsData = {
 export type HiddenGemUniverseRecord = {
   ticker: string;
   companyName: string;
+  businessSummary?: string;
+  countryCode?: string;
+  countryName?: string;
+  region?: SectorRegion;
+  exchange?: string;
   status: "available" | "unavailable" | "excluded";
   exclusionReason?: string;
   themes: Array<{

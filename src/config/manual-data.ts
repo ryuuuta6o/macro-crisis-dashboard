@@ -117,7 +117,7 @@ export const MARGIN_DEBT_M2_CONFIG = {
   sourceUrl:
     "https://www.finra.org/rules-guidance/key-topics/margin-accounts/margin-statistics",
   m2SourceUrl: "https://fred.stlouisfed.org/series/M2SL",
-  updateFrequency: "FINRA月次公表後に手動更新 / M2はFRED自動取得",
+  updateFrequency: "FINRA取得失敗時のみ使う手動フォールバック",
   itBubblePeakPct: 6.35,
   lehmanPeakPct: 5.73,
   peakoutMinimumDropPctPoint: 0.15,

@@ -6,6 +6,11 @@ import {
   INDICATOR_CONFIGS,
 } from "@/lib/indicators";
 import { buildMarginDebtM2IndicatorData } from "@/lib/margin-debt-m2";
+import {
+  fetchFinraMarginHistory,
+  FINRA_MARGIN_SOURCE,
+} from "@/lib/finra-margin";
+import { fetchFdicDif } from "@/lib/fdic-dif";
 import type {
   DashboardData,
   IndicatorConfig,
@@ -219,6 +224,41 @@ function toIndicatorData(
       date: item.date,
       value: item.value * multiplier,
     })),
+  };
+}
+
+function findLatestAtOrBefore(
+  observations: NumericObservation[],
+  date: string,
+) {
+  return observations.find((item) => item.date <= date);
+}
+
+async function fetchMarginDebtGdp(): Promise<ManualIndicator> {
+  const [marginDebt, gdp] = await Promise.all([
+    fetchFinraMarginHistory(),
+    fetchFredSeries("GDP"),
+  ]);
+  const history = marginDebt.flatMap((point) => {
+    const alignedGdp = findLatestAtOrBefore(gdp, point.date);
+    if (!alignedGdp) return [];
+    return [{
+      date: point.date,
+      value: ((point.marginDebtMillionUsd / 1_000) / alignedGdp.value) * 100,
+    }];
+  });
+  if (history.length < 2) {
+    throw new Error("Margin Debt / GDP has insufficient aligned observations");
+  }
+  return {
+    value: history[0].value,
+    previousValue: history[1].value,
+    observationDate: history[0].date,
+    sourceLabel: `${FINRA_MARGIN_SOURCE.name} / FRED GDP`,
+    sourceName: `${FINRA_MARGIN_SOURCE.name} + FRED GDP`,
+    sourceUrl: FINRA_MARGIN_SOURCE.url,
+    updateFrequency: `${FINRA_MARGIN_SOURCE.updateFrequency} / GDPは四半期公表後`,
+    history: history.slice(0, 12),
   };
 }
 
@@ -596,8 +636,13 @@ async function fetchFredIndicator(config: IndicatorConfig) {
   }
 
   if (config.mode === "margin-debt-m2") {
+    const [m2, marginDebt] = await Promise.all([
+      fetchFredSeries(config.fredSeries[0]),
+      fetchFinraMarginHistory(),
+    ]);
     const { data, signal, previousSignal } = buildMarginDebtM2IndicatorData(
-      await fetchFredSeries(config.fredSeries[0]),
+      m2,
+      marginDebt,
     );
     return createIndicator(
       config,
@@ -607,7 +652,28 @@ async function fetchFredIndicator(config: IndicatorConfig) {
     );
   }
 
+  if (config.mode === "margin-debt-gdp") {
+    return createIndicator(config, await fetchMarginDebtGdp(), "FRED");
+  }
+
+  if (config.mode === "fdic-dif") {
+    return createIndicator(config, await fetchFdicDif(), "published");
+  }
+
   const observations = await fetchFredSeries(config.fredSeries[0]);
+  if (config.id === "bank-cet1") {
+    return createIndicator(
+      config,
+      {
+        ...toIndicatorData(observations, config.multiplier),
+        sourceLabel: "FRED BOGZ1FL010000016Q",
+        sourceName: "Federal Reserve Financial Accounts via FRED",
+        sourceUrl: "https://fred.stlouisfed.org/series/BOGZ1FL010000016Q",
+        updateFrequency: "四半期公表後にFREDを自動確認（CET1代替系列）",
+      },
+      "FRED",
+    );
+  }
   return createIndicator(
     config,
     toIndicatorData(observations, config.multiplier),

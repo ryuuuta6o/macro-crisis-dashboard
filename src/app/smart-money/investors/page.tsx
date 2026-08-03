@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/smart-money/SmartMoneyFoundationPage";
 import { getSmartMoneyInvestors } from "@/lib/sec-13f";
+import {
+  buildWhaleMovements,
+  classifyWhaleMovementSize,
+  estimatePositionChangeValue,
+  type WhaleMovement,
+  type WhaleMovementSize,
+} from "@/lib/whale-movements";
 import type {
   PositionChangeType,
   SmartMoneyInvestor,
+  SmartMoneyPosition,
   SmartMoneyStance,
 } from "@/types/smart-money";
 
@@ -29,8 +37,16 @@ const changeClass: Record<PositionChangeType, string> = {
   全売却: "border-rose-400/30 bg-rose-400/10 text-rose-100",
 };
 
+const whaleSizeClass: Record<WhaleMovementSize, string> = {
+  超大型: "border-fuchsia-300/30 bg-fuchsia-300/10 text-fuchsia-100",
+  大型: "border-cyan-300/25 bg-cyan-300/[0.09] text-cyan-100",
+  中型: "border-blue-300/20 bg-blue-300/[0.08] text-blue-100",
+  小型: "border-slate-300/15 bg-slate-300/[0.06] text-slate-300",
+};
+
 export async function InvestorsPageContent() {
   const investors = await getSmartMoneyInvestors();
+  const whaleMovements = buildWhaleMovements(investors);
 
   return (
     <>
@@ -53,6 +69,8 @@ export async function InvestorsPageContent() {
       </header>
 
       <ThirteenFGuide />
+
+      <WhaleMovementFeed movements={whaleMovements} />
 
       <section className="mt-7">
         <p className="text-[10px] font-bold tracking-[0.18em] text-cyan-400">
@@ -85,6 +103,124 @@ export async function InvestorsPageContent() {
 
       <Disclaimer />
     </>
+  );
+}
+
+function WhaleMovementFeed({ movements }: { movements: WhaleMovement[] }) {
+  return (
+    <section className="mt-7 overflow-hidden rounded-3xl border border-cyan-300/15 bg-[#07101f]/95">
+      <div className="border-b border-white/[0.07] p-5 sm:p-6">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className="text-[10px] font-bold tracking-[0.18em] text-cyan-300">
+              WHALE MOVEMENT / SEC DISCLOSURE
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-white">
+              大口投資家の最新開示
+            </h2>
+            <p className="mt-2 max-w-4xl text-xs leading-6 text-slate-400">
+              誰の13Fで、どの保有が新規・買い増し・減少・全売却になったかを、SEC提出日の新しい順に表示します。
+            </p>
+          </div>
+          <span className="rounded-full border border-amber-300/20 bg-amber-300/[0.07] px-3 py-1.5 text-[10px] font-bold text-amber-100">
+            最大45日遅れ
+          </span>
+        </div>
+      </div>
+
+      {movements.length > 0 ? (
+        <div className="grid gap-3 p-4 sm:p-5 lg:grid-cols-2 xl:grid-cols-3">
+          {movements.map((movement) => (
+            <article
+              key={movement.id}
+              className="rounded-2xl border border-white/[0.07] bg-[#0b1426] p-4 transition-colors hover:border-cyan-300/20 hover:bg-[#0d182b]"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-[9px] font-bold tracking-[0.12em] text-slate-500">
+                    SEC提出 {movement.filingDate}
+                  </p>
+                  <h3 className="mt-2 text-sm font-bold text-white">
+                    {movement.investor}
+                  </h3>
+                  <p className="mt-1 text-[10px] text-slate-500">
+                    {movement.firm}
+                  </p>
+                </div>
+                <ChangeBadge type={movement.changeType} />
+              </div>
+
+              <div className="mt-4 border-t border-white/[0.06] pt-4">
+                <p className="text-base font-bold text-cyan-50">
+                  {movement.company}
+                </p>
+                <p className="mt-1 font-mono text-[9px] text-cyan-300/65">
+                  CUSIP {movement.cusip}
+                  {movement.optionType ? ` / ${movement.optionType}` : ""}
+                </p>
+              </div>
+
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                <div className="rounded-xl bg-black/15 p-3">
+                  <span className="block text-[9px] text-slate-600">
+                    推定変化規模
+                  </span>
+                  <strong className="mt-1 block font-mono text-sm text-white">
+                    {formatMoney(movement.estimatedChangeValue)}
+                  </strong>
+                </div>
+                <div className="rounded-xl bg-black/15 p-3">
+                  <span className="block text-[9px] text-slate-600">
+                    金額帯
+                  </span>
+                  <span
+                    className={`mt-1 inline-flex rounded-full border px-2 py-1 text-[9px] font-bold ${whaleSizeClass[movement.size]}`}
+                  >
+                    {movement.size}
+                  </span>
+                </div>
+                <div className="rounded-xl bg-black/15 p-3">
+                  <span className="block text-[9px] text-slate-600">
+                    開示株数差
+                  </span>
+                  <strong className="mt-1 block font-mono text-xs text-slate-200">
+                    {formatSignedShares(movement.shareChange)}
+                  </strong>
+                </div>
+                <div className="rounded-xl bg-black/15 p-3">
+                  <span className="block text-[9px] text-slate-600">
+                    今回開示額
+                  </span>
+                  <strong className="mt-1 block font-mono text-xs text-slate-200">
+                    {formatMoney(movement.currentValue)}
+                  </strong>
+                </div>
+              </div>
+
+              <div className="mt-4 flex items-center justify-between gap-3">
+                <span className="text-[9px] text-slate-600">{movement.period}</span>
+                <a
+                  href={movement.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[10px] font-bold text-cyan-300 hover:text-cyan-200"
+                >
+                  SEC原文 ↗
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p className="p-6 text-sm text-slate-400">
+          現在、比較可能なSEC 13Fの変化を取得できません。
+        </p>
+      )}
+
+      <p className="border-t border-white/[0.06] px-5 py-4 text-[10px] leading-5 text-slate-500">
+        「推定変化規模」は開示株数の差を四半期末の開示評価単価で換算した目安です。実際の売買日・取得価格・売買代金ではなく、株価変動の影響も含みます。
+      </p>
+    </section>
   );
 }
 
@@ -256,6 +392,7 @@ function InvestorPositions({ investor }: { investor: SmartMoneyInvestor }) {
                   <Metric label="今回株数" value={formatShares(position.currentShares)} />
                   <Metric label="変化率" value={formatChange(position.changePercent)} />
                   <Metric label="構成比" value={`${position.portfolioWeight.toFixed(2)}%`} />
+                  <Metric label="推定変化規模" value={formatMovementEstimate(position)} />
                 </dl>
                 <p className="mt-4 text-xs leading-6 text-slate-400">{position.note}</p>
               </article>
@@ -274,6 +411,7 @@ function InvestorPositions({ investor }: { investor: SmartMoneyInvestor }) {
                   <Th>変化</Th>
                   <Th align="right">構成比</Th>
                   <Th align="right">今回評価額</Th>
+                  <Th align="right">推定変化規模</Th>
                   <Th>読み方</Th>
                 </tr>
               </thead>
@@ -291,6 +429,7 @@ function InvestorPositions({ investor }: { investor: SmartMoneyInvestor }) {
                     <Td><ChangeBadge type={position.changeType} /></Td>
                     <Td align="right" mono>{position.portfolioWeight.toFixed(2)}%</Td>
                     <Td align="right" mono>{formatMoney(position.currentValue)}</Td>
+                    <Td align="right" mono>{formatMovementEstimate(position)}</Td>
                     <Td><span className="block max-w-[250px] text-xs leading-5 text-slate-400">{position.note}</span></Td>
                   </tr>
                 ))}
@@ -528,6 +667,17 @@ function Td({ children, align = "left", mono = false }: { children: React.ReactN
 
 function formatShares(value: number) {
   return new Intl.NumberFormat("ja-JP", { maximumFractionDigits: 0 }).format(value);
+}
+
+function formatSignedShares(value: number) {
+  const formatted = formatShares(Math.abs(value));
+  return `${value > 0 ? "+" : value < 0 ? "-" : ""}${formatted}株`;
+}
+
+function formatMovementEstimate(position: SmartMoneyPosition) {
+  const estimatedValue = estimatePositionChangeValue(position);
+  if (estimatedValue <= 0) return "変化なし";
+  return `${classifyWhaleMovementSize(estimatedValue)} / ${formatMoney(estimatedValue)}`;
 }
 
 function formatChange(value: number | null) {

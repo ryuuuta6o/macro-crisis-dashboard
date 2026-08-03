@@ -23,6 +23,7 @@ export async function getAllFreeCompanyFinancials() {
 function convertRecord(record: HiddenGemUniverseRecord): SectorCompanyGrowthData {
   const manual = manualCompanyFinancials[record.ticker];
   const base: SectorCompanyGrowthData = {
+    marketCapUsd: record.marketCapUsd ?? null,
     financialCurrency: record.financialCurrency ?? null,
     revenueLatest: record.revenueLatest ?? null,
     netIncomeLatest: record.netIncomeLatest ?? null,
@@ -72,6 +73,7 @@ function convertRecord(record: HiddenGemUniverseRecord): SectorCompanyGrowthData
 
 function unavailableFreeFinancials(): SectorCompanyGrowthData {
   return {
+    marketCapUsd: null,
     financialCurrency: null,
     revenueLatest: null,
     netIncomeLatest: null,

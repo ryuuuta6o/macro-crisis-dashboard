@@ -9,11 +9,17 @@ import type {
 } from "@/types/smart-money";
 
 const filers = filerData as SmartMoneyFiler[];
+const configuredSecUserAgent = process.env.SEC_USER_AGENT?.trim();
+const secUserAgent =
+  configuredSecUserAgent &&
+  configuredSecUserAgent.length >= 12 &&
+  configuredSecUserAgent.includes("@")
+    ? configuredSecUserAgent
+    : "MacroCrisisDashboard/1.0 admin@macro-crisis-dashboard.vercel.app";
 const SEC_HEADERS = {
-  "User-Agent":
-    process.env.SEC_USER_AGENT ??
-    "Macro Crisis Dashboard https://macro-crisis-dashboard.vercel.app",
+  "User-Agent": secUserAgent,
   Accept: "application/json, application/xml, text/xml, */*",
+  "Accept-Encoding": "gzip, deflate",
 };
 
 type Filing = {
@@ -54,7 +60,7 @@ type FilingIndex = {
 
 export const getSmartMoneyInvestors = unstable_cache(
   async () => mapWithConcurrency(filers, 1, loadInvestor),
-  ["sec-13f-investors-v5"],
+  ["sec-13f-investors-v6"],
   { revalidate: 21600, tags: ["sec-13f"] },
 );
 

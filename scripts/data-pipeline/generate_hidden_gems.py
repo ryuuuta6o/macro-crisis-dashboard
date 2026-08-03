@@ -18,9 +18,10 @@ import yfinance as yf
 
 ROOT = Path(__file__).resolve().parents[2]
 THEMES_FILE = ROOT / "src" / "config" / "themes.ts"
+SECTORS_FILE = ROOT / "src" / "config" / "sector-momentum.ts"
 NOTES_FILE = ROOT / "src" / "config" / "company-notes.ts"
 OUTPUT_FILE = ROOT / "public" / "data" / "hidden-gems.json"
-METHODOLOGY_VERSION = "hidden-gems-free-v1"
+METHODOLOGY_VERSION = "hidden-gems-free-v2"
 SLEEP_SECONDS = float(os.getenv("YFINANCE_SLEEP_SECONDS", "1.25"))
 MIN_SUCCESS_RATIO = float(os.getenv("HIDDEN_GEMS_MIN_SUCCESS_RATIO", "0.35"))
 MIN_MARKET_CAP = 100_000_000
@@ -82,7 +83,7 @@ def parse_company_notes() -> dict[str, str]:
     return notes
 
 
-def parse_theme_universe() -> list[CompanyRef]:
+def parse_company_universe() -> list[CompanyRef]:
     text = THEMES_FILE.read_text(encoding="utf-8")
     theme_pattern = re.compile(
         r'\{\s*id:\s*"(?P<id>[^"]+)".*?nameJa:\s*"(?P<name_ja>[^"]+)".*?'
@@ -117,8 +118,40 @@ def parse_theme_universe() -> list[CompanyRef]:
                 themes=[theme],
                 business_summary=notes.get(ticker, "事業内容データなし"),
             )
+
+    sector_text = SECTORS_FILE.read_text(encoding="utf-8")
+    sector_pattern = re.compile(
+        r'\{\s*id:\s*"(?P<id>[^"]+)".*?nameJa:\s*"(?P<name_ja>[^"]+)".*?'
+        r'displayMode:\s*"sector".*?companies:\s*\[(?P<companies>.*?)\]\s*,?\s*\}',
+        re.DOTALL,
+    )
+    sector_company_pattern = re.compile(
+        r'sectorCompany\(\s*"(?P<ticker>[^"]+)",\s*"(?P<name>[^"]+)"'
+    )
+    for sector_match in sector_pattern.finditer(sector_text):
+        sector = {
+            "id": f"gics-{sector_match.group('id')}",
+            "nameJa": sector_match.group("name_ja"),
+        }
+        for match in sector_company_pattern.finditer(sector_match.group("companies")):
+            ticker = match.group("ticker")
+            existing = companies.get(ticker)
+            if existing:
+                if sector not in existing.themes:
+                    existing.themes.append(sector)
+                continue
+            companies[ticker] = CompanyRef(
+                ticker=ticker,
+                name=match.group("name"),
+                region="us",
+                country_code="US",
+                country_name="United States",
+                exchange="US",
+                themes=[sector],
+                business_summary=notes.get(ticker, "事業内容データなし"),
+            )
     if not companies:
-        raise RuntimeError("No companies were parsed from src/config/themes.ts")
+        raise RuntimeError("No companies were parsed from sector/theme config")
     return list(companies.values())
 
 
@@ -479,10 +512,16 @@ def score_record(record: dict[str, Any], theme_medians: dict[str, dict[str, floa
     ]
     momentum = sum(momentum_values) / len(momentum_values) if momentum_values else None
     market_cap = record.get("marketCapUsd")
+    analyst_coverage = record.get("analystCoverage")
+    analyst_attention = (
+        clamp((analyst_coverage / 30.0) * 100.0)
+        if analyst_coverage is not None
+        else None
+    )
     attention_parts = [
         (clamp(valuation_ratio * 50.0) if valuation_ratio is not None else None, 0.30),
         (clamp(((momentum + 20.0) / 70.0) * 100.0) if momentum is not None else None, 0.30),
-        (None, 0.20),
+        (analyst_attention, 0.20),
         (
             clamp((math.log10(market_cap / MIN_MARKET_CAP) / 4.0) * 100.0)
             if market_cap and market_cap >= MIN_MARKET_CAP
@@ -505,7 +544,7 @@ def score_record(record: dict[str, Any], theme_medians: dict[str, dict[str, floa
     record["attentionComponents"] = [
         {"id": "valuation", "label": "相対バリュエーション", "value": valuation_ratio, "score": attention_parts[0][0], "detail": "テーマ内PERまたはPSR中央値との比較"},
         {"id": "price-momentum", "label": "株価モメンタム", "value": momentum, "score": attention_parts[1][0], "detail": "3ヶ月と6ヶ月の騰落率"},
-        {"id": "analyst-coverage", "label": "アナリストカバレッジ", "value": None, "score": None, "detail": "無料構成では取得対象外"},
+        {"id": "analyst-coverage", "label": "アナリストカバレッジ", "value": analyst_coverage, "score": analyst_attention, "detail": "0社は未発見寄り、30社以上は広くカバー済みとして評価"},
         {"id": "market-cap", "label": "時価総額", "value": market_cap, "score": attention_parts[3][0], "detail": "規模が大きいほど発見済みとして評価"},
     ]
 
@@ -602,7 +641,7 @@ def write_atomic(payload: dict[str, Any]) -> None:
 
 
 def main() -> int:
-    universe = parse_theme_universe()
+    universe = parse_company_universe()
     print(f"Hidden Gems universe: {len(universe)} symbols")
     records = []
     for index, ref in enumerate(universe, start=1):
@@ -679,7 +718,7 @@ def main() -> int:
         "exclusions": exclusions,
         "history": history[-365:],
         "disclaimer": "これは状態の可視化であり、推奨ではありません。注目が低いことには、構造変化やガバナンス問題などの理由がある場合もあります。Gem Scoreは実態と注目の乖離であり、価格上昇の予測ではありません。",
-        "dataNote": "Yahoo Financeの非公式データを日次バッチで取得しています。アナリスト予想と受注データは無料構成の採点対象外です。欠損値は推測しません。",
+        "dataNote": "Yahoo Financeの非公式データを日次バッチで取得しています。アナリスト数は注目度に反映しますが、予想の上方修正率と受注データは無料構成の採点対象外です。欠損値は推測しません。",
         "records": records,
     }
     write_atomic(payload)

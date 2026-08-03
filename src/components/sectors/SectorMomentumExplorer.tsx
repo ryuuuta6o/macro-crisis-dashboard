@@ -160,9 +160,13 @@ export function SectorMomentumExplorer({ data }: { data: SectorMomentumData }) {
       if (companySortKey === "subcategory") {
         return (a.subcategory ?? "未分類").localeCompare(b.subcategory ?? "未分類", "ja");
       }
-      return compareNullable(companySortValue(a, companySortKey), companySortValue(b, companySortKey), true);
+      return compareNullable(
+        companySortValue(a, companySortKey, financialsByTicker[a.ticker]),
+        companySortValue(b, companySortKey, financialsByTicker[b.ticker]),
+        true,
+      );
     });
-  }, [companySortKey, selectedSector?.companies]);
+  }, [companySortKey, financialsByTicker, selectedSector?.companies]);
   const selectedCompany =
     selectedSector?.companies.find((company) => company.ticker === selectedTicker) ??
     sortedCompanies[0];
@@ -358,7 +362,14 @@ export function SectorMomentumExplorer({ data }: { data: SectorMomentumData }) {
                 </span>
               ))}
               <ScoreCell value={sector.momentumScore} />
-              <ScoreCell value={sector.expectationScore} label={expectationLabel(sector.expectationLevel)} />
+              <ScoreCell
+                value={sector.expectationScore}
+                label={
+                  sector.expectationScore === null
+                    ? `材料 ${Math.round(sector.expectationCoverage * 100)}%`
+                    : expectationLabel(sector.expectationLevel)
+                }
+              />
               <span className="sector-range-cell">{formatPercent(sector.market.rangePosition.week52, 0)}</span>
             </button>
           ))}
@@ -400,8 +411,11 @@ export function SectorMomentumExplorer({ data }: { data: SectorMomentumData }) {
             </div>
 
             <div className="sector-company-list">
-              {sortedCompanies.map((company) => (
-                <button
+              {sortedCompanies.map((company) => {
+                const growth = financialsByTicker[company.ticker];
+                const marketCap = growth?.marketCapUsd ?? company.marketCapUsd;
+                return (
+                  <button
                   type="button"
                   key={company.ticker}
                   data-ticker={company.ticker}
@@ -417,16 +431,17 @@ export function SectorMomentumExplorer({ data }: { data: SectorMomentumData }) {
                   <span>{formatPrice(company.market)}</span>
                   <span style={heatStyle(company.market.returns["1m"])}>{formatPercent(company.market.returns["1m"])}</span>
                   <span>
-                    {formatMarketCap(company.marketCapUsd)}
-                    <small className="sector-cap-class">{marketCapClass(company.marketCapUsd)}</small>
+                    {formatMarketCap(marketCap)}
+                    <small className="sector-cap-class">{marketCapClass(marketCap)}</small>
                   </span>
                   <span className="sector-growth-brief">
                     <small>売上CAGR</small>
-                    {formatPercent(financialsByTicker[company.ticker]?.revenueCagr5y ?? null)}
+                    {formatPercent(growth?.revenueCagr5y ?? null)}
                   </span>
                   <ScoreCell value={company.expectationScore} compact />
-                </button>
-              ))}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -491,7 +506,14 @@ function CompanyDetail({
         <Stat label="株価" value={formatPrice(company.market)} />
         <Stat label="1ヶ月" value={formatPercent(company.market.returns["1m"])} />
         <Stat label="YTD" value={formatPercent(company.market.returns.ytd)} />
-        <Stat label="期待度" value={company.expectationScore === null ? "unavailable" : `${company.expectationScore}/100`} />
+        <Stat
+          label="期待度"
+          value={
+            company.expectationScore === null
+              ? `未算出（材料 ${Math.round(company.expectationCoverage * 100)}%）`
+              : `${company.expectationScore}/100`
+          }
+        />
       </div>
 
       <div className="sector-chart-card">
@@ -659,11 +681,20 @@ function sectorSortValue(sector: SectorMomentumDataItem, key: SortKey) {
   return sector.market.returns[key];
 }
 
-function companySortValue(company: SectorCompanyData, key: CompanySortKey) {
-  if (key === "marketCap") return company.marketCapUsd;
+function companySortValue(
+  company: SectorCompanyData,
+  key: CompanySortKey,
+  growth?: SectorCompanyGrowthData,
+) {
+  if (key === "marketCap") return growth?.marketCapUsd ?? company.marketCapUsd;
   if (key === "expectation") return company.expectationScore;
-  if (key === "revenueGrowth") return company.fundamentals.revenueGrowthYoY;
-  if (key === "forwardPE") return company.fundamentals.forwardPE === null ? null : -company.fundamentals.forwardPE;
+  if (key === "revenueGrowth") {
+    return growth?.revenueGrowthYoY ?? company.fundamentals.revenueGrowthYoY;
+  }
+  if (key === "forwardPE") {
+    const pe = growth?.peRatio ?? company.fundamentals.forwardPE;
+    return pe === null ? null : -pe;
+  }
   if (key === "subcategory") return null;
   return company.market.returns[key];
 }

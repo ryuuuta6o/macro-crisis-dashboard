@@ -507,6 +507,7 @@ function median(values: number[]) {
 
 function unavailableFinancials(): SectorCompanyGrowthData {
   return {
+    marketCapUsd: null,
     financialCurrency: null,
     revenueLatest: null,
     netIncomeLatest: null,
