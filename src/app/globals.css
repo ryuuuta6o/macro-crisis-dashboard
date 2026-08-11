@@ -1470,6 +1470,18 @@ summary::-webkit-details-marker {
 .public-section-fold__content { padding-top: 10px; }
 .public-section-fold:not([open]) > .public-section-fold__content { display: none; }
 
+[id^="indicator-"]:target {
+  border-radius: 8px;
+  outline: 2px solid rgba(103, 232, 249, 0.72);
+  outline-offset: -2px;
+  animation: indicator-target-flash 1.2s ease-out;
+}
+
+@keyframes indicator-target-flash {
+  0% { background-color: rgba(34, 211, 238, 0.18); }
+  100% { background-color: transparent; }
+}
+
 .metrics-grid-fold { grid-area: metrics; }
 .metrics-rail-fold { grid-area: rail; }
 .metrics-grid-fold .metrics-grid,

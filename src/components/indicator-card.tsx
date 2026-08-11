@@ -207,7 +207,7 @@ export function IndicatorCard({
 
   return (
     <TiltCard className={`relative overflow-hidden rounded-lg border before:absolute before:inset-y-0 before:left-0 before:w-[3px] ${signalBorder[indicator.signal]} ${signalSurface[indicator.signal]}`}>
-    <article id={`indicator-${indicator.id}`} className="p-5 sm:p-6">
+    <article id={`indicator-${indicator.id}`} className="scroll-mt-24 p-5 sm:p-6">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="mb-2 text-[10px] font-semibold tracking-[0.18em] text-slate-500">

@@ -1,4 +1,7 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { useEffect, useRef } from "react";
 import type { Signal } from "@/types/indicator";
 
 const labels: Record<Signal | "neutral", string> = {
@@ -31,8 +34,32 @@ export function PublicSectionFold({
   className?: string;
   children: ReactNode;
 }) {
+  const detailsRef = useRef<HTMLDetailsElement>(null);
+
+  useEffect(() => {
+    const revealHashTarget = () => {
+      const hash = window.location.hash.slice(1);
+      if (!hash) return;
+      const target = document.getElementById(decodeURIComponent(hash));
+      const details = detailsRef.current;
+      if (!target || !details?.contains(target)) return;
+      details.open = true;
+      target.querySelectorAll("details").forEach((disclosure) => {
+        disclosure.open = true;
+      });
+      window.requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    };
+
+    revealHashTarget();
+    window.addEventListener("hashchange", revealHashTarget);
+    return () => window.removeEventListener("hashchange", revealHashTarget);
+  }, []);
+
   return (
     <details
+      ref={detailsRef}
       id={id}
       className={`public-section-fold public-section-fold--${signal} ${className}`.trim()}
       open={defaultOpen}
