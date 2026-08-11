@@ -168,6 +168,7 @@ export function WeatherBriefDashboard() {
             <div className="grid h-32 place-items-center rounded-3xl border border-white/10 bg-black/20" style={{ boxShadow: `inset 0 0 40px ${weather.accent}18` }}><strong className="text-4xl font-black" style={{ color: weather.accent }}>{loading ? "確認中" : weather.label}</strong></div>
             <div><h3 className="text-xl font-black sm:text-2xl">{loading ? "公開データを取得しています" : weather.headline}</h3><p className="mt-3 text-sm leading-7 text-slate-300">{weather.plain}</p><div className="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-400"><span className="rounded-full border border-white/10 px-3 py-1.5">比較可能 {radar.summary.comparableIndicators}件</span><span className={`rounded-full border px-3 py-1.5 ${staleCount ? "border-amber-300/20 text-amber-100" : "border-white/10"}`}>鮮度注意 {staleCount}件</span></div>{error && <p className="mt-4 text-xs text-amber-200">{error}</p>}</div>
           </div>
+          <WeatherLevelGauge overall={overall} indicators={indicators} loading={loading} />
         </section>
 
         <section id="today-changes" className="scroll-mt-6 mt-6 rounded-[1.75rem] border border-white/10 bg-white/[0.045] p-5 sm:p-8">
@@ -194,6 +195,75 @@ export function WeatherBriefDashboard() {
 
 function SectionHead({ number, eyebrow, title, meta }: { number: string; eyebrow: string; title: string; meta?: string }) {
   return <div className="flex flex-wrap items-start justify-between gap-4"><div><p className="text-[10px] font-bold tracking-[0.2em] text-cyan-300">{number} / {eyebrow}</p><h2 className="mt-2 text-2xl font-black">{title}</h2></div>{meta && <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 font-mono text-[10px] text-slate-400">{meta}</span>}</div>;
+}
+
+const gaugePosition: Record<OverallSignal, number | null> = {
+  unavailable: null,
+  green: 12,
+  "green-yellow": 31,
+  yellow: 45,
+  localized: 63,
+  red: 82,
+  crisis: 96,
+};
+
+const gaugeStage: Record<OverallSignal, string> = {
+  unavailable: "観測中",
+  green: "落ち着き",
+  "green-yellow": "注意",
+  yellow: "注意",
+  localized: "局所ストレス",
+  red: "強い警戒",
+  crisis: "強い警戒",
+};
+
+function WeatherLevelGauge({ overall, indicators, loading }: { overall: OverallSignal; indicators: IndicatorValue[]; loading: boolean }) {
+  const position = gaugePosition[overall];
+  const available = indicators.filter((item) => item.signal !== "unavailable");
+  const safety = available.filter((item) => item.type === "safety_valve");
+  const warnings = available.filter((item) => item.type === "warning_signal");
+  const vulnerabilities = available.filter((item) => item.type === "vulnerability");
+  const safetyStress = safety.filter((item) => item.signal !== "green").length;
+  const warningStress = warnings.filter((item) => item.signal !== "green").length;
+  const vulnerabilityStress = vulnerabilities.filter((item) => item.signal === "orange" || item.signal === "red").length;
+
+  return (
+    <div className="mt-7 border-t border-white/[0.08] pt-6">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h3 className="text-base font-black text-white">市場ストレス水準</h3>
+          <p className="mt-1 text-xs leading-5 text-slate-400">危機の確率ではなく、既存の信号判定が現在どの段階にあるかを示します。</p>
+        </div>
+        <strong className="text-sm text-cyan-100">現在位置：{loading ? "観測中" : gaugeStage[overall]}</strong>
+      </div>
+
+      <div role="meter" aria-label="市場ストレス水準" aria-valuemin={0} aria-valuemax={100} aria-valuenow={position ?? undefined} className="relative mt-6">
+        <div className="grid h-3 grid-cols-4 overflow-hidden rounded-full border border-white/10">
+          <span className="bg-emerald-400/70" />
+          <span className="bg-cyan-300/65" />
+          <span className="bg-amber-400/75" />
+          <span className="bg-rose-400/80" />
+        </div>
+        {position !== null && !loading && (
+          <span className="absolute top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-[#08111f] shadow-[0_0_14px_rgba(255,255,255,0.35)]" style={{ left: `${position}%` }} />
+        )}
+        <div className="mt-2 grid grid-cols-4 text-center text-[10px] font-bold text-slate-500">
+          <span>落ち着き</span><span>注意</span><span>局所ストレス</span><span>強い警戒</span>
+        </div>
+      </div>
+
+      <div className="mt-6 grid gap-3 sm:grid-cols-3">
+        <GaugeBasis label="安全弁" value={loading ? "--" : `${safetyStress}/${safety.length}`} description="信用・流動性・銀行資金" priority="最優先" />
+        <GaugeBasis label="警告サイン" value={loading ? "--" : `${warningStress}/${warnings.length}`} description="金利・雇用・市場心理" priority="次に確認" />
+        <GaugeBasis label="脆弱性" value={loading ? "--" : `${vulnerabilityStress}/${vulnerabilities.length}`} description="CRE・Private Credit・割高感" priority="被害の大きさ" />
+      </div>
+      <p className="mt-4 text-xs leading-6 text-slate-500">分子は黄・橙・赤の件数です。脆弱性は橙・赤だけを数えます。安全弁の悪化を最も重く扱い、脆弱性が赤いだけでは「強い警戒」にしません。</p>
+    </div>
+  );
+}
+
+function GaugeBasis({ label, value, description, priority }: { label: string; value: string; description: string; priority: string }) {
+  return <div className="rounded-2xl border border-white/[0.08] bg-black/20 p-4"><div className="flex items-center justify-between gap-3"><strong className="text-sm text-white">{label}</strong><span className="font-mono text-lg font-black text-cyan-100">{value}</span></div><p className="mt-2 text-xs leading-5 text-slate-400">{description}</p><span className="mt-3 inline-block rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-bold text-slate-500">{priority}</span></div>;
 }
 
 function formatNumber(value: number, decimals: number) {
