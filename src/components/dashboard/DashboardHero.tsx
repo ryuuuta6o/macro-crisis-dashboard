@@ -90,7 +90,7 @@ export function DashboardHero({
             href="/weather"
             className="inline-flex min-h-10 items-center rounded-full border border-cyan-200/20 bg-cyan-200/[0.075] px-4 py-2 text-xs font-bold text-cyan-100 backdrop-blur-md transition hover:border-cyan-200/35 hover:bg-cyan-200/[0.12]"
           >
-            初心者向け「世界経済の現在地」へ →
+            「世界経済の現在地」へ →
           </Link>
           <Link
             href="/research-brief"

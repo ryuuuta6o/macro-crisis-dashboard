@@ -447,7 +447,7 @@ function IndicatorDetail({
       </div>
 
       <div className="mt-5 grid gap-4 lg:grid-cols-2">
-        <DetailBox title="初心者向け説明">
+        <DetailBox title="かんたんな説明">
           {glossary.shortDefinition}
         </DetailBox>
         <DetailBox title="なぜ重要か">

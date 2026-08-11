@@ -17,7 +17,7 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Macro Signal | 金融危機の早期警戒ダッシュボード",
   description:
-    "お金の流れ、安全弁、警告サイン、脆弱性を初心者にも分かりやすく整理する金融危機の早期警戒ダッシュボード",
+    "お金の流れ、安全弁、警告サイン、脆弱性を分かりやすく整理する金融危機の早期警戒ダッシュボード",
 };
 
 export default function RootLayout({
