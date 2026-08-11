@@ -281,7 +281,7 @@ function GaugeBasis({ label, value, description, priority, items }: { label: str
         {items.map((item) => (
           <a key={item.id} href={`/#indicator-${item.id}`} aria-label={`${item.name}の詳細データを見る`} className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.06] bg-white/[0.025] px-3 py-2.5 hover:border-cyan-300/20 hover:bg-white/[0.05]">
             <span className="min-w-0 truncate text-xs text-slate-300">{item.name}</span>
-            <span className="flex shrink-0 items-center gap-3"><span className="flex items-center gap-1.5 text-[10px] font-bold" style={{ color: signalColor[item.signal] }}><span className="size-1.5 rounded-full" style={{ backgroundColor: signalColor[item.signal] }} />{gaugeSignalLabel[item.signal]}</span><span className="text-[10px] font-bold text-cyan-200">詳細データ →</span></span>
+            <span className="flex shrink-0 items-center gap-1.5 text-[10px] font-bold" style={{ color: signalColor[item.signal] }}><span className="size-1.5 rounded-full" style={{ backgroundColor: signalColor[item.signal] }} />{gaugeSignalLabel[item.signal]}</span>
           </a>
         ))}
       </div>
