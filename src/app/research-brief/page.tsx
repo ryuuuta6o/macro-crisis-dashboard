@@ -31,7 +31,7 @@ export default function ResearchBriefPage() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a href="https://x.com/ryugukozou" target="_blank" rel="noreferrer" className="rounded-full bg-white px-6 py-3 text-center text-sm font-black text-slate-950">試験配信への参加をXで連絡</a>
-            <a href="https://x.com/ryugukozou" target="_blank" rel="noreferrer" className="rounded-full border border-cyan-300/20 bg-cyan-300/[0.06] px-6 py-3 text-center text-sm font-bold text-cyan-100">メディア向け試験導入を相談</a>
+            <a href="https://x.com/ryugukozou" target="_blank" rel="noreferrer" className="rounded-full border border-cyan-300/20 bg-cyan-300/[0.06] px-6 py-3 text-center text-sm font-bold text-cyan-100">動画・記事向け資料を相談</a>
           </div>
           <p className="mt-4 text-xs leading-6 text-slate-500">現在は需要検証期間です。自動売買、個別銘柄の推奨、価格予測は提供しません。</p>
         </header>
@@ -61,19 +61,22 @@ export default function ResearchBriefPage() {
             <p className="mt-5 border-t border-white/[0.08] pt-4 text-xs leading-6 text-slate-500">「世界経済の現在地」は無料公開のままです。有料化を検討するのは、重要部分を毎朝選び、読みに行かなくても受け取れる配信サービスです。</p>
           </article>
           <article id="research-pack-pilot" className="scroll-mt-8 rounded-3xl border border-cyan-300/20 bg-cyan-300/[0.055] p-6 sm:p-8">
-            <p className="text-[10px] font-bold tracking-[0.18em] text-cyan-300">メディア・情報発信者向け</p>
-            <h2 className="mt-2 text-2xl font-black">メディア向け調査資料プラン</h2>
+            <p className="text-[10px] font-bold tracking-[0.18em] text-cyan-300">YouTube・記事・ニュースレター運営者向け</p>
+            <h2 className="mt-2 text-2xl font-black">動画・記事制作者向けプラン</h2>
             <p className="mt-2 text-xs font-bold text-cyan-200">現在は試験提供中</p>
-            <p className="mt-4 text-sm leading-7 text-slate-300">金融系動画、ニュースレター、投資コミュニティ向け。初月1万円で、図版・出典・解説の実務価値を検証します。</p>
+            <p className="mt-4 text-sm leading-7 text-slate-300">金融情報を発信する人が、動画や記事を作るための調査時間を減らすプランです。重要な変化を選び、根拠付きの図と解説下書きをまとめて渡します。</p>
             <ul className="mt-5 space-y-3 text-sm text-slate-400">
-              <li>出典・観測日・閾値付き指標カード</li><li>週次の市場のズレ3テーマ</li><li>動画・記事向けの短い解説原稿</li><li>通常価格案：月額3万円</li>
+              <li><strong className="text-slate-200">届くもの：</strong>出典・観測日・警戒線付きの図版</li>
+              <li><strong className="text-slate-200">テーマ：</strong>今週の重要な変化と市場のズレ3件</li>
+              <li><strong className="text-slate-200">制作補助：</strong>動画・記事に使える短い解説下書き</li>
+              <li><strong className="text-slate-200">料金：</strong>試験導入は初月1万円、通常価格案は月額3万円</li>
             </ul>
           </article>
         </section>
 
         <section className="mt-6 rounded-3xl border border-amber-300/15 bg-amber-300/[0.04] p-6 text-sm leading-7 text-slate-400">
           <strong className="text-amber-100">検証の合格条件</strong>
-          <p className="mt-2">20営業日継続できること、読者から返信・保存・クリックが発生すること、メディア向け試験導入または個人の予約購入が実際に成立すること。この条件を満たした機能だけを自動化します。</p>
+          <p className="mt-2">20営業日継続できること、読者から返信・保存・クリックが発生すること、動画・記事制作者向けの試験導入または個人の予約購入が実際に成立すること。この条件を満たした機能だけを自動化します。</p>
         </section>
       </div>
     </main>
