@@ -173,6 +173,14 @@ export function IndicatorCard({
       : indicator.source === "manual"
         ? "手動JSON"
         : "取得不可";
+  const sourceLinks = indicator.sourceUrl
+    ? [{ label: sourceLabel, url: indicator.sourceUrl }]
+    : indicator.source === "FRED"
+      ? indicator.fredSeries.map((series) => ({
+          label: `FRED ${series}`,
+          url: `https://fred.stlouisfed.org/series/${encodeURIComponent(series)}`,
+        }))
+      : [];
   const reasons = getIndicatorReasons(indicator, allIndicators);
   const glossary = getIndicatorGlossary(indicator.id);
   const chartColor =
@@ -389,15 +397,20 @@ export function IndicatorCard({
           </p>
           <p className="mt-3 text-[11px] leading-5 text-slate-500">
             データ取得元：
-            {indicator.sourceUrl ? (
-              <a
-                href={indicator.sourceUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="text-cyan-300 hover:text-cyan-200"
-              >
-                {sourceLabel}
-              </a>
+            {sourceLinks.length ? (
+              sourceLinks.map((sourceLink, sourceIndex) => (
+                <span key={sourceLink.url}>
+                  {sourceIndex > 0 ? " / " : ""}
+                  <a
+                    href={sourceLink.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-cyan-300 underline decoration-cyan-300/30 underline-offset-2 hover:text-cyan-200"
+                  >
+                    {sourceLink.label}
+                  </a>
+                </span>
+              ))
             ) : (
               sourceLabel
             )}
