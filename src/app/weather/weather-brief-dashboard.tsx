@@ -219,10 +219,9 @@ const gaugeStage: Record<OverallSignal, string> = {
 
 function WeatherLevelGauge({ overall, indicators, loading }: { overall: OverallSignal; indicators: IndicatorValue[]; loading: boolean }) {
   const position = gaugePosition[overall];
-  const available = indicators.filter((item) => item.signal !== "unavailable");
-  const safety = available.filter((item) => item.type === "safety_valve");
-  const warnings = available.filter((item) => item.type === "warning_signal");
-  const vulnerabilities = available.filter((item) => item.type === "vulnerability");
+  const safety = indicators.filter((item) => item.type === "safety_valve");
+  const warnings = indicators.filter((item) => item.type === "warning_signal");
+  const vulnerabilities = indicators.filter((item) => item.type === "vulnerability");
   const safetyStress = safety.filter((item) => item.signal !== "green").length;
   const warningStress = warnings.filter((item) => item.signal !== "green").length;
   const vulnerabilityStress = vulnerabilities.filter((item) => item.signal === "orange" || item.signal === "red").length;
@@ -253,17 +252,41 @@ function WeatherLevelGauge({ overall, indicators, loading }: { overall: OverallS
       </div>
 
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
-        <GaugeBasis label="安全弁" value={loading ? "--" : `${safetyStress}/${safety.length}`} description="信用・流動性・銀行資金" priority="最優先" />
-        <GaugeBasis label="警告サイン" value={loading ? "--" : `${warningStress}/${warnings.length}`} description="金利・雇用・市場心理" priority="次に確認" />
-        <GaugeBasis label="脆弱性" value={loading ? "--" : `${vulnerabilityStress}/${vulnerabilities.length}`} description="CRE・Private Credit・割高感" priority="被害の大きさ" />
+        <GaugeBasis label="安全弁" value={loading ? "--" : `${safetyStress}/${safety.length} 点灯`} description="信用・流動性・銀行資金" priority="最優先" items={safety} />
+        <GaugeBasis label="警告サイン" value={loading ? "--" : `${warningStress}/${warnings.length} 点灯`} description="金利・雇用・市場心理" priority="次に確認" items={warnings} />
+        <GaugeBasis label="脆弱性" value={loading ? "--" : `${vulnerabilityStress}/${vulnerabilities.length} 高警戒`} description="CRE・Private Credit・割高感" priority="被害の大きさ" items={vulnerabilities} />
       </div>
-      <p className="mt-4 text-xs leading-6 text-slate-500">分子は黄・橙・赤の件数です。脆弱性は橙・赤だけを数えます。安全弁の悪化を最も重く扱い、脆弱性が赤いだけでは「強い警戒」にしません。</p>
+      <p className="mt-4 text-xs leading-6 text-slate-500">安全弁と警告サインの分子は黄・橙・赤・観測待ちの件数、脆弱性は橙・赤だけを数えます。カードを開くと対象指標と状態を確認できます。</p>
     </div>
   );
 }
 
-function GaugeBasis({ label, value, description, priority }: { label: string; value: string; description: string; priority: string }) {
-  return <div className="rounded-2xl border border-white/[0.08] bg-black/20 p-4"><div className="flex items-center justify-between gap-3"><strong className="text-sm text-white">{label}</strong><span className="font-mono text-lg font-black text-cyan-100">{value}</span></div><p className="mt-2 text-xs leading-5 text-slate-400">{description}</p><span className="mt-3 inline-block rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-bold text-slate-500">{priority}</span></div>;
+const gaugeSignalLabel: Record<Signal, string> = {
+  green: "落ち着き",
+  yellow: "注意",
+  orange: "警戒",
+  red: "強い警戒",
+  unavailable: "観測待ち",
+};
+
+function GaugeBasis({ label, value, description, priority, items }: { label: string; value: string; description: string; priority: string; items: IndicatorValue[] }) {
+  return (
+    <details className="group rounded-2xl border border-white/[0.08] bg-black/20 p-4 open:border-cyan-300/15 sm:col-span-3 lg:col-span-1">
+      <summary className="cursor-pointer list-none">
+        <div className="flex items-center justify-between gap-3"><strong className="text-sm text-white">{label}</strong><span className="font-mono text-base font-black text-cyan-100">{value}</span></div>
+        <p className="mt-2 text-xs leading-5 text-slate-400">{description}</p>
+        <div className="mt-3 flex items-center justify-between gap-3"><span className="rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-bold text-slate-500">{priority}</span><span className="text-[11px] font-bold text-cyan-200">{items.length}項目を見る <span className="inline-block transition group-open:rotate-180">⌄</span></span></div>
+      </summary>
+      <div className="mt-4 grid gap-2 border-t border-white/[0.07] pt-4 sm:grid-cols-2 lg:grid-cols-1">
+        {items.map((item) => (
+          <Link key={item.id} href={`/#indicator-${item.id}`} className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.06] bg-white/[0.025] px-3 py-2.5 hover:bg-white/[0.05]">
+            <span className="min-w-0 truncate text-xs text-slate-300">{item.name}</span>
+            <span className="flex shrink-0 items-center gap-1.5 text-[10px] font-bold" style={{ color: signalColor[item.signal] }}><span className="size-1.5 rounded-full" style={{ backgroundColor: signalColor[item.signal] }} />{gaugeSignalLabel[item.signal]}</span>
+          </Link>
+        ))}
+      </div>
+    </details>
+  );
 }
 
 function formatNumber(value: number, decimals: number) {
