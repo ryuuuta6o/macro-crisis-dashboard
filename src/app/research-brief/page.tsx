@@ -31,7 +31,7 @@ export default function ResearchBriefPage() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a href="https://x.com/ryugukozou" target="_blank" rel="noreferrer" className="rounded-full bg-white px-6 py-3 text-center text-sm font-black text-slate-950">試験配信への参加をXで連絡</a>
-            <a href="https://x.com/ryugukozou" target="_blank" rel="noreferrer" className="rounded-full border border-cyan-300/20 bg-cyan-300/[0.06] px-6 py-3 text-center text-sm font-bold text-cyan-100">動画・記事向け資料を相談</a>
+            <a href="#research-pack-pilot" className="rounded-full border border-cyan-300/20 bg-cyan-300/[0.06] px-6 py-3 text-center text-sm font-bold text-cyan-100">制作者向け構想を確認</a>
           </div>
           <p className="mt-4 text-xs leading-6 text-slate-500">現在は需要検証期間です。自動売買、個別銘柄の推奨、価格予測は提供しません。</p>
         </header>
@@ -63,20 +63,21 @@ export default function ResearchBriefPage() {
           <article id="research-pack-pilot" className="scroll-mt-8 rounded-3xl border border-cyan-300/20 bg-cyan-300/[0.055] p-6 sm:p-8">
             <p className="text-[10px] font-bold tracking-[0.18em] text-cyan-300">YouTube・記事・ニュースレター運営者向け</p>
             <h2 className="mt-2 text-2xl font-black">動画・記事制作者向けプラン</h2>
-            <p className="mt-2 text-xs font-bold text-cyan-200">現在は試験提供中</p>
-            <p className="mt-4 text-sm leading-7 text-slate-300">金融情報を発信する人が、動画や記事を作るための調査時間を減らすプランです。重要な変化を選び、根拠付きの図と解説下書きをまとめて渡します。</p>
+            <p className="mt-2 text-xs font-bold text-amber-200">準備中・現在は申込受付前</p>
+            <p className="mt-4 text-sm leading-7 text-slate-300">現時点のプロ版では、指標の現在値・観測日・警戒線・取得元を画面上で確認できます。以下の制作者向け機能は、まだ実装も提供もしていません。</p>
             <ul className="mt-5 space-y-3 text-sm text-slate-400">
-              <li><strong className="text-slate-200">届くもの：</strong>出典・観測日・警戒線付きの図版</li>
-              <li><strong className="text-slate-200">テーマ：</strong>今週の重要な変化と市場のズレ3件</li>
-              <li><strong className="text-slate-200">制作補助：</strong>動画・記事に使える短い解説下書き</li>
-              <li><strong className="text-slate-200">料金：</strong>試験導入は初月1万円、通常価格案は月額3万円</li>
+              <li><strong className="text-emerald-200">現在利用可能：</strong>プロ版で現在値・観測日・警戒線・取得元を確認</li>
+              <li><strong className="text-amber-200">未実装：</strong>出典情報を含む図版の書き出し</li>
+              <li><strong className="text-amber-200">未実装：</strong>今週の重要な変化と市場のズレ3件の選定</li>
+              <li><strong className="text-amber-200">未実装：</strong>動画・記事向けの解説下書き</li>
             </ul>
+            <p className="mt-5 border-t border-cyan-300/10 pt-4 text-xs leading-6 text-slate-500">料金は、実際に提供できる状態と需要の確認ができるまで設定しません。</p>
           </article>
         </section>
 
         <section className="mt-6 rounded-3xl border border-amber-300/15 bg-amber-300/[0.04] p-6 text-sm leading-7 text-slate-400">
           <strong className="text-amber-100">検証の合格条件</strong>
-          <p className="mt-2">20営業日継続できること、読者から返信・保存・クリックが発生すること、動画・記事制作者向けの試験導入または個人の予約購入が実際に成立すること。この条件を満たした機能だけを自動化します。</p>
+          <p className="mt-2">まず朝3分ブリーフを20営業日継続し、読者から返信・保存・クリックが発生するかを確認します。動画・記事制作者向け機能は、その後に需要を確認してから実装します。</p>
         </section>
       </div>
     </main>
