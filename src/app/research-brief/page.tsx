@@ -10,7 +10,7 @@ const format = [
   { number: "01", title: "今日の天気", text: "世界経済の現在地を、晴れ・くもり・雨・嵐で短く確認します。", href: "/weather#today-weather" },
   { number: "02", title: "今日変わった3つ", text: "信号色・変化速度に加え、市場が見落としやすいズレを3件の中に含めます。", href: "/weather#today-changes" },
   { number: "03", title: "次に点灯する候補", text: "予測ではなく、次に確認する指標と警戒線までの距離を示します。", href: "/weather#next-trigger" },
-  { number: "04", title: "数字と出典を確認する", text: "プロ版で現在値、観測日、閾値、取得元を確認できます。", href: "/weather#evidence-links" },
+  { number: "04", title: "数字と出典を確認する", text: "詳細データ版で現在値、観測日、閾値、取得元を確認できます。", href: "/weather#evidence-links" },
 ] as const;
 
 export default function ResearchBriefPage() {
@@ -64,9 +64,9 @@ export default function ResearchBriefPage() {
             <p className="text-[10px] font-bold tracking-[0.18em] text-cyan-300">YouTube・記事・ニュースレター運営者向け</p>
             <h2 className="mt-2 text-2xl font-black">動画・記事制作者向けプラン</h2>
             <p className="mt-2 text-xs font-bold text-amber-200">準備中・現在は申込受付前</p>
-            <p className="mt-4 text-sm leading-7 text-slate-300">現時点のプロ版では、指標の現在値・観測日・警戒線・取得元を画面上で確認できます。以下の制作者向け機能は、まだ実装も提供もしていません。</p>
+            <p className="mt-4 text-sm leading-7 text-slate-300">現時点の詳細データ版では、指標の現在値・観測日・警戒線・取得元を画面上で確認できます。以下の制作者向け機能は、まだ実装も提供もしていません。</p>
             <ul className="mt-5 space-y-3 text-sm text-slate-400">
-              <li><strong className="text-emerald-200">現在利用可能：</strong>プロ版で現在値・観測日・警戒線・取得元を確認</li>
+              <li><strong className="text-emerald-200">現在利用可能：</strong>詳細データ版で現在値・観測日・警戒線・取得元を確認</li>
               <li><strong className="text-amber-200">未実装：</strong>出典情報を含む図版の書き出し</li>
               <li><strong className="text-amber-200">未実装：</strong>今週の重要な変化と市場のズレ3件の選定</li>
               <li><strong className="text-amber-200">未実装：</strong>動画・記事向けの解説下書き</li>

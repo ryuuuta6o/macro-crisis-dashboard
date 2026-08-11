@@ -153,7 +153,7 @@ export function WeatherBriefDashboard() {
       <div className="relative mx-auto max-w-5xl px-4 pb-20 pt-5 sm:px-6 lg:px-8">
         <nav className="flex items-center justify-between border-b border-white/[0.08] pb-4">
           <Link href="/" className="text-sm font-black tracking-[0.08em]">MACRO SIGNAL</Link>
-          <div className="flex items-center gap-3 text-xs"><Link href="/research-brief" className="text-cyan-200">朝3分ブリーフ</Link><Link href="/" className="rounded-full border border-white/10 px-3 py-1.5 text-slate-300">プロ版</Link></div>
+          <div className="flex items-center gap-3 text-xs"><Link href="/research-brief" className="text-cyan-200">朝3分ブリーフ</Link><Link href="/" className="rounded-full border border-white/10 px-3 py-1.5 text-slate-300">詳細データ版</Link></div>
         </nav>
 
         <header className="py-10 sm:py-14">
@@ -184,7 +184,7 @@ export function WeatherBriefDashboard() {
 
         <section id="evidence-links" className="scroll-mt-6 mt-6 grid gap-4 sm:grid-cols-2">
           <Link href="/research-brief" className="rounded-3xl border border-cyan-300/20 bg-cyan-300/[0.065] p-6 hover:bg-cyan-300/[0.095]"><p className="text-[10px] font-bold tracking-[0.18em] text-cyan-300">20-DAY VALIDATION</p><h2 className="mt-2 text-xl font-black">朝3分ブリーフの試験配信</h2><p className="mt-2 text-sm leading-6 text-slate-300">市場のズレ、今日の変化、次の線を固定フォーマットで検証します。</p></Link>
-          <Link href="/" className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 hover:bg-white/[0.07]"><p className="text-[10px] font-bold tracking-[0.18em] text-slate-500">EVIDENCE TERMINAL</p><h2 className="mt-2 text-xl font-black">数字と出典を確認する</h2><p className="mt-2 text-sm leading-6 text-slate-400">プロ版で観測値、履歴、閾値、データ鮮度まで掘り下げます。</p></Link>
+          <Link href="/" className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 hover:bg-white/[0.07]"><p className="text-[10px] font-bold tracking-[0.18em] text-slate-500">DETAILED DATA</p><h2 className="mt-2 text-xl font-black">詳細データ版で確認する</h2><p className="mt-2 text-sm leading-6 text-slate-400">観測値、履歴、閾値、データ鮮度まで無料で掘り下げます。</p></Link>
         </section>
         <footer className="mt-10 border-t border-white/[0.07] py-8 text-xs leading-6 text-slate-600">本ページは市場環境の情報提供であり、投資助言や価格予測ではありません。</footer>
       </div>
