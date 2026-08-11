@@ -173,13 +173,13 @@ export function IndicatorCard({
       : indicator.source === "manual"
         ? "手動JSON"
         : "取得不可";
-  const sourceLinks = indicator.sourceUrl
-    ? [{ label: sourceLabel, url: indicator.sourceUrl }]
-    : indicator.source === "FRED"
-      ? indicator.fredSeries.map((series) => ({
+  const sourceLinks = indicator.source === "FRED" && indicator.fredSeries.length
+    ? indicator.fredSeries.map((series) => ({
           label: `FRED ${series}`,
           url: `https://fred.stlouisfed.org/series/${encodeURIComponent(series)}`,
         }))
+    : indicator.sourceUrl
+      ? [{ label: sourceLabel, url: indicator.sourceUrl }]
       : [];
   const reasons = getIndicatorReasons(indicator, allIndicators);
   const glossary = getIndicatorGlossary(indicator.id);
