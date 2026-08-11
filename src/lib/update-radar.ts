@@ -5,6 +5,10 @@ import type {
   UpdateItem,
   UpdateRadarData,
 } from "@/types/indicator";
+import {
+  assessIndicatorFreshness,
+  computeChangeIntelligence,
+} from "@/lib/data-freshness";
 
 const signalRank: Record<Signal, number> = {
   unavailable: -1,
@@ -74,22 +78,20 @@ function indicatorPriority(item: UpdateItem) {
   const critical = item.relatedIndicators?.some((id) => criticalIds.has(id)) ? 40 : 0;
   const direction = item.direction === "worse" ? 50 : item.direction === "new" ? 35 : item.direction === "better" ? 20 : 10;
   const level = item.level === "red" ? 40 : item.level === "orange" ? 30 : item.level === "yellow" ? 20 : 5;
-  return critical + direction + level;
+  return critical + direction + level + (item.changeScore ?? 0);
 }
 
-function buildIndicatorItems(indicators: IndicatorValue[]): UpdateItem[] {
+function buildIndicatorItems(indicators: IndicatorValue[], now: Date): UpdateItem[] {
   return indicators.flatMap((item) => {
-    const valueUpdated =
-      item.value !== null &&
-      item.previousValue !== null &&
-      String(item.value) !== String(item.previousValue);
-    const signalChanged = item.previousSignal !== item.signal;
-    if (!valueUpdated && !signalChanged && !criticalIds.has(item.id)) return [];
+    if (item.source === "manual" || item.source === "published") return [];
+    const intelligence = computeChangeIntelligence(item, now);
+    if (!intelligence.actionable) return [];
+    const freshness = assessIndicatorFreshness(item, now);
 
-    const direction = signalChanged
+    const direction = intelligence.signalChanged
       ? directionFromSignals(item.previousSignal, item.signal)
       : directionFromValue(item);
-    const category: UpdateItem["category"] = signalChanged ? "signal_change" : "indicator";
+    const category: UpdateItem["category"] = intelligence.signalChanged ? "signal_change" : "indicator";
     const update: UpdateItem = {
       id: `indicator-${item.id}`,
       title: item.name,
@@ -105,13 +107,22 @@ function buildIndicatorItems(indicators: IndicatorValue[]): UpdateItem[] {
       sourceName: item.sourceName ?? item.sourceLabel ?? item.source,
       sourceUrl: item.sourceUrl,
       updatedAt: item.observationDate ?? new Date().toISOString(),
+      freshnessStatus: freshness.status,
+      freshnessLabel: freshness.label,
+      changeScore: intelligence.score,
     };
     return [update];
   });
 }
 
-function buildNewsItems(news: MarketNewsItem[]): UpdateItem[] {
-  return news.slice(0, 3).map((item) => ({
+function buildNewsItems(news: MarketNewsItem[], now: Date): UpdateItem[] {
+  return news
+    .filter((item) => {
+      const publishedAt = new Date(item.publishedAt);
+      return !Number.isNaN(publishedAt.getTime()) && now.getTime() - publishedAt.getTime() <= 72 * 60 * 60 * 1000;
+    })
+    .slice(0, 3)
+    .map((item) => ({
     id: `news-${item.id}`,
     title: item.title,
     category: "news" as const,
@@ -122,20 +133,27 @@ function buildNewsItems(news: MarketNewsItem[]): UpdateItem[] {
     sourceName: item.sourceName,
     sourceUrl: item.sourceUrl,
     updatedAt: item.publishedAt,
-  }));
+    }));
 }
 
-function buildManualItems(indicators: IndicatorValue[]): UpdateItem[] {
+function buildManualItems(indicators: IndicatorValue[], now: Date): UpdateItem[] {
   return indicators
     .filter((item) => item.source === "manual" || item.source === "published")
-    .filter((item) => item.signal === "red" || item.signal === "orange" || criticalIds.has(item.id))
-    .slice(0, 5)
     .map((item) => ({
+      item,
+      freshness: assessIndicatorFreshness(item, now),
+      intelligence: computeChangeIntelligence(item, now),
+    }))
+    .filter(({ intelligence }) => intelligence.actionable)
+    .slice(0, 5)
+    .map(({ item, freshness, intelligence }) => ({
       id: `manual-${item.id}`,
       title: `${item.name} 更新`,
       category: "manual_data" as const,
       level: item.signal === "red" ? "red" as const : item.signal === "orange" ? "orange" as const : item.signal === "yellow" ? "yellow" as const : "green" as const,
-      direction: directionFromValue(item),
+      direction: intelligence.signalChanged
+        ? directionFromSignals(item.previousSignal, item.signal)
+        : directionFromValue(item),
       summary: item.description,
       before: displayValue(item, item.previousValue),
       after: displayValue(item, item.value),
@@ -145,6 +163,9 @@ function buildManualItems(indicators: IndicatorValue[]): UpdateItem[] {
       sourceName: item.sourceName ?? item.sourceLabel ?? item.source,
       sourceUrl: item.sourceUrl,
       updatedAt: item.observationDate ?? new Date().toISOString(),
+      freshnessStatus: freshness.status,
+      freshnessLabel: freshness.label,
+      changeScore: intelligence.score,
     }));
 }
 
@@ -153,9 +174,12 @@ export function buildUpdateRadarData(
   news: MarketNewsItem[],
   generatedAt = new Date().toISOString(),
 ): UpdateRadarData {
-  const indicatorUpdates = buildIndicatorItems(indicators);
-  const newsUpdates = buildNewsItems(news);
-  const manualUpdates = buildManualItems(indicators);
+  const now = new Date(generatedAt);
+  const safeNow = Number.isNaN(now.getTime()) ? new Date() : now;
+  const indicatorUpdates = buildIndicatorItems(indicators, safeNow);
+  const newsUpdates = buildNewsItems(news, safeNow);
+  const manualUpdates = buildManualItems(indicators, safeNow);
+  const freshness = indicators.map((item) => assessIndicatorFreshness(item, safeNow));
   const all = [...indicatorUpdates, ...newsUpdates, ...manualUpdates];
   const highlights = [...all]
     .sort((left, right) => indicatorPriority(right) - indicatorPriority(left))
@@ -169,6 +193,8 @@ export function buildUpdateRadarData(
       improved: all.filter((item) => item.direction === "better").length,
       newNews: newsUpdates.length,
       manualUpdates: manualUpdates.length,
+      staleIndicators: freshness.filter((item) => item.status === "stale" || item.status === "unknown").length,
+      comparableIndicators: freshness.filter((item) => item.status === "fresh" || item.status === "aging").length,
     },
     highlights,
     indicatorUpdates: indicatorUpdates.slice(0, 8),

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { WeatherDashboard } from "./weather-dashboard";
+import { WeatherBriefDashboard } from "./weather-brief-dashboard";
 
 export const metadata: Metadata = {
-  title: "世界経済天気予報 | Macro Signal",
+  title: "世界経済の現在地 | Macro Signal",
   description:
-    "新NISA勢のための世界経済天気予報。株価より先に見るべき危険信号を、毎朝1分でチェック。",
+    "毎朝3分で、今日変わった3つ、市場が見落としやすいズレ、次の警戒線を確認できます。",
 };
 
 export default function WeatherPage() {
-  return <WeatherDashboard />;
+  return <WeatherBriefDashboard />;
 }

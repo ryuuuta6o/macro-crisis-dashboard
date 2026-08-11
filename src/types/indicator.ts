@@ -346,6 +346,9 @@ export type UpdateItem = {
   sourceName?: string;
   sourceUrl?: string;
   updatedAt: string;
+  freshnessStatus?: "fresh" | "aging" | "stale" | "unknown";
+  freshnessLabel?: string;
+  changeScore?: number;
 };
 
 export type UpdateRadarData = {
@@ -356,6 +359,8 @@ export type UpdateRadarData = {
     improved: number;
     newNews: number;
     manualUpdates: number;
+    staleIndicators: number;
+    comparableIndicators: number;
   };
   highlights: UpdateItem[];
   indicatorUpdates: UpdateItem[];

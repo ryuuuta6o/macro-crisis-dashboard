@@ -13,35 +13,7 @@ import type {
   SimilarPeriodCondition,
 } from "@/types/indicator";
 import { getIndicatorGlossary } from "@/lib/indicator-glossary";
-
-const meaningfulChanges: Partial<Record<IndicatorId, number>> = {
-  "hy-oas": 15,
-  "baa-aaa": 0.1,
-  "ig-oas": 0.08,
-  "ccc-oas": 30,
-  vix: 2,
-  dgs10: 0.08,
-  dgs30: 0.08,
-  move: 5,
-  sofr: 0.08,
-  "ted-spread": 0.05,
-  "fra-ois": 5,
-  "discount-window": 2,
-  btfp: 1,
-  "bank-cet1": 0.3,
-  "fdic-dif": 2,
-  "household-debt-gdp": 1,
-  "household-dsr": 0.2,
-  sloos: 5,
-  "office-cmbs": 0.3,
-  "private-credit-default": 0.2,
-  "pik-ratio": 0.5,
-  "shiller-cape": 0.5,
-  "buffett-indicator": 5,
-  "margin-debt-gdp": 0.1,
-  "margin-debt-m2": 0.1,
-  icsa: 10,
-};
+import { computeChangeIntelligence } from "@/lib/data-freshness";
 
 const signalRank: Record<Signal, number> = {
   unavailable: -1,
@@ -67,6 +39,8 @@ export function formatIndicatorValue(
 export function getChangeItems(indicators: IndicatorValue[]): ChangeItem[] {
   return indicators
     .flatMap((indicator) => {
+      const intelligence = computeChangeIntelligence(indicator);
+      if (!intelligence.actionable) return [];
       const hasNumericPair =
         indicator.numericValue !== null &&
         indicator.previousNumericValue !== null;
@@ -81,11 +55,6 @@ export function getChangeItems(indicators: IndicatorValue[]): ChangeItem[] {
         indicator.thresholdDirection === "lower-is-worse"
           ? numericChange < 0
           : numericChange > 0;
-      const threshold = meaningfulChanges[indicator.id] ?? Number.POSITIVE_INFINITY;
-      const meaningful = Math.abs(numericChange) >= threshold;
-
-      if (!signalChanged && !meaningful) return [];
-
       const direction =
         signalRank[indicator.signal] > signalRank[indicator.previousSignal] ||
         (!signalChanged && worseningChange)
@@ -94,9 +63,7 @@ export function getChangeItems(indicators: IndicatorValue[]): ChangeItem[] {
               (!signalChanged && numericChange !== 0 && !worseningChange)
             ? "improving"
             : "flat";
-      const score =
-        (signalChanged ? 100 : 0) +
-        (Number.isFinite(threshold) ? Math.abs(numericChange) / threshold : 0);
+      const score = intelligence.score;
 
       return [
         {

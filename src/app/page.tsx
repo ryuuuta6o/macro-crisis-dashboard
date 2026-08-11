@@ -2,7 +2,6 @@ import { AppShell } from "@/components/layout/AppShell";
 import { TerminalOverview } from "@/components/dashboard/TerminalOverview";
 import { PublicSectionFold } from "@/components/dashboard/PublicSectionFold";
 import { ContagionWatch } from "@/components/dashboard/ContagionWatch";
-import { ApocalypseCommandCenter } from "@/components/dashboard/ApocalypseCommandCenter";
 import {
   BubbleTriggerMonitor,
   CombinationChecklist,
@@ -224,9 +223,9 @@ export default async function Home() {
 
         <PublicSectionFold
           id="supporting-signals-fold"
-          eyebrow="SUPPORTING SIGNALS"
-          title="危機前行動・著名投資家・世界リスク"
-          description="人・企業・資金・地域がどこへ動いているかを見る"
+          eyebrow="RESEARCH LABS"
+          title="補助調査ラボ"
+          description="危機前行動・著名投資家・世界リスクは、主判定と分けて調査する"
           signal={riskLevel}
         >
           <section aria-label="補助シグナルと世界リスク" className="mt-5 grid gap-4 xl:grid-cols-3">
@@ -234,16 +233,6 @@ export default async function Home() {
             <SmartMoneyDashboardSection />
             <GlobalRiskDashboardSummary />
           </section>
-        </PublicSectionFold>
-
-        <PublicSectionFold
-          id="apocalypse-fold"
-          eyebrow="APOCALYPSE COMMAND CENTER"
-          title="異常検知・危機ニュース密度・資金逃避"
-          description="今日の異常、ニュース密度、逃避資金をまとめて確認"
-          signal={riskLevel}
-        >
-          <ApocalypseCommandCenter indicators={data.indicators} news={news} />
         </PublicSectionFold>
 
         <PublicSectionFold

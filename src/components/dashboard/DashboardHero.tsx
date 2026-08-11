@@ -6,6 +6,7 @@ import type {
 } from "@/types/indicator";
 import { CompactGlobe } from "@/components/globe/CompactGlobe";
 import type { GlobeHeroData } from "@/types/globe";
+import { assessIndicatorFreshness } from "@/lib/data-freshness";
 
 const stateLabel: Record<RiskLevel, string> = {
   green: "STABLE",
@@ -29,9 +30,8 @@ export function DashboardHero({
 }) {
   const alerts = indicators.filter(
     (item) =>
-      item.signal === "red" ||
-      item.signal === "orange" ||
-      item.signal === "yellow",
+      (item.signal === "red" || item.signal === "orange" || item.signal === "yellow") &&
+      !["stale", "unknown"].includes(assessIndicatorFreshness(item).status),
   ).length;
   const live = indicators.filter((item) => item.signal !== "unavailable").length;
   const creditPulse = indicators.find((item) => item.id === "hy-oas");
@@ -85,12 +85,18 @@ export function DashboardHero({
           </span>
         </div>
 
-        <div className="mt-5 flex justify-center">
+        <div className="mt-5 flex flex-wrap justify-center gap-3">
           <Link
             href="/weather"
             className="inline-flex min-h-10 items-center rounded-full border border-cyan-200/20 bg-cyan-200/[0.075] px-4 py-2 text-xs font-bold text-cyan-100 backdrop-blur-md transition hover:border-cyan-200/35 hover:bg-cyan-200/[0.12]"
           >
-            数字を使わない初心者向け「世界経済天気予報」へ →
+            初心者向け「世界経済の現在地」へ →
+          </Link>
+          <Link
+            href="/research-brief"
+            className="inline-flex min-h-10 items-center rounded-full border border-white/10 bg-white/[0.045] px-4 py-2 text-xs font-bold text-slate-200 backdrop-blur-md transition hover:bg-white/[0.08]"
+          >
+            朝3分ブリーフの試験配信 →
           </Link>
         </div>
 

@@ -3,13 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const items = [
+const coreItems = [
   { href: "/#dashboard", label: "ダッシュボード", short: "ホーム", icon: "HM" },
-  { href: "/weather", label: "初心者向け天気予報", short: "入門", icon: "EZ" },
+  { href: "/weather", label: "世界経済の現在地", short: "現在地", icon: "EZ" },
+  { href: "/research-brief", label: "朝3分ブリーフ", short: "ブリーフ", icon: "BR" },
   { href: "/#crisis-risk-range-fold", label: "危機警戒レンジ", short: "総合", icon: "RR" },
   { href: "/#liquidity-core-fold", label: "流動性コア", short: "流動性", icon: "LQ" },
   { href: "/#classification-summary-fold", label: "3分類サマリー", short: "3分類", icon: "3T" },
   { href: "/#crisis-routes-fold", label: "危機ルート", short: "ルート", icon: "RT" },
+] as const;
+
+const researchItems = [
   { href: "/behavior", label: "危機前行動", short: "行動", icon: "BH" },
   { href: "/sectors", label: "セクター動向", short: "セクター", icon: "SC" },
   { href: "/investors", label: "著名投資家", short: "投資家", icon: "13F" },
@@ -18,12 +22,11 @@ const items = [
 ] as const;
 
 const mobileItems = [
-  items[0],
-  items[1],
-  items[2],
-  items[3],
-  items[4],
-  items[7],
+  coreItems[0],
+  coreItems[1],
+  coreItems[2],
+  coreItems[3],
+  coreItems[4],
 ] as const;
 
 export function Sidebar() {
@@ -58,7 +61,8 @@ export function Sidebar() {
         </Link>
 
         <nav className="mt-7 space-y-1.5">
-          {items.map((item) => {
+          <p className="px-3 pb-1 text-[9px] font-bold tracking-[0.18em] text-slate-700">CORE MONITOR</p>
+          {coreItems.map((item) => {
             const active = isActive(item.href);
             return (
               <Link
@@ -74,6 +78,25 @@ export function Sidebar() {
                 <span className="grid size-7 place-items-center rounded bg-white/[0.035] font-mono text-[9px] group-hover:text-slate-200">
                   {item.icon}
                 </span>
+                {item.label}
+              </Link>
+            );
+          })}
+          <p className="px-3 pb-1 pt-4 text-[9px] font-bold tracking-[0.18em] text-slate-700">RESEARCH LABS</p>
+          {researchItems.map((item) => {
+            const active = isActive(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={`group flex items-center gap-3 rounded-md border px-3 py-2.5 text-xs transition ${
+                  active
+                    ? "border-blue-400/25 bg-blue-400/[0.09] text-blue-100"
+                    : "border-transparent text-slate-500 hover:bg-blue-400/[0.04] hover:text-slate-200"
+                }`}
+              >
+                <span className="grid size-7 place-items-center rounded bg-white/[0.035] font-mono text-[9px] group-hover:text-slate-200">{item.icon}</span>
                 {item.label}
               </Link>
             );

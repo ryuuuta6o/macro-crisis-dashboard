@@ -14,6 +14,7 @@ import { createSparkline, sparklinePoints } from "@/lib/mock-sparklines";
 import { getIndicatorGlossary } from "@/lib/indicator-glossary";
 import { MARGIN_DEBT_M2_CONFIG } from "@/config/manual-data";
 import { detectMarginDebtM2Peakout } from "@/lib/margin-debt-m2";
+import { assessIndicatorFreshness } from "@/lib/data-freshness";
 
 const signalBorder: Record<Signal, string> = {
   green: "before:bg-[#3FB950]",
@@ -197,6 +198,12 @@ export function IndicatorCard({
     indicator.id === "margin-debt-m2"
       ? detectMarginDebtM2Peakout(indicator.history)
       : null;
+  const freshness = assessIndicatorFreshness(indicator);
+  const freshnessClass = freshness.status === "fresh"
+    ? "border-emerald-300/15 bg-emerald-300/[0.045] text-emerald-100"
+    : freshness.status === "aging"
+      ? "border-amber-300/20 bg-amber-300/[0.055] text-amber-100"
+      : "border-rose-300/20 bg-rose-300/[0.06] text-rose-100";
 
   return (
     <TiltCard className={`relative overflow-hidden rounded-lg border before:absolute before:inset-y-0 before:left-0 before:w-[3px] ${signalBorder[indicator.signal]} ${signalSurface[indicator.signal]}`}>
@@ -228,7 +235,16 @@ export function IndicatorCard({
         >
           重要度：{IMPORTANCE_LABELS[indicator.importance]}
         </span>
+        <span className={`inline-flex rounded-md border px-2 py-1 text-[10px] font-bold tracking-[0.08em] ${freshnessClass}`}>
+          鮮度：{freshness.label}
+        </span>
       </div>
+
+      {(freshness.status === "stale" || freshness.status === "unknown") && (
+        <p className="mt-3 rounded-md border border-rose-300/15 bg-rose-300/[0.045] px-3 py-2 text-xs leading-5 text-rose-100/90">
+          {freshness.note} 信号色は直近公表値の参考表示です。
+        </p>
+      )}
 
       <div className="mt-6 flex items-end justify-between gap-4">
         <div className="min-w-0">

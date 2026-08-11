@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test src/lib/x-automation/*.test.ts",
+    "test": "tsx --test src/lib/data-freshness.test.ts src/lib/x-automation/*.test.ts",
     "data:pipeline": "python scripts/data-pipeline/generate_hidden_gems.py",
     "hidden-gems:snapshot": "node scripts/update-hidden-gems-history.mjs"
   },

@@ -28,12 +28,13 @@ export function UpdateRadar({ data }: { data: UpdateRadarData }) {
         </span>
       </div>
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
         <SummaryPill label="更新された情報" value={`${data.summary.totalUpdates}件`} />
         <SummaryPill label="危険度上昇" value={`${data.summary.worsened}件`} tone="red" />
         <SummaryPill label="危険度低下" value={`${data.summary.improved}件`} tone="green" />
         <SummaryPill label="新着ニュース" value={`${data.summary.newNews}件`} />
         <SummaryPill label="手動データ更新" value={`${data.summary.manualUpdates}件`} />
+        <SummaryPill label="鮮度注意" value={`${data.summary.staleIndicators}件`} tone={data.summary.staleIndicators ? "red" : "neutral"} />
       </div>
 
       <div className="mt-6 grid gap-4 xl:grid-cols-[1.2fr_1fr]">
@@ -41,6 +42,14 @@ export function UpdateRadar({ data }: { data: UpdateRadarData }) {
           <h3 className="text-sm font-black text-white">重要更新</h3>
           <div className="mt-3 space-y-3">
             {data.highlights.map((item) => <UpdateCard key={item.id} item={item} />)}
+            {!data.highlights.length && (
+              <div className="rounded-3xl border border-emerald-300/15 bg-emerald-300/[0.045] p-5">
+                <strong className="text-sm text-emerald-100">有意な変化は検出されていません</strong>
+                <p className="mt-2 text-sm leading-6 text-slate-400">
+                  高ストレス水準が続いていても、信号色または通常ノイズを超える変化がなければ「今日の更新」には数えません。
+                </p>
+              </div>
+            )}
           </div>
         </div>
         <div className="grid gap-4">
@@ -68,7 +77,7 @@ export function UpdateRadar({ data }: { data: UpdateRadarData }) {
       </div>
 
       <p className="mt-5 rounded-2xl border border-white/[0.06] bg-black/20 p-3 text-[11px] leading-5 text-slate-500">
-        更新情報は市場環境の変化を示すもので、売買判断ではありません。脆弱性の悪化だけで金融危機とは表示せず、点火層の悪化を最重要扱いにします。
+        比較可能 {data.summary.comparableIndicators}件。更新停滞・観測日不明 {data.summary.staleIndicators}件は、現在水準の参考表示に残しても「今日の変化」から除外します。脆弱性の赤だけで金融危機とは判定しません。
       </p>
     </section>
   );
@@ -105,6 +114,7 @@ function UpdateCard({ item, compact = false }: { item: UpdateItem; compact?: boo
           {item.previousSignal && item.currentSignal && <span className="rounded-full border border-white/[0.08] bg-black/20 px-2.5 py-1 font-mono">{item.previousSignal} → {item.currentSignal}</span>}
           <span className="rounded-full border border-white/[0.08] bg-black/20 px-2.5 py-1">{formatDate(item.updatedAt)}</span>
           {item.sourceName && <span className="rounded-full border border-white/[0.08] bg-black/20 px-2.5 py-1">{item.sourceName}</span>}
+          {item.freshnessLabel && <span className="rounded-full border border-white/[0.08] bg-black/20 px-2.5 py-1">鮮度: {item.freshnessLabel}</span>}
         </div>
       )}
     </a>
