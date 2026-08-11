@@ -7,9 +7,10 @@ export const metadata: Metadata = {
 };
 
 const format = [
-  { number: "01", title: "今日変わった3つ", text: "高いまま動かない指標ではなく、信号色・変化速度・複数市場への波及を優先します。" },
-  { number: "02", title: "市場が見ていないズレ", text: "株価と信用、VIXと国債、公開市場とPrivate Creditの温度差を一つだけ言語化します。" },
-  { number: "03", title: "次に点灯する線", text: "予測ではなく、どの公表値・閾値を次に確認するかを出典付きで示します。" },
+  { number: "01", title: "今日の天気", text: "世界経済の現在地を、晴れ・くもり・雨・嵐で短く確認します。", href: "/weather#today-weather" },
+  { number: "02", title: "今日変わった3つ", text: "信号色・変化速度に加え、市場が見落としやすいズレを3件の中に含めます。", href: "/weather#today-changes" },
+  { number: "03", title: "次に点灯する候補", text: "予測ではなく、次に確認する指標と警戒線までの距離を示します。", href: "/weather#next-trigger" },
+  { number: "04", title: "数字と出典を確認する", text: "プロ版で現在値、観測日、閾値、取得元を確認できます。", href: "/weather#evidence-links" },
 ] as const;
 
 export default function ResearchBriefPage() {
@@ -35,13 +36,14 @@ export default function ResearchBriefPage() {
           <p className="mt-4 text-xs leading-6 text-slate-500">現在は需要検証期間です。自動売買、個別銘柄の推奨、価格予測は提供しません。</p>
         </header>
 
-        <section className="grid gap-4 md:grid-cols-3">
+        <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {format.map((item) => (
-            <article key={item.number} className="rounded-3xl border border-white/10 bg-white/[0.045] p-6">
+            <Link key={item.number} href={item.href} className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 transition hover:border-cyan-300/20 hover:bg-white/[0.065]">
               <span className="font-mono text-xs text-cyan-300">{item.number}</span>
               <h2 className="mt-3 text-xl font-black">{item.title}</h2>
               <p className="mt-3 text-sm leading-7 text-slate-400">{item.text}</p>
-            </article>
+              <span className="mt-4 block text-xs font-bold text-cyan-200">該当箇所を見る →</span>
+            </Link>
           ))}
         </section>
 
@@ -49,10 +51,14 @@ export default function ResearchBriefPage() {
           <article id="founding-reader" className="scroll-mt-8 rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-8">
             <p className="text-[10px] font-bold tracking-[0.18em] text-cyan-300">個人向け</p>
             <h2 className="mt-2 text-2xl font-black">創設メンバープラン</h2>
-            <p className="mt-4 text-sm leading-7 text-slate-300">20日間の試験配信後、継続価値が確認できた場合のみ月額980円の創設メンバー枠を案内します。</p>
+            <p className="mt-4 text-sm leading-7 text-slate-300">現在の試験配信は無料です。20日間の検証後、継続価値が確認できた場合のみ月額980円の創設メンバー枠を案内します。</p>
             <ul className="mt-5 space-y-3 text-sm text-slate-400">
-              <li>今日の有意な変化3件</li><li>市場の温度差・見落とし1件</li><li>次の公表値と警戒線</li><li>根拠データと観測日のリンク</li>
+              <li><Link href="/weather#today-weather" className="hover:text-cyan-200">「今日の天気」を短く配信</Link></li>
+              <li><Link href="/weather#today-changes" className="hover:text-cyan-200">「今日変わった3つ」を配信（市場のズレを含む）</Link></li>
+              <li><Link href="/weather#next-trigger" className="hover:text-cyan-200">「次に点灯する候補」と警戒線を配信</Link></li>
+              <li><Link href="/weather#evidence-links" className="hover:text-cyan-200">「数字と出典を確認する」リンクを添付</Link></li>
             </ul>
+            <p className="mt-5 border-t border-white/[0.08] pt-4 text-xs leading-6 text-slate-500">「世界経済の現在地」は無料公開のままです。有料化を検討するのは、重要部分を毎朝選び、読みに行かなくても受け取れる配信サービスです。</p>
           </article>
           <article id="research-pack-pilot" className="scroll-mt-8 rounded-3xl border border-cyan-300/20 bg-cyan-300/[0.055] p-6 sm:p-8">
             <p className="text-[10px] font-bold tracking-[0.18em] text-cyan-300">メディア・情報発信者向け</p>

@@ -162,7 +162,7 @@ export function WeatherBriefDashboard() {
           <p className="mt-4 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">毎朝3分。いま何が変わり、次に何が点灯したら警戒が上がるかだけを表示します。</p>
         </header>
 
-        <section className="rounded-[1.75rem] border border-white/10 bg-white/[0.055] p-5 shadow-2xl shadow-black/30 sm:p-8">
+        <section id="today-weather" className="scroll-mt-6 rounded-[1.75rem] border border-white/10 bg-white/[0.055] p-5 shadow-2xl shadow-black/30 sm:p-8">
           <SectionHead number="01" eyebrow="TODAY" title="今日の天気" meta={loading ? "取得中" : dashboard?.fetchedAt ? formatDate(dashboard.fetchedAt) : "観測待ち"} />
           <div className="mt-7 grid gap-6 sm:grid-cols-[150px_1fr] sm:items-center">
             <div className="grid h-32 place-items-center rounded-3xl border border-white/10 bg-black/20" style={{ boxShadow: `inset 0 0 40px ${weather.accent}18` }}><strong className="text-4xl font-black" style={{ color: weather.accent }}>{loading ? "確認中" : weather.label}</strong></div>
@@ -170,19 +170,19 @@ export function WeatherBriefDashboard() {
           </div>
         </section>
 
-        <section className="mt-6 rounded-[1.75rem] border border-white/10 bg-white/[0.045] p-5 sm:p-8">
+        <section id="today-changes" className="scroll-mt-6 mt-6 rounded-[1.75rem] border border-white/10 bg-white/[0.045] p-5 sm:p-8">
           <SectionHead number="02" eyebrow="WHAT CHANGED" title="今日変わった3つ" />
           <p className="mt-2 text-sm leading-6 text-slate-400">高いまま動かない指標ではなく、信号色・変化速度・市場のズレを優先します。</p>
           <div className="mt-5 grid gap-3">{dailyBrief.map((item, index) => { const meta = directionMeta[item.direction]; return <Link key={item.id} href={item.href} className="grid gap-3 rounded-2xl border border-white/[0.08] bg-black/20 p-4 transition hover:bg-white/[0.04] sm:grid-cols-[44px_1fr_auto] sm:items-center"><span className="font-mono text-sm text-slate-500">0{index + 1}</span><span><strong className="block text-base text-white">{item.title}</strong><small className="mt-1 block text-sm leading-6 text-slate-400">{item.summary}</small></span><span className={`w-fit rounded-full border px-3 py-1.5 text-[10px] font-bold ${meta.className}`}>{meta.label} · {item.meta}</span></Link>; })}</div>
         </section>
 
-        <section className="mt-6 rounded-[1.75rem] border border-white/10 bg-white/[0.045] p-5 sm:p-8">
+        <section id="next-trigger" className="scroll-mt-6 mt-6 rounded-[1.75rem] border border-white/10 bg-white/[0.045] p-5 sm:p-8">
           <SectionHead number="03" eyebrow="NEXT TRIGGER" title="次に点灯する候補" />
           <p className="mt-2 text-sm leading-6 text-slate-400">危機の予測ではなく、次に確認する警戒線までの距離です。</p>
           <div className="mt-5 grid gap-4 md:grid-cols-3">{triggers.map((item) => <Link key={item.id} href={`/#indicator-${item.id}`} className="rounded-2xl border border-white/[0.08] bg-black/20 p-4 hover:bg-white/[0.04]"><div className="flex items-center justify-between gap-3"><strong>{item.name}</strong><span className="font-mono text-sm" style={{ color: signalColor[item.signal] }}>{item.current}</span></div><div className="mt-4 h-1.5 overflow-hidden rounded-full bg-white/[0.08]"><div className="h-full rounded-full" style={{ width: `${item.progress}%`, backgroundColor: signalColor[item.signal] }} /></div><p className="mt-3 text-sm font-bold">{item.distance}</p><p className="mt-2 text-xs leading-5 text-slate-500">{item.explanation}</p></Link>)}</div>
         </section>
 
-        <section className="mt-6 grid gap-4 sm:grid-cols-2">
+        <section id="evidence-links" className="scroll-mt-6 mt-6 grid gap-4 sm:grid-cols-2">
           <Link href="/research-brief" className="rounded-3xl border border-cyan-300/20 bg-cyan-300/[0.065] p-6 hover:bg-cyan-300/[0.095]"><p className="text-[10px] font-bold tracking-[0.18em] text-cyan-300">20-DAY VALIDATION</p><h2 className="mt-2 text-xl font-black">朝3分ブリーフの試験配信</h2><p className="mt-2 text-sm leading-6 text-slate-300">市場のズレ、今日の変化、次の線を固定フォーマットで検証します。</p></Link>
           <Link href="/" className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 hover:bg-white/[0.07]"><p className="text-[10px] font-bold tracking-[0.18em] text-slate-500">EVIDENCE TERMINAL</p><h2 className="mt-2 text-xl font-black">数字と出典を確認する</h2><p className="mt-2 text-sm leading-6 text-slate-400">プロ版で観測値、履歴、閾値、データ鮮度まで掘り下げます。</p></Link>
         </section>
