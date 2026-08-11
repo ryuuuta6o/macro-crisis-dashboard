@@ -222,8 +222,8 @@ function WeatherLevelGauge({ overall, indicators, loading }: { overall: OverallS
   const safety = indicators.filter((item) => item.type === "safety_valve");
   const warnings = indicators.filter((item) => item.type === "warning_signal");
   const vulnerabilities = indicators.filter((item) => item.type === "vulnerability");
-  const safetyStress = safety.filter((item) => item.signal !== "green").length;
-  const warningStress = warnings.filter((item) => item.signal !== "green").length;
+  const safetyStress = safety.filter((item) => item.signal === "yellow" || item.signal === "orange" || item.signal === "red").length;
+  const warningStress = warnings.filter((item) => item.signal === "yellow" || item.signal === "orange" || item.signal === "red").length;
   const vulnerabilityStress = vulnerabilities.filter((item) => item.signal === "orange" || item.signal === "red").length;
 
   return (
@@ -256,7 +256,7 @@ function WeatherLevelGauge({ overall, indicators, loading }: { overall: OverallS
         <GaugeBasis label="警告サイン" value={loading ? "--" : `${warningStress}/${warnings.length} 点灯`} description="金利・雇用・市場心理" priority="次に確認" items={warnings} />
         <GaugeBasis label="脆弱性" value={loading ? "--" : `${vulnerabilityStress}/${vulnerabilities.length} 高警戒`} description="CRE・Private Credit・割高感" priority="被害の大きさ" items={vulnerabilities} />
       </div>
-      <p className="mt-4 text-xs leading-6 text-slate-500">安全弁と警告サインの分子は黄・橙・赤・観測待ちの件数、脆弱性は橙・赤だけを数えます。カードを開くと対象指標と状態を確認できます。</p>
+      <p className="mt-4 text-xs leading-6 text-slate-500">安全弁と警告サインの分子は黄・橙・赤の件数、脆弱性は橙・赤だけを数えます。観測待ちは点灯数に含めません。カードを開くと対象指標と状態を確認できます。</p>
     </div>
   );
 }
