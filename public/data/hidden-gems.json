@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-22T21:40:15.044015+00:00",
+  "generatedAt": "2026-08-23T21:41:32.658754+00:00",
   "methodologyVersion": "hidden-gems-free-v2",
   "dataSource": "free",
   "status": "ready",
@@ -81,8 +81,8 @@
           {
             "id": "valuation",
             "label": "相対バリュエーション",
-            "value": 0.804592182589377,
-            "score": 40.229609129468855,
+            "value": 0.8045463374032702,
+            "score": 40.22731687016351,
             "detail": "テーマ内PERまたはPSR中央値との比較"
           },
           {
@@ -116,7 +116,7 @@
         "評価倍率はテーマ中央値の0.80倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:38:02.346793+00:00"
+      "updatedAt": "2026-08-23T21:38:43.842377+00:00"
     },
     {
       "ticker": "8473.T",
@@ -143,7 +143,7 @@
       "roic": 16.551876105368603,
       "forwardPE": 7.903856,
       "priceToSalesRatio": 1.0268543,
-      "marketCapUsd": 13079121799.213867,
+      "marketCapUsd": 13089169791.264648,
       "return3m": 5.2356020942408374,
       "return6m": -5.447300725815794,
       "components": {
@@ -216,8 +216,8 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 13079121799.213867,
-            "score": 52.91446460398822,
+            "value": 13089169791.264648,
+            "score": 52.92280253407669,
             "detail": "規模が大きいほど発見済みとして評価"
           }
         ]
@@ -230,7 +230,7 @@
         "評価倍率はテーマ中央値の1.00倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:38:00.453946+00:00"
+      "updatedAt": "2026-08-23T21:38:41.414297+00:00"
     },
     {
       "ticker": "012450.KS",
@@ -257,7 +257,7 @@
       "roic": 21.22424244450936,
       "forwardPE": 18.653004,
       "priceToSalesRatio": 1.8637373,
-      "marketCapUsd": 40336680462.80322,
+      "marketCapUsd": 40284864447.24121,
       "return3m": -13.130504403522819,
       "return6m": -4.067197170645446,
       "components": {
@@ -330,8 +330,8 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 40336680462.80322,
-            "score": 65.1425038689771,
+            "value": 40284864447.24121,
+            "score": 65.12854766610576,
             "detail": "規模が大きいほど発見済みとして評価"
           }
         ]
@@ -344,7 +344,7 @@
         "評価倍率はテーマ中央値の1.00倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:37:24.756662+00:00"
+      "updatedAt": "2026-08-23T21:37:57.244540+00:00"
     },
     {
       "ticker": "TSM",
@@ -458,7 +458,7 @@
         "評価倍率はテーマ中央値の1.01倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:16.340798+00:00"
+      "updatedAt": "2026-08-23T21:36:31.159540+00:00"
     },
     {
       "ticker": "VRT",
@@ -576,7 +576,7 @@
         "評価倍率はテーマ中央値の0.79倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:38.680961+00:00"
+      "updatedAt": "2026-08-23T21:36:59.788028+00:00"
     },
     {
       "ticker": "META",
@@ -605,7 +605,7 @@
       "priceToSalesRatio": 6.137534,
       "marketCapUsd": 1400873680896.0,
       "return3m": -9.379679281004947,
-      "return6m": -15.980697934992383,
+      "return6m": -15.98070577027057,
       "components": {
         "fundamentals": [
           {
@@ -662,8 +662,8 @@
           {
             "id": "price-momentum",
             "label": "株価モメンタム",
-            "value": -12.680188607998666,
-            "score": 10.456873417144763,
+            "value": -12.680192525637757,
+            "score": 10.456867820517491,
             "detail": "3ヶ月と6ヶ月の騰落率"
           },
           {
@@ -690,7 +690,7 @@
         "評価倍率はテーマ中央値の0.76倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:39:33.356886+00:00"
+      "updatedAt": "2026-08-23T21:40:39.272937+00:00"
     },
     {
       "ticker": "ISRG",
@@ -804,7 +804,7 @@
         "評価倍率はテーマ中央値の0.81倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:58.771402+00:00"
+      "updatedAt": "2026-08-23T21:37:24.694150+00:00"
     },
     {
       "ticker": "207940.KS",
@@ -831,7 +831,7 @@
       "roic": 22.873256519477703,
       "forwardPE": 31.448503,
       "priceToSalesRatio": 14.019565,
-      "marketCapUsd": 51880384388.37744,
+      "marketCapUsd": 51813739469.31152,
       "return3m": 16.00598354525056,
       "return6m": -9.773123909249563,
       "components": {
@@ -904,8 +904,8 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 51880384388.37744,
-            "score": 67.8750796291777,
+            "value": 51813739469.31152,
+            "score": 67.86112342630636,
             "detail": "規模が大きいほど発見済みとして評価"
           }
         ]
@@ -918,7 +918,7 @@
         "評価倍率はテーマ中央値の1.34倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:39:14.843272+00:00"
+      "updatedAt": "2026-08-23T21:40:16.277691+00:00"
     },
     {
       "ticker": "NVDA",
@@ -1039,7 +1039,7 @@
         "評価倍率はテーマ中央値の0.86倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:10.943272+00:00"
+      "updatedAt": "2026-08-23T21:36:24.233377+00:00"
     },
     {
       "ticker": "2330.TW",
@@ -1066,7 +1066,7 @@
       "roic": 48.83658827587483,
       "forwardPE": 16.956417,
       "priceToSalesRatio": 14.074343,
-      "marketCapUsd": 1964079635802.9531,
+      "marketCapUsd": 1964141332974.5938,
       "return3m": 4.607334115042677,
       "return6m": 28.952841441013412,
       "components": {
@@ -1139,7 +1139,7 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 1964079635802.9531,
+            "value": 1964141332974.5938,
             "score": 100.0,
             "detail": "規模が大きいほど発見済みとして評価"
           }
@@ -1153,7 +1153,7 @@
         "評価倍率はテーマ中央値の0.89倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:18.259616+00:00"
+      "updatedAt": "2026-08-23T21:36:33.393984+00:00"
     },
     {
       "ticker": "6266.T",
@@ -1180,7 +1180,7 @@
       "roic": 18.769024845200672,
       "forwardPE": 12.360531,
       "priceToSalesRatio": 1.6401423,
-      "marketCapUsd": 323250654.07299995,
+      "marketCapUsd": 323498990.31853676,
       "return3m": -6.955380577427822,
       "return6m": 45.884773662551446,
       "components": {
@@ -1232,8 +1232,8 @@
           {
             "id": "valuation",
             "label": "相対バリュエーション",
-            "value": 0.4029381404222451,
-            "score": 20.146907021112252,
+            "value": 0.4029151812456126,
+            "score": 20.14575906228063,
             "detail": "テーマ内PERまたはPSR中央値との比較"
           },
           {
@@ -1253,8 +1253,8 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 323250654.07299995,
-            "score": 12.738485307875544,
+            "value": 323498990.31853676,
+            "score": 12.746823237964017,
             "detail": "規模が大きいほど発見済みとして評価"
           }
         ]
@@ -1266,7 +1266,7 @@
         "評価倍率はテーマ中央値の0.40倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:38:26.289233+00:00"
+      "updatedAt": "2026-08-23T21:39:14.698548+00:00"
     },
     {
       "ticker": "AVGO",
@@ -1383,7 +1383,7 @@
         "評価倍率はテーマ中央値の0.99倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:12.874866+00:00"
+      "updatedAt": "2026-08-23T21:36:26.632590+00:00"
     },
     {
       "ticker": "6857.T",
@@ -1414,7 +1414,7 @@
       "roic": 76.17745096330866,
       "forwardPE": 151.01166,
       "priceToSalesRatio": 21.04176,
-      "marketCapUsd": 163142736436.28418,
+      "marketCapUsd": 163268070303.8037,
       "return3m": 33.730676103557464,
       "return6m": 32.652634101068536,
       "components": {
@@ -1487,8 +1487,8 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 163142736436.28418,
-            "score": 80.3141935642123,
+            "value": 163268070303.8037,
+            "score": 80.32253149430078,
             "detail": "規模が大きいほど発見済みとして評価"
           }
         ]
@@ -1501,7 +1501,7 @@
         "評価倍率はテーマ中央値の7.92倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:20.081165+00:00"
+      "updatedAt": "2026-08-23T21:36:35.846355+00:00"
     },
     {
       "ticker": "PLTR",
@@ -1615,7 +1615,7 @@
         "評価倍率はテーマ中央値の3.34倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:29.516606+00:00"
+      "updatedAt": "2026-08-23T21:36:47.971993+00:00"
     },
     {
       "ticker": "NVO",
@@ -1728,7 +1728,7 @@
         "評価倍率はテーマ中央値の0.99倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:37:36.134567+00:00"
+      "updatedAt": "2026-08-23T21:38:11.591591+00:00"
     },
     {
       "ticker": "ANET",
@@ -1842,7 +1842,7 @@
         "評価倍率はテーマ中央値の1.00倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:40.348380+00:00"
+      "updatedAt": "2026-08-23T21:37:01.984243+00:00"
     },
     {
       "ticker": "5803.T",
@@ -1869,7 +1869,7 @@
       "roic": 31.086378908921503,
       "forwardPE": 17.43495,
       "priceToSalesRatio": 6.6406164,
-      "marketCapUsd": 55002511522.664795,
+      "marketCapUsd": 55044767020.16968,
       "return3m": 8.8659793814433,
       "return6m": 48.4250774505664,
       "components": {
@@ -1942,8 +1942,8 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 55002511522.664795,
-            "score": 68.50956301714312,
+            "value": 55044767020.16968,
+            "score": 68.5179009472316,
             "detail": "規模が大きいほど発見済みとして評価"
           }
         ]
@@ -1956,7 +1956,7 @@
         "評価倍率はテーマ中央値の0.67倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:38:41.498207+00:00"
+      "updatedAt": "2026-08-23T21:39:34.050374+00:00"
     },
     {
       "ticker": "ASML",
@@ -1981,7 +1981,7 @@
       "revenueGrowthYoY": 15.583680372502467,
       "operatingMargin": 34.595451720833985,
       "roic": 87.12955098861913,
-      "forwardPE": 29.195837,
+      "forwardPE": 29.199333,
       "priceToSalesRatio": 19.176569,
       "marketCapUsd": 677460246528.0,
       "return3m": 10.93222869354269,
@@ -2035,8 +2035,8 @@
           {
             "id": "valuation",
             "label": "相対バリュエーション",
-            "value": 0.9517484539176334,
-            "score": 47.58742269588167,
+            "value": 0.9518081826699837,
+            "score": 47.590409133499186,
             "detail": "テーマ内PERまたはPSR中央値との比較"
           },
           {
@@ -2070,7 +2070,7 @@
         "評価倍率はテーマ中央値の0.95倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:38:07.882133+00:00"
+      "updatedAt": "2026-08-23T21:38:50.993017+00:00"
     },
     {
       "ticker": "6146.T",
@@ -2097,7 +2097,7 @@
       "roic": 45.01366857507863,
       "forwardPE": 45.086487,
       "priceToSalesRatio": 14.428409,
-      "marketCapUsd": 41874793959.139404,
+      "marketCapUsd": 41906964131.05835,
       "return3m": -6.832675372001215,
       "return6m": -14.601782949605235,
       "components": {
@@ -2149,8 +2149,8 @@
           {
             "id": "valuation",
             "label": "相対バリュエーション",
-            "value": 1.4697641411968245,
-            "score": 73.48820705984123,
+            "value": 1.4696803949064126,
+            "score": 73.48401974532062,
             "detail": "テーマ内PERまたはPSR中央値との比較"
           },
           {
@@ -2170,8 +2170,8 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 41874793959.139404,
-            "score": 65.54881707865749,
+            "value": 41906964131.05835,
+            "score": 65.55715500874597,
             "detail": "規模が大きいほど発見済みとして評価"
           }
         ]
@@ -2183,7 +2183,7 @@
         "評価倍率はテーマ中央値の1.47倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:38:20.849112+00:00"
+      "updatedAt": "2026-08-23T21:39:07.595017+00:00"
     },
     {
       "ticker": "7012.T",
@@ -2210,7 +2210,7 @@
       "roic": 12.80930369574453,
       "forwardPE": 4.5633807,
       "priceToSalesRatio": 0.9606857,
-      "marketCapUsd": 14303318110.05371,
+      "marketCapUsd": 14314306586.870117,
       "return3m": -12.369572534500168,
       "return6m": -26.091591946347055,
       "components": {
@@ -2283,8 +2283,8 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 14303318110.05371,
-            "score": 53.885919939645,
+            "value": 14314306586.870117,
+            "score": 53.894257869733465,
             "detail": "規模が大きいほど発見済みとして評価"
           }
         ]
@@ -2296,7 +2296,7 @@
         "評価倍率はテーマ中央値の0.01倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:09.185875+00:00"
+      "updatedAt": "2026-08-23T21:36:21.836632+00:00"
     },
     {
       "ticker": "LLY",
@@ -2329,7 +2329,7 @@
       "priceToSalesRatio": 14.046263,
       "marketCapUsd": 1119009636352.0,
       "return3m": 20.693025350232315,
-      "return6m": 24.748711557094055,
+      "return6m": 24.748703991029558,
       "components": {
         "fundamentals": [
           {
@@ -2386,8 +2386,8 @@
           {
             "id": "price-momentum",
             "label": "株価モメンタム",
-            "value": 22.720868453663186,
-            "score": 61.02981207666169,
+            "value": 22.720864670630938,
+            "score": 61.02980667232991,
             "detail": "3ヶ月と6ヶ月の騰落率"
           },
           {
@@ -2414,7 +2414,7 @@
         "評価倍率はテーマ中央値の1.93倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:37:34.157616+00:00"
+      "updatedAt": "2026-08-23T21:38:09.238715+00:00"
     },
     {
       "ticker": "NFLX",
@@ -2528,7 +2528,7 @@
         "評価倍率はテーマ中央値の1.00倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:39:35.298662+00:00"
+      "updatedAt": "2026-08-23T21:40:41.550471+00:00"
     },
     {
       "ticker": "NOVO-B.CO",
@@ -2555,7 +2555,7 @@
       "roic": 33.61008676372631,
       "forwardPE": 13.792544,
       "priceToSalesRatio": 4.0384216,
-      "marketCapUsd": 207937045248.26953,
+      "marketCapUsd": 207870753041.17578,
       "return3m": 5.425904697984136,
       "return6m": 2.450635711807876,
       "components": {
@@ -2628,8 +2628,8 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 207937045248.26953,
-            "score": 82.94829671064157,
+            "value": 207870753041.17578,
+            "score": 82.94483473372624,
             "detail": "規模が大きいほど発見済みとして評価"
           }
         ]
@@ -2641,7 +2641,7 @@
         "評価倍率はテーマ中央値の1.00倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:37:38.012915+00:00"
+      "updatedAt": "2026-08-23T21:38:13.817371+00:00"
     },
     {
       "ticker": "GOOGL",
@@ -2674,7 +2674,7 @@
       "priceToSalesRatio": 9.458282,
       "marketCapUsd": 4217126256640.0,
       "return3m": -10.997789726244283,
-      "return6m": 9.616120611801863,
+      "return6m": 9.616109977562727,
       "components": {
         "fundamentals": [
           {
@@ -2731,8 +2731,8 @@
           {
             "id": "price-momentum",
             "label": "株価モメンタム",
-            "value": -0.6908345572212102,
-            "score": 27.58452206111256,
+            "value": -0.690839874340778,
+            "score": 27.58451446522746,
             "detail": "3ヶ月と6ヶ月の騰落率"
           },
           {
@@ -2759,7 +2759,7 @@
         "評価倍率はテーマ中央値の1.00倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:27.583632+00:00"
+      "updatedAt": "2026-08-23T21:36:45.471740+00:00"
     },
     {
       "ticker": "LRCX",
@@ -2838,8 +2838,8 @@
           {
             "id": "valuation",
             "label": "相対バリュエーション",
-            "value": 0.8856875300387503,
-            "score": 44.284376501937516,
+            "value": 0.8856370640877683,
+            "score": 44.28185320438842,
             "detail": "テーマ内PERまたはPSR中央値との比較"
           },
           {
@@ -2873,7 +2873,7 @@
         "評価倍率はテーマ中央値の0.89倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:38:04.170396+00:00"
+      "updatedAt": "2026-08-23T21:38:46.198583+00:00"
     },
     {
       "ticker": "4568.T",
@@ -2900,7 +2900,7 @@
       "roic": 16.02667352802441,
       "forwardPE": 19.737392,
       "priceToSalesRatio": 2.3191867,
-      "marketCapUsd": 32439836594.680176,
+      "marketCapUsd": 32464758391.818848,
       "return3m": 6.944706548405359,
       "return6m": -2.818128053309785,
       "components": {
@@ -2973,8 +2973,8 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 32439836594.680176,
-            "score": 62.77696644812081,
+            "value": 32464758391.818848,
+            "score": 62.785304378209275,
             "detail": "規模が大きいほど発見済みとして評価"
           }
         ]
@@ -2986,7 +2986,7 @@
         "評価倍率はテーマ中央値の0.80倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:37:30.201799+00:00"
+      "updatedAt": "2026-08-23T21:38:04.301162+00:00"
     },
     {
       "ticker": "MSFT",
@@ -3104,7 +3104,7 @@
         "評価倍率はテーマ中央値の0.88倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:25.713617+00:00"
+      "updatedAt": "2026-08-23T21:36:43.138424+00:00"
     },
     {
       "ticker": "ENR.DE",
@@ -3131,7 +3131,7 @@
       "roic": 29.341213754311614,
       "forwardPE": 24.785976,
       "priceToSalesRatio": 3.1183956,
-      "marketCapUsd": 152383668755.39844,
+      "marketCapUsd": 152419274516.9961,
       "return3m": -15.410922212411599,
       "return6m": -7.0525079386746,
       "components": {
@@ -3204,8 +3204,8 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 152383668755.39844,
-            "score": 79.5734606335112,
+            "value": 152419274516.9961,
+            "score": 79.57599725367803,
             "detail": "規模が大きいほど発見済みとして評価"
           }
         ]
@@ -3218,7 +3218,7 @@
         "評価倍率はテーマ中央値の0.91倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:38:45.069599+00:00"
+      "updatedAt": "2026-08-23T21:39:38.774913+00:00"
     },
     {
       "ticker": "BWXT",
@@ -3332,7 +3332,7 @@
         "評価倍率はテーマ中央値の1.09倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:38:43.300048+00:00"
+      "updatedAt": "2026-08-23T21:39:36.464775+00:00"
     },
     {
       "ticker": "GE",
@@ -3361,7 +3361,7 @@
       "priceToSalesRatio": 7.137891,
       "marketCapUsd": 361455648768.0,
       "return3m": 15.589946375783459,
-      "return6m": 1.7750517038026734,
+      "return6m": 1.7750607776616374,
       "components": {
         "fundamentals": [
           {
@@ -3418,8 +3418,8 @@
           {
             "id": "price-momentum",
             "label": "株価モメンタム",
-            "value": 8.682499039793067,
-            "score": 40.974998628275806,
+            "value": 8.682503576722548,
+            "score": 40.975005109603636,
             "detail": "3ヶ月と6ヶ月の騰落率"
           },
           {
@@ -3446,7 +3446,7 @@
         "評価倍率はテーマ中央値の1.47倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:39:55.950127+00:00"
+      "updatedAt": "2026-08-23T21:41:07.747569+00:00"
     },
     {
       "ticker": "CCJ",
@@ -3475,7 +3475,7 @@
       "revenueGrowthYoY": 11.039099781489217,
       "operatingMargin": 17.842359402090736,
       "roic": 7.048602895583726,
-      "forwardPE": 54.199196,
+      "forwardPE": 54.177017,
       "priceToSalesRatio": 12.849307,
       "marketCapUsd": 44646486016.0,
       "return3m": -2.677299578279122,
@@ -3529,7 +3529,7 @@
           {
             "id": "valuation",
             "label": "相対バリュエーション",
-            "value": 3.219806691107065,
+            "value": 3.2184891052778943,
             "score": 100.0,
             "detail": "テーマ内PERまたはPSR中央値との比較"
           },
@@ -3563,7 +3563,7 @@
         "評価倍率はテーマ中央値の3.22倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:47.662099+00:00"
+      "updatedAt": "2026-08-23T21:37:11.032905+00:00"
     },
     {
       "ticker": "ORCL",
@@ -3677,7 +3677,7 @@
         "評価倍率はテーマ中央値の0.65倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:39:31.562446+00:00"
+      "updatedAt": "2026-08-23T21:40:37.042521+00:00"
     },
     {
       "ticker": "PLD",
@@ -3790,7 +3790,7 @@
         "評価倍率はテーマ中央値の1.00倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:40:12.779061+00:00"
+      "updatedAt": "2026-08-23T21:41:29.049466+00:00"
     },
     {
       "ticker": "COIN",
@@ -3819,7 +3819,7 @@
       "revenueGrowthYoY": 9.40424081067296,
       "operatingMargin": 20.276829136684384,
       "roic": 11.257628306763747,
-      "forwardPE": 61.794014,
+      "forwardPE": 64.82122,
       "priceToSalesRatio": 8.141126,
       "marketCapUsd": 49202950144.0,
       "return3m": -3.652610123271719,
@@ -3873,7 +3873,7 @@
           {
             "id": "valuation",
             "label": "相対バリュエーション",
-            "value": 7.818211009917184,
+            "value": 8.20121469824349,
             "score": 100.0,
             "detail": "テーマ内PERまたはPSR中央値との比較"
           },
@@ -3904,10 +3904,10 @@
         "売上5年CAGR +31.0%",
         "営業利益率 +20.3%",
         "ROIC +11.3%",
-        "評価倍率はテーマ中央値の7.82倍"
+        "評価倍率はテーマ中央値の8.20倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:37:54.975992+00:00"
+      "updatedAt": "2026-08-23T21:38:34.577487+00:00"
     },
     {
       "ticker": "4543.T",
@@ -3934,7 +3934,7 @@
       "roic": 7.985544795503781,
       "forwardPE": 25.228321,
       "priceToSalesRatio": 3.201373,
-      "marketCapUsd": 23842554160.319214,
+      "marketCapUsd": 23860871123.671265,
       "return3m": 7.332358470858575,
       "return6m": 35.526817668830965,
       "components": {
@@ -4007,8 +4007,8 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 23842554160.319214,
-            "score": 59.433819446079106,
+            "value": 23860871123.671265,
+            "score": 59.44215737616757,
             "detail": "規模が大きいほど発見済みとして評価"
           }
         ]
@@ -4020,7 +4020,7 @@
         "評価倍率はテーマ中央値の1.07倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:39:16.713634+00:00"
+      "updatedAt": "2026-08-23T21:40:18.736207+00:00"
     },
     {
       "ticker": "7203.T",
@@ -4047,7 +4047,7 @@
       "roic": 4.381784680940909,
       "forwardPE": 9.660108,
       "priceToSalesRatio": 0.71378565,
-      "marketCapUsd": 233334455768.92578,
+      "marketCapUsd": 233513714192.59766,
       "return3m": 4.854368932038835,
       "return6m": -13.294187993739504,
       "components": {
@@ -4120,8 +4120,8 @@
           {
             "id": "market-cap",
             "label": "時価総額",
-            "value": 233334455768.92578,
-            "score": 84.19947186090896,
+            "value": 233513714192.59766,
+            "score": 84.20780979099743,
             "detail": "規模が大きいほど発見済みとして評価"
           }
         ]
@@ -4133,7 +4133,7 @@
         "評価倍率はテーマ中央値の0.55倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:37:09.956835+00:00"
+      "updatedAt": "2026-08-23T21:37:38.616982+00:00"
     },
     {
       "ticker": "AMZN",
@@ -4247,7 +4247,7 @@
         "評価倍率はテーマ中央値の1.00倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:39:37.182547+00:00"
+      "updatedAt": "2026-08-23T21:40:43.735142+00:00"
     },
     {
       "ticker": "PANW",
@@ -4364,7 +4364,7 @@
         "評価倍率はテーマ中央値の1.37倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:37:13.436920+00:00"
+      "updatedAt": "2026-08-23T21:37:43.014883+00:00"
     },
     {
       "ticker": "UNH",
@@ -4478,7 +4478,7 @@
         "評価倍率はテーマ中央値の0.79倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:39:46.622869+00:00"
+      "updatedAt": "2026-08-23T21:40:55.829931+00:00"
     },
     {
       "ticker": "AMD",
@@ -4596,7 +4596,7 @@
         "評価倍率はテーマ中央値の1.60倍"
       ],
       "sourceName": "Yahoo Finance via yfinance",
-      "updatedAt": "2026-08-22T21:36:14.545166+00:00"
+      "updatedAt": "2026-08-23T21:36:28.974941+00:00"
     }
   ],
   "evaluatedCompanies": 141,
@@ -14947,6 +14947,293 @@
           "price": 473.25
         }
       ]
+    },
+    {
+      "date": "2026-08-23",
+      "generatedAt": "2026-08-23T21:41:32.658754+00:00",
+      "methodologyVersion": "hidden-gems-free-v2",
+      "entries": [
+        {
+          "ticker": "RMBS",
+          "gemScore": 52,
+          "fundamentalScore": 79,
+          "attentionScore": 27,
+          "price": 91.23999786376953
+        },
+        {
+          "ticker": "8473.T",
+          "gemScore": 29,
+          "fundamentalScore": 68,
+          "attentionScore": 39,
+          "price": 3216.0
+        },
+        {
+          "ticker": "012450.KS",
+          "gemScore": 28,
+          "fundamentalScore": 76,
+          "attentionScore": 48,
+          "price": 1085000.0
+        },
+        {
+          "ticker": "TSM",
+          "gemScore": 24,
+          "fundamentalScore": 83,
+          "attentionScore": 59,
+          "price": 418.95001220703125
+        },
+        {
+          "ticker": "VRT",
+          "gemScore": 22,
+          "fundamentalScore": 72,
+          "attentionScore": 50,
+          "price": 261.95001220703125
+        },
+        {
+          "ticker": "META",
+          "gemScore": 19,
+          "fundamentalScore": 74,
+          "attentionScore": 55,
+          "price": 549.9000244140625
+        },
+        {
+          "ticker": "ISRG",
+          "gemScore": 18,
+          "fundamentalScore": 66,
+          "attentionScore": 48,
+          "price": 378.80999755859375
+        },
+        {
+          "ticker": "207940.KS",
+          "gemScore": 17,
+          "fundamentalScore": 77,
+          "attentionScore": 60,
+          "price": 1551000.0
+        },
+        {
+          "ticker": "NVDA",
+          "gemScore": 15,
+          "fundamentalScore": 79,
+          "attentionScore": 64,
+          "price": 214.72000122070312
+        },
+        {
+          "ticker": "2330.TW",
+          "gemScore": 14,
+          "fundamentalScore": 83,
+          "attentionScore": 69,
+          "price": 2410.0
+        },
+        {
+          "ticker": "6266.T",
+          "gemScore": 14,
+          "fundamentalScore": 40,
+          "attentionScore": 26,
+          "price": 3545.0
+        },
+        {
+          "ticker": "AVGO",
+          "gemScore": 13,
+          "fundamentalScore": 76,
+          "attentionScore": 63,
+          "price": 368.45001220703125
+        },
+        {
+          "ticker": "6857.T",
+          "gemScore": 12,
+          "fundamentalScore": 95,
+          "attentionScore": 83,
+          "price": 35900.0
+        },
+        {
+          "ticker": "PLTR",
+          "gemScore": 12,
+          "fundamentalScore": 100,
+          "attentionScore": 88,
+          "price": 179.94000244140625
+        },
+        {
+          "ticker": "NVO",
+          "gemScore": 12,
+          "fundamentalScore": 62,
+          "attentionScore": 50,
+          "price": 46.7400016784668
+        },
+        {
+          "ticker": "ANET",
+          "gemScore": 11,
+          "fundamentalScore": 84,
+          "attentionScore": 73,
+          "price": 188.64999389648438
+        },
+        {
+          "ticker": "5803.T",
+          "gemScore": 11,
+          "fundamentalScore": 63,
+          "attentionScore": 52,
+          "price": 5280.0
+        },
+        {
+          "ticker": "ASML",
+          "gemScore": 10,
+          "fundamentalScore": 69,
+          "attentionScore": 59,
+          "price": 1763.760009765625
+        },
+        {
+          "ticker": "6146.T",
+          "gemScore": 9,
+          "fundamentalScore": 61,
+          "attentionScore": 52,
+          "price": 61360.0
+        },
+        {
+          "ticker": "7012.T",
+          "gemScore": 8,
+          "fundamentalScore": 28,
+          "attentionScore": 20,
+          "price": 2603.5
+        },
+        {
+          "ticker": "LLY",
+          "gemScore": 6,
+          "fundamentalScore": 93,
+          "attentionScore": 87,
+          "price": 1255.4000244140625
+        },
+        {
+          "ticker": "NFLX",
+          "gemScore": 6,
+          "fundamentalScore": 65,
+          "attentionScore": 59,
+          "price": 79.58999633789062
+        },
+        {
+          "ticker": "NOVO-B.CO",
+          "gemScore": 5,
+          "fundamentalScore": 62,
+          "attentionScore": 57,
+          "price": 300.8500061035156
+        },
+        {
+          "ticker": "GOOGL",
+          "gemScore": 2,
+          "fundamentalScore": 65,
+          "attentionScore": 63,
+          "price": 344.82000732421875
+        },
+        {
+          "ticker": "LRCX",
+          "gemScore": 2,
+          "fundamentalScore": 69,
+          "attentionScore": 67,
+          "price": 314.0
+        },
+        {
+          "ticker": "4568.T",
+          "gemScore": 1,
+          "fundamentalScore": 46,
+          "attentionScore": 45,
+          "price": 2833.5
+        },
+        {
+          "ticker": "MSFT",
+          "gemScore": 0,
+          "fundamentalScore": 70,
+          "attentionScore": 70,
+          "price": 483.239990234375
+        },
+        {
+          "ticker": "ENR.DE",
+          "gemScore": 0,
+          "fundamentalScore": 50,
+          "attentionScore": 50,
+          "price": 153.36000061035156
+        },
+        {
+          "ticker": "BWXT",
+          "gemScore": -1,
+          "fundamentalScore": 36,
+          "attentionScore": 37,
+          "price": 156.77999877929688
+        },
+        {
+          "ticker": "GE",
+          "gemScore": -5,
+          "fundamentalScore": 61,
+          "attentionScore": 66,
+          "price": 348.3699951171875
+        },
+        {
+          "ticker": "CCJ",
+          "gemScore": -6,
+          "fundamentalScore": 49,
+          "attentionScore": 55,
+          "price": 102.51000213623047
+        },
+        {
+          "ticker": "ORCL",
+          "gemScore": -8,
+          "fundamentalScore": 44,
+          "attentionScore": 52,
+          "price": 146.47000122070312
+        },
+        {
+          "ticker": "PLD",
+          "gemScore": -8,
+          "fundamentalScore": 40,
+          "attentionScore": 48,
+          "price": 141.8000030517578
+        },
+        {
+          "ticker": "COIN",
+          "gemScore": -15,
+          "fundamentalScore": 57,
+          "attentionScore": 72,
+          "price": 186.49000549316406
+        },
+        {
+          "ticker": "4543.T",
+          "gemScore": -16,
+          "fundamentalScore": 38,
+          "attentionScore": 54,
+          "price": 2569.0
+        },
+        {
+          "ticker": "7203.T",
+          "gemScore": -23,
+          "fundamentalScore": 22,
+          "attentionScore": 45,
+          "price": 3132.0
+        },
+        {
+          "ticker": "AMZN",
+          "gemScore": -25,
+          "fundamentalScore": 43,
+          "attentionScore": 68,
+          "price": 258.6300048828125
+        },
+        {
+          "ticker": "PANW",
+          "gemScore": -31,
+          "fundamentalScore": 57,
+          "attentionScore": 88,
+          "price": 357.8699951171875
+        },
+        {
+          "ticker": "UNH",
+          "gemScore": -32,
+          "fundamentalScore": 32,
+          "attentionScore": 64,
+          "price": 390.1099853515625
+        },
+        {
+          "ticker": "AMD",
+          "gemScore": -44,
+          "fundamentalScore": 49,
+          "attentionScore": 93,
+          "price": 473.25
+        }
+      ]
     }
   ],
   "disclaimer": "これは状態の可視化であり、推奨ではありません。注目が低いことには、構造変化やガバナンス問題などの理由がある場合もあります。Gem Scoreは実態と注目の乖離であり、価格上昇の予測ではありません。",
@@ -15039,7 +15326,7 @@
       "debtToEquity": 0.007901267450573323,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:35:54.182475+00:00",
+      "updatedAt": "2026-08-23T21:36:03.386532+00:00",
       "fundamentalScore": 62,
       "attentionScore": 36,
       "gemScore": 26,
@@ -15200,7 +15487,7 @@
       "debtToEquity": 0.0131215912149235,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:35:55.907990+00:00",
+      "updatedAt": "2026-08-23T21:36:05.571941+00:00",
       "fundamentalScore": 11,
       "attentionScore": 50,
       "gemScore": -39,
@@ -15368,7 +15655,7 @@
       "debtToEquity": 0.05099210307076728,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:35:57.834463+00:00",
+      "updatedAt": "2026-08-23T21:36:07.881571+00:00",
       "fundamentalScore": 62,
       "attentionScore": 57,
       "gemScore": 5,
@@ -15536,7 +15823,7 @@
       "debtToEquity": 1.978896103896104,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:35:59.735583+00:00",
+      "updatedAt": "2026-08-23T21:36:10.240928+00:00",
       "fundamentalScore": 41,
       "attentionScore": 53,
       "gemScore": -12,
@@ -15708,7 +15995,7 @@
       "debtToEquity": 0.14748927609425655,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:01.646677+00:00",
+      "updatedAt": "2026-08-23T21:36:12.350330+00:00",
       "fundamentalScore": 50,
       "attentionScore": 54,
       "gemScore": -4,
@@ -15876,7 +16163,7 @@
       "debtToEquity": -0.49730540882553775,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:03.550036+00:00",
+      "updatedAt": "2026-08-23T21:36:14.788214+00:00",
       "fundamentalScore": 50,
       "attentionScore": 28,
       "gemScore": 22,
@@ -16048,7 +16335,7 @@
       "debtToEquity": 2.454373218844033,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:05.290185+00:00",
+      "updatedAt": "2026-08-23T21:36:16.939016+00:00",
       "fundamentalScore": 31,
       "attentionScore": 46,
       "gemScore": -15,
@@ -16196,7 +16483,7 @@
       "marketCapLocal": 13212343861248.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 83127870889.06494,
+      "marketCapUsd": 83191733600.85205,
       "peRatio": 42.43013,
       "priceToSalesRatio": 2.5733676,
       "return3m": -0.9322247417485512,
@@ -16224,7 +16511,7 @@
       "debtToEquity": 0.28370447644635083,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:07.308505+00:00",
+      "updatedAt": "2026-08-23T21:36:19.497839+00:00",
       "fundamentalScore": 26,
       "attentionScore": 29,
       "gemScore": -3,
@@ -16298,8 +16585,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 83127870889.06494,
-          "score": 72.99366643213962,
+          "value": 83191733600.85205,
+          "score": 73.0020043622281,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -16364,7 +16651,7 @@
       "marketCapLocal": 2273369391104.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 14303318110.05371,
+      "marketCapUsd": 14314306586.870117,
       "peRatio": 4.5633807,
       "priceToSalesRatio": 0.9606857,
       "return3m": -12.369572534500168,
@@ -16392,7 +16679,7 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:09.185875+00:00",
+      "updatedAt": "2026-08-23T21:36:21.836632+00:00",
       "fundamentalScore": 28,
       "attentionScore": 20,
       "gemScore": 8,
@@ -16466,8 +16753,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 14303318110.05371,
-          "score": 53.885919939645,
+          "value": 14314306586.870117,
+          "score": 53.894257869733465,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ]
@@ -16567,7 +16854,7 @@
       "debtToEquity": 0.07018748450344262,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:10.943272+00:00",
+      "updatedAt": "2026-08-23T21:36:24.233377+00:00",
       "fundamentalScore": 79,
       "attentionScore": 64,
       "gemScore": 15,
@@ -16738,7 +17025,7 @@
       "debtToEquity": 0.8012596565467697,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:12.874866+00:00",
+      "updatedAt": "2026-08-23T21:36:26.632590+00:00",
       "fundamentalScore": 76,
       "attentionScore": 63,
       "gemScore": 13,
@@ -16909,7 +17196,7 @@
       "debtToEquity": 0.0610644613406562,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:14.545166+00:00",
+      "updatedAt": "2026-08-23T21:36:28.974941+00:00",
       "fundamentalScore": 49,
       "attentionScore": 93,
       "gemScore": -44,
@@ -17076,7 +17363,7 @@
       "debtToEquity": 0.19880018794261936,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:16.340798+00:00",
+      "updatedAt": "2026-08-23T21:36:31.159540+00:00",
       "fundamentalScore": 83,
       "attentionScore": 59,
       "gemScore": 24,
@@ -17215,7 +17502,7 @@
       "marketCapLocal": 62497012842496.0,
       "marketCapCurrency": "TWD",
       "financialCurrency": "TWD",
-      "marketCapUsd": 1964079635802.9531,
+      "marketCapUsd": 1964141332974.5938,
       "peRatio": 16.956417,
       "priceToSalesRatio": 14.074343,
       "return3m": 4.607334115042677,
@@ -17243,7 +17530,7 @@
       "debtToEquity": 0.19880018794261936,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:18.259616+00:00",
+      "updatedAt": "2026-08-23T21:36:33.393984+00:00",
       "fundamentalScore": 83,
       "attentionScore": 69,
       "gemScore": 14,
@@ -17317,7 +17604,7 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 1964079635802.9531,
+          "value": 1964141332974.5938,
           "score": 100.0,
           "detail": "規模が大きいほど発見済みとして評価"
         }
@@ -17386,7 +17673,7 @@
       "marketCapLocal": 25929906651136.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 163142736436.28418,
+      "marketCapUsd": 163268070303.8037,
       "peRatio": 151.01166,
       "priceToSalesRatio": 21.04176,
       "return3m": 33.730676103557464,
@@ -17414,7 +17701,7 @@
       "debtToEquity": 0.025375568977261016,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:20.081165+00:00",
+      "updatedAt": "2026-08-23T21:36:35.846355+00:00",
       "fundamentalScore": 95,
       "attentionScore": 83,
       "gemScore": 12,
@@ -17488,8 +17775,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 163142736436.28418,
-          "score": 80.3141935642123,
+          "value": 163268070303.8037,
+          "score": 80.32253149430078,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ]
@@ -17557,7 +17844,7 @@
       "marketCapLocal": 24663776296960.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 155176646413.50098,
+      "marketCapUsd": 155295860358.71582,
       "peRatio": 42.407436,
       "priceToSalesRatio": 9.390948,
       "return3m": 8.950431466987759,
@@ -17585,7 +17872,7 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:21.954020+00:00",
+      "updatedAt": "2026-08-23T21:36:38.427969+00:00",
       "fundamentalScore": 49,
       "attentionScore": 78,
       "gemScore": -29,
@@ -17659,8 +17946,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 155176646413.50098,
-          "score": 79.77065904790844,
+          "value": 155295860358.71582,
+          "score": 79.7789969779969,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -17718,8 +18005,8 @@
       "marketCapLocal": 1848487620640768.0,
       "marketCapCurrency": "KRW",
       "financialCurrency": "KRW",
-      "marketCapUsd": 1335708926544.3906,
-      "peRatio": 4.181988,
+      "marketCapUsd": 1333993090889.8438,
+      "peRatio": 4.181984,
       "priceToSalesRatio": 3.809178,
       "return3m": 2.1052289144144405,
       "return6m": 58.11519942033788,
@@ -17746,11 +18033,11 @@
       "debtToEquity": 0.05948232515149686,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:23.887350+00:00",
+      "updatedAt": "2026-08-23T21:36:40.892423+00:00",
       "fundamentalScore": 46,
       "attentionScore": 65,
       "gemScore": -19,
-      "valuationToThemeMedian": 0.21938130831267116,
+      "valuationToThemeMedian": 0.21938109847820172,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -17799,8 +18086,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 0.21938130831267116,
-          "score": 10.969065415633558,
+          "value": 0.21938109847820172,
+          "score": 10.969054923910086,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -17820,7 +18107,7 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 1335708926544.3906,
+          "value": 1333993090889.8438,
           "score": 100.0,
           "detail": "規模が大きいほど発見済みとして評価"
         }
@@ -17911,7 +18198,7 @@
       "debtToEquity": 0.12845314170624364,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:25.713617+00:00",
+      "updatedAt": "2026-08-23T21:36:43.138424+00:00",
       "fundamentalScore": 70,
       "attentionScore": 70,
       "gemScore": 0,
@@ -18051,7 +18338,7 @@
       "peRatio": 23.281328,
       "priceToSalesRatio": 9.458282,
       "return3m": -10.997789726244283,
-      "return6m": 9.616120611801863,
+      "return6m": 9.616109977562727,
       "price": 344.82000732421875,
       "revenueCagrYears": 3,
       "revenueCagr5y": 12.511745609215975,
@@ -18075,7 +18362,7 @@
       "debtToEquity": 0.14277870757227312,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:27.583632+00:00",
+      "updatedAt": "2026-08-23T21:36:45.471740+00:00",
       "fundamentalScore": 65,
       "attentionScore": 63,
       "gemScore": 2,
@@ -18135,8 +18422,8 @@
         {
           "id": "price-momentum",
           "label": "株価モメンタム",
-          "value": -0.6908345572212102,
-          "score": 27.58452206111256,
+          "value": -0.690839874340778,
+          "score": 27.58451446522746,
           "detail": "3ヶ月と6ヶ月の騰落率"
         },
         {
@@ -18242,7 +18529,7 @@
       "debtToEquity": 0.031045035864408873,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:29.516606+00:00",
+      "updatedAt": "2026-08-23T21:36:47.971993+00:00",
       "fundamentalScore": 100,
       "attentionScore": 88,
       "gemScore": 12,
@@ -18402,7 +18689,7 @@
       "debtToEquity": 1.42461990060818,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:31.363953+00:00",
+      "updatedAt": "2026-08-23T21:36:50.206487+00:00",
       "fundamentalScore": 46,
       "attentionScore": 95,
       "gemScore": -49,
@@ -18542,7 +18829,7 @@
       "marketCapLocal": 29947842265088.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 188422311087.4414,
+      "marketCapUsd": 188567065904.55078,
       "peRatio": 17.796064,
       "priceToSalesRatio": 3.7444632,
       "return3m": -22.228799763208524,
@@ -18570,7 +18857,7 @@
       "debtToEquity": 1.4563513661441272,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:33.173636+00:00",
+      "updatedAt": "2026-08-23T21:36:52.779193+00:00",
       "fundamentalScore": 14,
       "attentionScore": 47,
       "gemScore": -33,
@@ -18644,8 +18931,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 188422311087.4414,
-          "score": 81.87830815787405,
+          "value": 188567065904.55078,
+          "score": 81.88664608796252,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -18746,7 +19033,7 @@
       "debtToEquity": 1.6053970048036168,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:34.997613+00:00",
+      "updatedAt": "2026-08-23T21:36:55.069332+00:00",
       "fundamentalScore": 31,
       "attentionScore": 70,
       "gemScore": -39,
@@ -18894,7 +19181,7 @@
       "peRatio": 65.92882,
       "priceToSalesRatio": 10.626965,
       "return3m": -1.2246197900367144,
-      "return6m": 9.971237956284828,
+      "return6m": 9.971247637054367,
       "price": 190.6199951171875,
       "revenueCagrYears": 3,
       "revenueCagr5y": 9.218604990875768,
@@ -18918,7 +19205,7 @@
       "debtToEquity": 0.8573515191250958,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:36.872440+00:00",
+      "updatedAt": "2026-08-23T21:36:57.513313+00:00",
       "fundamentalScore": 30,
       "attentionScore": 72,
       "gemScore": -42,
@@ -18978,8 +19265,8 @@
         {
           "id": "price-momentum",
           "label": "株価モメンタム",
-          "value": 4.373309083124057,
-          "score": 34.81901297589151,
+          "value": 4.373313923508826,
+          "score": 34.81901989072689,
           "detail": "3ヶ月と6ヶ月の騰落率"
         },
         {
@@ -19090,7 +19377,7 @@
       "debtToEquity": 0.8189937330322482,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:38.680961+00:00",
+      "updatedAt": "2026-08-23T21:36:59.788028+00:00",
       "fundamentalScore": 72,
       "attentionScore": 50,
       "gemScore": 22,
@@ -19250,7 +19537,7 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:40.348380+00:00",
+      "updatedAt": "2026-08-23T21:37:01.984243+00:00",
       "fundamentalScore": 84,
       "attentionScore": 73,
       "gemScore": 11,
@@ -19389,7 +19676,7 @@
       "marketCapLocal": 314685063168.0,
       "marketCapCurrency": "HKD",
       "financialCurrency": "CNY",
-      "marketCapUsd": 40138911651.336914,
+      "marketCapUsd": 40139427460.350586,
       "peRatio": 7.0164366,
       "priceToSalesRatio": 0.23958881,
       "return3m": -6.72065024433831,
@@ -19417,7 +19704,7 @@
       "debtToEquity": 0.4759376110913615,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:42.066498+00:00",
+      "updatedAt": "2026-08-23T21:37:04.314299+00:00",
       "fundamentalScore": 25,
       "attentionScore": 38,
       "gemScore": -13,
@@ -19491,8 +19778,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 40138911651.336914,
-          "score": 65.08913981525481,
+          "value": 40139427460.350586,
+          "score": 65.08927933795225,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -19593,7 +19880,7 @@
       "debtToEquity": 0.6194117241854378,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:43.921921+00:00",
+      "updatedAt": "2026-08-23T21:37:06.419067+00:00",
       "fundamentalScore": 43,
       "attentionScore": 53,
       "gemScore": -10,
@@ -19737,7 +20024,7 @@
       "peRatio": 13.140568,
       "priceToSalesRatio": 2.3796,
       "return3m": -8.504994237654621,
-      "return6m": -20.31106385713827,
+      "return6m": -20.3110709710271,
       "price": 136.2100067138672,
       "revenueCagrYears": 3,
       "revenueCagr5y": 8.917866741227787,
@@ -19761,7 +20048,7 @@
       "debtToEquity": 3.9372179713556994,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:45.795161+00:00",
+      "updatedAt": "2026-08-23T21:37:08.667153+00:00",
       "fundamentalScore": 17,
       "attentionScore": 39,
       "gemScore": -22,
@@ -19821,8 +20108,8 @@
         {
           "id": "price-momentum",
           "label": "株価モメンタム",
-          "value": -14.408029047396445,
-          "score": 7.988529932290793,
+          "value": -14.40803260434086,
+          "score": 7.988524850941628,
           "detail": "3ヶ月と6ヶ月の騰落率"
         },
         {
@@ -19906,7 +20193,7 @@
       "marketCapCurrency": "USD",
       "financialCurrency": "CAD",
       "marketCapUsd": 44646486016.0,
-      "peRatio": 54.199196,
+      "peRatio": 54.177017,
       "priceToSalesRatio": 12.849307,
       "return3m": -2.677299578279122,
       "return6m": -15.525337103245546,
@@ -19933,11 +20220,11 @@
       "debtToEquity": 0.14432791669799197,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:47.662099+00:00",
+      "updatedAt": "2026-08-23T21:37:11.032905+00:00",
       "fundamentalScore": 49,
       "attentionScore": 55,
       "gemScore": -6,
-      "valuationToThemeMedian": 3.219806691107065,
+      "valuationToThemeMedian": 3.2184891052778943,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -19986,7 +20273,7 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 3.219806691107065,
+          "value": 3.2184891052778943,
           "score": 100.0,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
@@ -20104,7 +20391,7 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:49.479896+00:00",
+      "updatedAt": "2026-08-23T21:37:13.222633+00:00",
       "fundamentalScore": 42,
       "attentionScore": 48,
       "gemScore": -6,
@@ -20244,7 +20531,7 @@
       "marketCapLocal": 880364224512.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 5538972067.267456,
+      "marketCapUsd": 5543227364.232788,
       "peRatio": 2.5915265,
       "priceToSalesRatio": 0.13788764,
       "return3m": 0.054642585240209464,
@@ -20272,7 +20559,7 @@
       "debtToEquity": 1.8725512177680015,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:51.359755+00:00",
+      "updatedAt": "2026-08-23T21:37:15.582785+00:00",
       "fundamentalScore": 22,
       "attentionScore": 16,
       "gemScore": 6,
@@ -20346,8 +20633,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 5538972067.267456,
-          "score": 43.58572937572344,
+          "value": 5543227364.232788,
+          "score": 43.594067305811905,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -20440,7 +20727,7 @@
       "debtToEquity": 0.0009822450735328984,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:53.333503+00:00",
+      "updatedAt": "2026-08-23T21:37:17.718175+00:00",
       "fundamentalScore": 33,
       "attentionScore": 53,
       "gemScore": -20,
@@ -20584,7 +20871,7 @@
       "marketCapLocal": 23258025951232.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 146332111751.88965,
+      "marketCapUsd": 146444530912.6123,
       "peRatio": 29.169706,
       "priceToSalesRatio": 2.107079,
       "return3m": 3.878448620551779,
@@ -20612,7 +20899,7 @@
       "debtToEquity": 0.15362063245837743,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:55.241575+00:00",
+      "updatedAt": "2026-08-23T21:37:20.118670+00:00",
       "fundamentalScore": 47,
       "attentionScore": 60,
       "gemScore": -13,
@@ -20686,8 +20973,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 146332111751.88965,
-          "score": 79.13349100110909,
+          "value": 146444530912.6123,
+          "score": 79.14182893119757,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -20752,7 +21039,7 @@
       "marketCapLocal": 2833812815872.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 17829450122.965088,
+      "marketCapUsd": 17843147539.034424,
       "peRatio": 4.621689,
       "priceToSalesRatio": 1.6866337,
       "return3m": -3.187250996015936,
@@ -20780,7 +21067,7 @@
       "debtToEquity": 0.751089701230983,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:57.084061+00:00",
+      "updatedAt": "2026-08-23T21:37:22.555894+00:00",
       "fundamentalScore": 35,
       "attentionScore": 23,
       "gemScore": 12,
@@ -20854,8 +21141,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 17829450122.965088,
-          "score": 56.278448733275496,
+          "value": 17843147539.034424,
+          "score": 56.28678666336396,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -20941,7 +21228,7 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:36:58.771402+00:00",
+      "updatedAt": "2026-08-23T21:37:24.694150+00:00",
       "fundamentalScore": 66,
       "attentionScore": 48,
       "gemScore": 18,
@@ -21108,7 +21395,7 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:00.688611+00:00",
+      "updatedAt": "2026-08-23T21:37:26.867508+00:00",
       "fundamentalScore": 49,
       "attentionScore": 43,
       "gemScore": 6,
@@ -21245,7 +21532,7 @@
       "marketCapLocal": 19377757880320.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 121918697553.68652,
+      "marketCapUsd": 122012361189.72168,
       "peRatio": 42.78699,
       "priceToSalesRatio": 15.442487,
       "return3m": 0.6677585989668641,
@@ -21273,7 +21560,7 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:02.588681+00:00",
+      "updatedAt": "2026-08-23T21:37:29.242553+00:00",
       "fundamentalScore": 53,
       "attentionScore": 59,
       "gemScore": -6,
@@ -21347,8 +21634,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 121918697553.68652,
-          "score": 77.15175786230031,
+          "value": 122012361189.72168,
+          "score": 77.16009579238879,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -21417,7 +21704,7 @@
       "marketCapLocal": 5631606521856.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 35432279447.39868,
+      "marketCapUsd": 35459500178.85864,
       "peRatio": 34.862225,
       "priceToSalesRatio": 6.309902,
       "return3m": -26.168338634695377,
@@ -21445,7 +21732,7 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:04.486650+00:00",
+      "updatedAt": "2026-08-23T21:37:31.729103+00:00",
       "fundamentalScore": 44,
       "attentionScore": 39,
       "gemScore": 5,
@@ -21519,8 +21806,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 35432279447.39868,
-          "score": 63.734977312127995,
+          "value": 35459500178.85864,
+          "score": 63.74331524221647,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -21617,7 +21904,7 @@
       "debtToEquity": 0.17920060386914546,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:06.337231+00:00",
+      "updatedAt": "2026-08-23T21:37:33.955311+00:00",
       "fundamentalScore": 24,
       "attentionScore": 73,
       "gemScore": -49,
@@ -21785,7 +22072,7 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:08.050999+00:00",
+      "updatedAt": "2026-08-23T21:37:36.212828+00:00",
       "fundamentalScore": 26,
       "attentionScore": 50,
       "gemScore": -24,
@@ -21925,7 +22212,7 @@
       "marketCapLocal": 37086178574336.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 233334455768.92578,
+      "marketCapUsd": 233513714192.59766,
       "peRatio": 9.660108,
       "priceToSalesRatio": 0.71378565,
       "return3m": 4.854368932038835,
@@ -21953,7 +22240,7 @@
       "debtToEquity": 1.0823323986204614,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:09.956835+00:00",
+      "updatedAt": "2026-08-23T21:37:38.616982+00:00",
       "fundamentalScore": 22,
       "attentionScore": 45,
       "gemScore": -23,
@@ -22027,8 +22314,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 233334455768.92578,
-          "score": 84.19947186090896,
+          "value": 233513714192.59766,
+          "score": 84.20780979099743,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ]
@@ -22117,7 +22404,7 @@
       "debtToEquity": 0.18518626408243177,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:11.781031+00:00",
+      "updatedAt": "2026-08-23T21:37:40.890202+00:00",
       "fundamentalScore": 42,
       "attentionScore": 96,
       "gemScore": -54,
@@ -22282,7 +22569,7 @@
       "debtToEquity": 0.043223761566382086,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:13.436920+00:00",
+      "updatedAt": "2026-08-23T21:37:43.014883+00:00",
       "fundamentalScore": 57,
       "attentionScore": 88,
       "gemScore": -31,
@@ -22442,7 +22729,7 @@
       "debtToEquity": 0.9985010612619653,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:15.316056+00:00",
+      "updatedAt": "2026-08-23T21:37:45.118673+00:00",
       "fundamentalScore": 39,
       "attentionScore": 55,
       "gemScore": -16,
@@ -22582,7 +22869,7 @@
       "marketCapLocal": 710223659008.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 4468501671.496735,
+      "marketCapUsd": 4471934583.122101,
       "peRatio": 18.34149,
       "priceToSalesRatio": 2.4433935,
       "return3m": -11.51358344113842,
@@ -22610,7 +22897,7 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:17.156790+00:00",
+      "updatedAt": "2026-08-23T21:37:47.502217+00:00",
       "fundamentalScore": 30,
       "attentionScore": 24,
       "gemScore": 6,
@@ -22684,8 +22971,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 4468501671.496735,
-          "score": 41.2540481180956,
+          "value": 4471934583.122101,
+          "score": 41.26238604818407,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -22754,7 +23041,7 @@
       "peRatio": 17.225834,
       "priceToSalesRatio": 1.6888714,
       "return3m": 8.50618154708954,
-      "return6m": -13.370246825712986,
+      "return6m": -13.37025495338747,
       "price": 563.5700073242188,
       "revenueCagrYears": 3,
       "revenueCagr5y": 4.383894133723754,
@@ -22778,7 +23065,7 @@
       "debtToEquity": 3.228686207409612,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:19.027245+00:00",
+      "updatedAt": "2026-08-23T21:37:49.931358+00:00",
       "fundamentalScore": 40,
       "attentionScore": 50,
       "gemScore": -10,
@@ -22838,8 +23125,8 @@
         {
           "id": "price-momentum",
           "label": "株価モメンタム",
-          "value": -2.432032639311723,
-          "score": 25.097096229554683,
+          "value": -2.432036703148965,
+          "score": 25.097090424072903,
           "detail": "3ヶ月と6ヶ月の騰落率"
         },
         {
@@ -22921,8 +23208,8 @@
       "marketCapUsd": 282907901952.0,
       "peRatio": 26.72018,
       "priceToSalesRatio": 3.025753,
-      "return3m": 20.175358824902986,
-      "return6m": 3.203498187161295,
+      "return3m": 20.17536932317512,
+      "return6m": 3.2034904447589314,
       "price": 209.91000366210938,
       "revenueCagrYears": 3,
       "revenueCagr5y": 9.723101071987417,
@@ -22946,7 +23233,7 @@
       "debtToEquity": 0.6055023373438577,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:20.948892+00:00",
+      "updatedAt": "2026-08-23T21:37:52.354752+00:00",
       "fundamentalScore": 34,
       "attentionScore": 67,
       "gemScore": -33,
@@ -23006,8 +23293,8 @@
         {
           "id": "price-momentum",
           "label": "株価モメンタム",
-          "value": 11.68942850603214,
-          "score": 45.27061215147449,
+          "value": 11.689429883967025,
+          "score": 45.27061411995289,
           "detail": "3ヶ月と6ヶ月の騰落率"
         },
         {
@@ -23107,7 +23394,7 @@
       "debtToEquity": 1.0206908960057575,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:22.741880+00:00",
+      "updatedAt": "2026-08-23T21:37:54.814098+00:00",
       "fundamentalScore": 32,
       "attentionScore": 47,
       "gemScore": -15,
@@ -23247,7 +23534,7 @@
       "marketCapLocal": 55821933215744.0,
       "marketCapCurrency": "KRW",
       "financialCurrency": "KRW",
-      "marketCapUsd": 40336680462.80322,
+      "marketCapUsd": 40284864447.24121,
       "peRatio": 18.653004,
       "priceToSalesRatio": 1.8637373,
       "return3m": -13.130504403522819,
@@ -23275,7 +23562,7 @@
       "debtToEquity": 1.3242641018885646,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:24.756662+00:00",
+      "updatedAt": "2026-08-23T21:37:57.244540+00:00",
       "fundamentalScore": 76,
       "attentionScore": 48,
       "gemScore": 28,
@@ -23349,8 +23636,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 40336680462.80322,
-          "score": 65.1425038689771,
+          "value": 40284864447.24121,
+          "score": 65.12854766610576,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ]
@@ -23435,7 +23722,7 @@
       "debtToEquity": 0.1508670520231214,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:26.623634+00:00",
+      "updatedAt": "2026-08-23T21:37:59.630604+00:00",
       "fundamentalScore": 27,
       "attentionScore": 78,
       "gemScore": -51,
@@ -23596,7 +23883,7 @@
       "debtToEquity": 0.10757862497547889,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:28.343365+00:00",
+      "updatedAt": "2026-08-23T21:38:01.914555+00:00",
       "fundamentalScore": 32,
       "attentionScore": 66,
       "gemScore": -34,
@@ -23736,7 +24023,7 @@
       "marketCapLocal": 5155987652608.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 32439836594.680176,
+      "marketCapUsd": 32464758391.818848,
       "peRatio": 19.737392,
       "priceToSalesRatio": 2.3191867,
       "return3m": 6.944706548405359,
@@ -23764,7 +24051,7 @@
       "debtToEquity": 0.18055810102158482,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:30.201799+00:00",
+      "updatedAt": "2026-08-23T21:38:04.301162+00:00",
       "fundamentalScore": 46,
       "attentionScore": 45,
       "gemScore": 1,
@@ -23838,8 +24125,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 32439836594.680176,
-          "score": 62.77696644812081,
+          "value": 32464758391.818848,
+          "score": 62.785304378209275,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ]
@@ -23903,7 +24190,7 @@
       "marketCapLocal": 11538445369344.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 72596233264.60693,
+      "marketCapUsd": 72652005080.63232,
       "peRatio": 29.71896,
       "priceToSalesRatio": 8.592767,
       "return3m": -12.56116398137167,
@@ -23931,7 +24218,7 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:32.134745+00:00",
+      "updatedAt": "2026-08-23T21:38:06.859282+00:00",
       "fundamentalScore": 62,
       "attentionScore": 43,
       "gemScore": 19,
@@ -24005,8 +24292,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 72596233264.60693,
-          "score": 71.52285218594766,
+          "value": 72652005080.63232,
+          "score": 71.53119011603614,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -24079,7 +24366,7 @@
       "peRatio": 26.57834,
       "priceToSalesRatio": 14.046263,
       "return3m": 20.693025350232315,
-      "return6m": 24.748711557094055,
+      "return6m": 24.748703991029558,
       "price": 1255.4000244140625,
       "revenueCagrYears": 3,
       "revenueCagr5y": 31.687374880620432,
@@ -24103,7 +24390,7 @@
       "debtToEquity": 1.6017712455247786,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:34.157616+00:00",
+      "updatedAt": "2026-08-23T21:38:09.238715+00:00",
       "fundamentalScore": 93,
       "attentionScore": 87,
       "gemScore": 6,
@@ -24163,8 +24450,8 @@
         {
           "id": "price-momentum",
           "label": "株価モメンタム",
-          "value": 22.720868453663186,
-          "score": 61.02981207666169,
+          "value": 22.720864670630938,
+          "score": 61.02980667232991,
           "detail": "3ヶ月と6ヶ月の騰落率"
         },
         {
@@ -24263,7 +24550,7 @@
       "debtToEquity": 0.6748777358062737,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:36.134567+00:00",
+      "updatedAt": "2026-08-23T21:38:11.591591+00:00",
       "fundamentalScore": 62,
       "attentionScore": 50,
       "gemScore": 12,
@@ -24395,7 +24682,7 @@
       "marketCapLocal": 1330381193216.0,
       "marketCapCurrency": "DKK",
       "financialCurrency": "DKK",
-      "marketCapUsd": 207937045248.26953,
+      "marketCapUsd": 207870753041.17578,
       "peRatio": 13.792544,
       "priceToSalesRatio": 4.0384216,
       "return3m": 5.425904697984136,
@@ -24423,7 +24710,7 @@
       "debtToEquity": 0.6748777358062737,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:38.012915+00:00",
+      "updatedAt": "2026-08-23T21:38:13.817371+00:00",
       "fundamentalScore": 62,
       "attentionScore": 57,
       "gemScore": 5,
@@ -24497,8 +24784,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 207937045248.26953,
-          "score": 82.94829671064157,
+          "value": 207870753041.17578,
+          "score": 82.94483473372624,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ]
@@ -24563,7 +24850,7 @@
       "peRatio": 12.453446,
       "priceToSalesRatio": 2.8612897,
       "return3m": -15.470464059988034,
-      "return6m": -14.516416152117282,
+      "return6m": -14.51642393590247,
       "price": 143.25,
       "revenueCagrYears": 3,
       "revenueCagr5y": -11.101948515436078,
@@ -24587,7 +24874,7 @@
       "debtToEquity": 0.3458014038065258,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:39.933601+00:00",
+      "updatedAt": "2026-08-23T21:38:16.100470+00:00",
       "fundamentalScore": 30,
       "attentionScore": 36,
       "gemScore": -6,
@@ -24647,8 +24934,8 @@
         {
           "id": "price-momentum",
           "label": "株価モメンタム",
-          "value": -14.993440106052658,
-          "score": 7.152228419924775,
+          "value": -14.993443997945253,
+          "score": 7.15222286007821,
           "detail": "3ヶ月と6ヶ月の騰落率"
         },
         {
@@ -24727,7 +25014,7 @@
       "marketCapLocal": 10047182602240.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 63213681609.32617,
+      "marketCapUsd": 63262245311.083984,
       "peRatio": 25.484158,
       "priceToSalesRatio": 1.2296231,
       "return3m": 22.697462218420302,
@@ -24755,7 +25042,7 @@
       "debtToEquity": 0.30764024598984663,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:41.846228+00:00",
+      "updatedAt": "2026-08-23T21:38:18.617672+00:00",
       "fundamentalScore": 22,
       "attentionScore": 73,
       "gemScore": -51,
@@ -24829,8 +25116,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 63213681609.32617,
-          "score": 70.02027711701916,
+          "value": 63262245311.083984,
+          "score": 70.02861504710764,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -24895,7 +25182,7 @@
       "marketCapLocal": 80378995933184.0,
       "marketCapCurrency": "KRW",
       "financialCurrency": "KRW",
-      "marketCapUsd": 58081504672.13428,
+      "marketCapUsd": 58006893868.38379,
       "peRatio": 44.087154,
       "priceToSalesRatio": 3.1873636,
       "return3m": -10.663198959687907,
@@ -24923,7 +25210,7 @@
       "debtToEquity": 1.1136029993546057,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:43.613414+00:00",
+      "updatedAt": "2026-08-23T21:38:20.790126+00:00",
       "fundamentalScore": 21,
       "attentionScore": 67,
       "gemScore": -46,
@@ -24997,8 +25284,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 58081504672.13428,
-          "score": 69.10094646913481,
+          "value": 58006893868.38379,
+          "score": 69.08699026626346,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -25060,7 +25347,7 @@
       "peRatio": 15.638782,
       "priceToSalesRatio": 3.4686685,
       "return3m": -2.5572445264297787,
-      "return6m": 8.362910660984687,
+      "return6m": 8.362901499454347,
       "price": 391.1499938964844,
       "revenueCagrYears": 3,
       "revenueCagr5y": 8.842934883424336,
@@ -25084,7 +25371,7 @@
       "debtToEquity": 0.3549502764764406,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:45.476594+00:00",
+      "updatedAt": "2026-08-23T21:38:23.109054+00:00",
       "fundamentalScore": 60,
       "attentionScore": 54,
       "gemScore": 6,
@@ -25144,8 +25431,8 @@
         {
           "id": "price-momentum",
           "label": "株価モメンタム",
-          "value": 2.902833067277454,
-          "score": 32.71833295325351,
+          "value": 2.902828486512284,
+          "score": 32.71832640930326,
           "detail": "3ヶ月と6ヶ月の騰落率"
         },
         {
@@ -25252,7 +25539,7 @@
       "debtToEquity": 0.5089912505679071,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:47.402159+00:00",
+      "updatedAt": "2026-08-23T21:38:25.281021+00:00",
       "fundamentalScore": 32,
       "attentionScore": 61,
       "gemScore": -29,
@@ -25400,7 +25687,7 @@
       "peRatio": 18.593122,
       "priceToSalesRatio": 4.2556486,
       "return3m": 23.328630151639405,
-      "return6m": 19.70047659897485,
+      "return6m": 19.700490858762194,
       "price": 76.66000366210938,
       "revenueCagrYears": 3,
       "revenueCagr5y": 4.391666611007472,
@@ -25424,7 +25711,7 @@
       "debtToEquity": 0.5551616487644849,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:49.301032+00:00",
+      "updatedAt": "2026-08-23T21:38:27.602540+00:00",
       "fundamentalScore": 45,
       "attentionScore": 60,
       "gemScore": -15,
@@ -25484,8 +25771,8 @@
         {
           "id": "price-momentum",
           "label": "株価モメンタム",
-          "value": 21.514553375307127,
-          "score": 59.306504821867335,
+          "value": 21.514560505200798,
+          "score": 59.30651500742972,
           "detail": "3ヶ月と6ヶ月の騰落率"
         },
         {
@@ -25557,7 +25844,7 @@
       "marketCapLocal": 2888927805440.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 18176216130.947876,
+      "marketCapUsd": 18190179948.85559,
       "peRatio": 26.461403,
       "priceToSalesRatio": 1.5188128,
       "return3m": 13.215488215488216,
@@ -25585,7 +25872,7 @@
       "debtToEquity": 0.319936766056096,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:51.204544+00:00",
+      "updatedAt": "2026-08-23T21:38:30.040464+00:00",
       "fundamentalScore": 37,
       "attentionScore": 48,
       "gemScore": -11,
@@ -25659,8 +25946,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 18176216130.947876,
-          "score": 56.48758695497642,
+          "value": 18190179948.85559,
+          "score": 56.49592488506489,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -25718,9 +26005,9 @@
       "marketCapLocal": 1025337982976.0,
       "marketCapCurrency": "HKD",
       "financialCurrency": "CNY",
-      "marketCapUsd": 130784570125.78906,
-      "peRatio": 10.14728,
-      "priceToSalesRatio": 2.781344,
+      "marketCapUsd": 130786250785.71094,
+      "peRatio": 10.148779,
+      "priceToSalesRatio": 2.7302544,
       "return3m": 22.15412030623264,
       "return6m": -11.871045398437959,
       "price": 38.560001373291016,
@@ -25733,9 +26020,9 @@
       "epsCagr5y": 35.958571124142736,
       "revenueLatest": 349079082852.0,
       "netIncomeLatest": 51777327785.0,
-      "grossMargin": 31.044,
+      "grossMargin": 34.631002,
       "roic": 21.801862727589505,
-      "roe": 33.777002,
+      "roe": 36.556998,
       "dividendYield": 2.39,
       "institutionalOwnership": 44.853002,
       "shortInterest": null,
@@ -25746,11 +26033,11 @@
       "debtToEquity": 0.88655289435812,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:53.152289+00:00",
+      "updatedAt": "2026-08-23T21:38:32.416805+00:00",
       "fundamentalScore": 57,
       "attentionScore": 43,
       "gemScore": 14,
-      "valuationToThemeMedian": 0.4504444337167022,
+      "valuationToThemeMedian": 0.4505109753126906,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -25799,8 +26086,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 0.4504444337167022,
-          "score": 22.52222168583511,
+          "value": 0.4505109753126906,
+          "score": 22.52554876563453,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -25820,8 +26107,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 130784570125.78906,
-          "score": 77.9139127311078,
+          "value": 130786250785.71094,
+          "score": 77.91405225380524,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -25891,7 +26178,7 @@
       "marketCapCurrency": "USD",
       "financialCurrency": "USD",
       "marketCapUsd": 49202950144.0,
-      "peRatio": 61.794014,
+      "peRatio": 64.82122,
       "priceToSalesRatio": 8.141126,
       "return3m": -3.652610123271719,
       "return6m": 8.835715699071578,
@@ -25918,11 +26205,11 @@
       "debtToEquity": 0.5294009527982653,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:54.975992+00:00",
+      "updatedAt": "2026-08-23T21:38:34.577487+00:00",
       "fundamentalScore": 57,
       "attentionScore": 72,
       "gemScore": -15,
-      "valuationToThemeMedian": 7.818211009917184,
+      "valuationToThemeMedian": 8.20121469824349,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -25971,7 +26258,7 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 7.818211009917184,
+          "value": 8.20121469824349,
           "score": 100.0,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
@@ -26085,7 +26372,7 @@
       "debtToEquity": 0.16135992238069524,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:56.855542+00:00",
+      "updatedAt": "2026-08-23T21:38:36.796316+00:00",
       "fundamentalScore": 28,
       "attentionScore": 28,
       "gemScore": 0,
@@ -26253,7 +26540,7 @@
       "debtToEquity": 1.0500135379581303,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:37:58.691633+00:00",
+      "updatedAt": "2026-08-23T21:38:39.010914+00:00",
       "fundamentalScore": 34,
       "attentionScore": 41,
       "gemScore": -7,
@@ -26393,7 +26680,7 @@
       "marketCapLocal": 2078795628544.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 13079121799.213867,
+      "marketCapUsd": 13089169791.264648,
       "peRatio": 7.903856,
       "priceToSalesRatio": 1.0268543,
       "return3m": 5.2356020942408374,
@@ -26421,7 +26708,7 @@
       "debtToEquity": 3.9054866396797223,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:00.453946+00:00",
+      "updatedAt": "2026-08-23T21:38:41.414297+00:00",
       "fundamentalScore": 68,
       "attentionScore": 39,
       "gemScore": 29,
@@ -26495,8 +26782,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 13079121799.213867,
-          "score": 52.91446460398822,
+          "value": 13089169791.264648,
+          "score": 52.92280253407669,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ]
@@ -26588,11 +26875,11 @@
       "debtToEquity": 0.018308811404071312,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:02.346793+00:00",
+      "updatedAt": "2026-08-23T21:38:43.842377+00:00",
       "fundamentalScore": 79,
       "attentionScore": 27,
       "gemScore": 52,
-      "valuationToThemeMedian": 0.804592182589377,
+      "valuationToThemeMedian": 0.8045463374032702,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -26641,8 +26928,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 0.804592182589377,
-          "score": 40.229609129468855,
+          "value": 0.8045463374032702,
+          "score": 40.22731687016351,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -26748,11 +27035,11 @@
       "debtToEquity": 0.29946168370403436,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:04.170396+00:00",
+      "updatedAt": "2026-08-23T21:38:46.198583+00:00",
       "fundamentalScore": 69,
       "attentionScore": 67,
       "gemScore": 2,
-      "valuationToThemeMedian": 0.8856875300387503,
+      "valuationToThemeMedian": 0.8856370640877683,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -26801,8 +27088,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 0.8856875300387503,
-          "score": 44.284376501937516,
+          "value": 0.8856370640877683,
+          "score": 44.28185320438842,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -26915,11 +27202,11 @@
       "debtToEquity": 0.3453343130051433,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:06.067819+00:00",
+      "updatedAt": "2026-08-23T21:38:48.601781+00:00",
       "fundamentalScore": 60,
       "attentionScore": 70,
       "gemScore": -10,
-      "valuationToThemeMedian": 0.8750246344850388,
+      "valuationToThemeMedian": 0.8749747760995311,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -26968,8 +27255,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 0.8750246344850388,
-          "score": 43.75123172425194,
+          "value": 0.8749747760995311,
+          "score": 43.748738804976554,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -27056,7 +27343,7 @@
       "marketCapCurrency": "USD",
       "financialCurrency": "EUR",
       "marketCapUsd": 677460246528.0,
-      "peRatio": 29.195837,
+      "peRatio": 29.199333,
       "priceToSalesRatio": 19.176569,
       "return3m": 10.93222869354269,
       "return6m": 20.43485077719024,
@@ -27083,11 +27370,11 @@
       "debtToEquity": 0.22388615249691518,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:07.882133+00:00",
+      "updatedAt": "2026-08-23T21:38:50.993017+00:00",
       "fundamentalScore": 69,
       "attentionScore": 59,
       "gemScore": 10,
-      "valuationToThemeMedian": 0.9517484539176334,
+      "valuationToThemeMedian": 0.9518081826699837,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -27136,8 +27423,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 0.9517484539176334,
-          "score": 47.58742269588167,
+          "value": 0.9518081826699837,
+          "score": 47.590409133499186,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -27215,7 +27502,7 @@
       "marketCapLocal": 16845454336.0,
       "marketCapCurrency": "EUR",
       "financialCurrency": "EUR",
-      "marketCapUsd": 19672373750.309814,
+      "marketCapUsd": 19676970370.50891,
       "peRatio": 32.76054,
       "priceToSalesRatio": 22.955526,
       "return3m": -25.070421460648657,
@@ -27243,11 +27530,11 @@
       "debtToEquity": 1.2517813528915915,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:09.699203+00:00",
+      "updatedAt": "2026-08-23T21:38:53.169381+00:00",
       "fundamentalScore": 56,
       "attentionScore": 49,
       "gemScore": 7,
-      "valuationToThemeMedian": 1.067953396729362,
+      "valuationToThemeMedian": 1.0678925453772286,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -27296,8 +27583,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 1.067953396729362,
-          "score": 53.3976698364681,
+          "value": 1.0678925453772286,
+          "score": 53.39462726886143,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -27317,8 +27604,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 19672373750.309814,
-          "score": 57.34641917142231,
+          "value": 19676970370.50891,
+          "score": 57.34895579158913,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -27404,11 +27691,11 @@
       "debtToEquity": 0.9688011628676089,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:11.659082+00:00",
+      "updatedAt": "2026-08-23T21:38:55.573694+00:00",
       "fundamentalScore": 58,
       "attentionScore": 62,
       "gemScore": -4,
-      "valuationToThemeMedian": 0.908236524893898,
+      "valuationToThemeMedian": 0.9081847741145419,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -27457,8 +27744,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 0.908236524893898,
-          "score": 45.4118262446949,
+          "value": 0.9081847741145419,
+          "score": 45.4092387057271,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -27544,7 +27831,7 @@
       "marketCapLocal": 3147828822016.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 19805139091.551514,
+      "marketCapUsd": 19820354324.13452,
       "peRatio": 32.156166,
       "priceToSalesRatio": 13.657413,
       "return3m": -7.5297179697127,
@@ -27572,11 +27859,11 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:13.428327+00:00",
+      "updatedAt": "2026-08-23T21:38:57.692069+00:00",
       "fundamentalScore": 62,
       "attentionScore": 48,
       "gemScore": 14,
-      "valuationToThemeMedian": 1.0482515460823667,
+      "valuationToThemeMedian": 1.0481918173300164,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -27625,8 +27912,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 1.0482515460823667,
-          "score": 52.41257730411834,
+          "value": 1.0481918173300164,
+          "score": 52.40959086650082,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -27646,8 +27933,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 19805139091.551514,
-          "score": 57.41944742006192,
+          "value": 19820354324.13452,
+          "score": 57.427785350150394,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -27740,11 +28027,11 @@
       "debtToEquity": 0.10131048819780868,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:15.182070+00:00",
+      "updatedAt": "2026-08-23T21:38:59.982516+00:00",
       "fundamentalScore": 62,
       "attentionScore": 53,
       "gemScore": 9,
-      "valuationToThemeMedian": 1.0602120683818588,
+      "valuationToThemeMedian": 1.0601516581260304,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -27793,8 +28080,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 1.0602120683818588,
-          "score": 53.01060341909294,
+          "value": 1.0601516581260304,
+          "score": 53.00758290630152,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -27880,7 +28167,7 @@
       "marketCapLocal": 11192513855488.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 70419742058.93799,
+      "marketCapUsd": 70473841792.79541,
       "peRatio": 18.351377,
       "priceToSalesRatio": 4.291865,
       "return3m": -13.974978675007108,
@@ -27908,11 +28195,11 @@
       "debtToEquity": 0.054496343092552954,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:17.073449+00:00",
+      "updatedAt": "2026-08-23T21:39:02.399252+00:00",
       "fundamentalScore": 49,
       "attentionScore": 42,
       "gemScore": 7,
-      "valuationToThemeMedian": 0.5982323674094226,
+      "valuationToThemeMedian": 0.5981982804833843,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -27961,8 +28248,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 0.5982323674094226,
-          "score": 29.911618370471132,
+          "value": 0.5981982804833843,
+          "score": 29.909914024169215,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -27982,8 +28269,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 70419742058.93799,
-          "score": 71.19236074890473,
+          "value": 70473841792.79541,
+          "score": 71.2006986789932,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -28048,7 +28335,7 @@
       "marketCapLocal": 1183494176768.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 7446169442.568359,
+      "marketCapUsd": 7451889937.607422,
       "peRatio": 68.73857,
       "priceToSalesRatio": 2.8224533,
       "return3m": 6.795293810905062,
@@ -28076,11 +28363,11 @@
       "debtToEquity": 0.6115526723918828,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:18.982618+00:00",
+      "updatedAt": "2026-08-23T21:39:05.049191+00:00",
       "fundamentalScore": 21,
       "attentionScore": 80,
       "gemScore": -59,
-      "valuationToThemeMedian": 2.2407930186077216,
+      "valuationToThemeMedian": 2.240665339548457,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -28129,7 +28416,7 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 2.2407930186077216,
+          "value": 2.240665339548457,
           "score": 100.0,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
@@ -28150,8 +28437,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 7446169442.568359,
-          "score": 46.79832286640919,
+          "value": 7451889937.607422,
+          "score": 46.80666079649766,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -28216,7 +28503,7 @@
       "marketCapLocal": 6655579783168.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 41874793959.139404,
+      "marketCapUsd": 41906964131.05835,
       "peRatio": 45.086487,
       "priceToSalesRatio": 14.428409,
       "return3m": -6.832675372001215,
@@ -28244,11 +28531,11 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:20.849112+00:00",
+      "updatedAt": "2026-08-23T21:39:07.595017+00:00",
       "fundamentalScore": 61,
       "attentionScore": 52,
       "gemScore": 9,
-      "valuationToThemeMedian": 1.4697641411968245,
+      "valuationToThemeMedian": 1.4696803949064126,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -28297,8 +28584,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 1.4697641411968245,
-          "score": 73.48820705984123,
+          "value": 1.4696803949064126,
+          "score": 73.48401974532062,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -28318,8 +28605,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 41874793959.139404,
-          "score": 65.54881707865749,
+          "value": 41906964131.05835,
+          "score": 65.55715500874597,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ]
@@ -28383,7 +28670,7 @@
       "marketCapLocal": 5394225692672.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 33938754670.32837,
+      "marketCapUsd": 33964828006.31958,
       "peRatio": 62.111603,
       "priceToSalesRatio": 12.205345,
       "return3m": -0.3116883116883117,
@@ -28411,11 +28698,11 @@
       "debtToEquity": 0.35002208805772345,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:22.808119+00:00",
+      "updatedAt": "2026-08-23T21:39:10.094779+00:00",
       "fundamentalScore": 47,
       "attentionScore": 83,
       "gemScore": -36,
-      "valuationToThemeMedian": 2.024762027736894,
+      "valuationToThemeMedian": 2.0246466579955613,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -28464,7 +28751,7 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 2.024762027736894,
+          "value": 2.0246466579955613,
           "score": 100.0,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
@@ -28485,8 +28772,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 33938754670.32837,
-          "score": 63.26739756288331,
+          "value": 33964828006.31958,
+          "score": 63.27573549297178,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -28572,11 +28859,11 @@
       "debtToEquity": 0.9602367582334194,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:24.509006+00:00",
+      "updatedAt": "2026-08-23T21:39:12.283883+00:00",
       "fundamentalScore": 47,
       "attentionScore": 45,
       "gemScore": 2,
-      "valuationToThemeMedian": 0.9337036314853486,
+      "valuationToThemeMedian": 0.93365042960534,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -28625,8 +28912,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 0.9337036314853486,
-          "score": 46.68518157426743,
+          "value": 0.93365042960534,
+          "score": 46.682521480267,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -28705,7 +28992,7 @@
       "marketCapLocal": 51377459200.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 323250654.07299995,
+      "marketCapUsd": 323498990.31853676,
       "peRatio": 12.360531,
       "priceToSalesRatio": 1.6401423,
       "return3m": -6.955380577427822,
@@ -28733,11 +29020,11 @@
       "debtToEquity": 0.29862690827274063,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:26.289233+00:00",
+      "updatedAt": "2026-08-23T21:39:14.698548+00:00",
       "fundamentalScore": 40,
       "attentionScore": 26,
       "gemScore": 14,
-      "valuationToThemeMedian": 0.4029381404222451,
+      "valuationToThemeMedian": 0.4029151812456126,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -28786,8 +29073,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 0.4029381404222451,
-          "score": 20.146907021112252,
+          "value": 0.4029151812456126,
+          "score": 20.14575906228063,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -28807,8 +29094,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 323250654.07299995,
-          "score": 12.738485307875544,
+          "value": 323498990.31853676,
+          "score": 12.746823237964017,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ]
@@ -28904,7 +29191,7 @@
       "debtToEquity": 0.5421879021879021,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:28.274665+00:00",
+      "updatedAt": "2026-08-23T21:39:16.947492+00:00",
       "fundamentalScore": 44,
       "attentionScore": 61,
       "gemScore": -17,
@@ -29044,7 +29331,7 @@
       "marketCapLocal": 166837190656.0,
       "marketCapCurrency": "EUR",
       "financialCurrency": "EUR",
-      "marketCapUsd": 194834968803.5703,
+      "marketCapUsd": 194880493678.42578,
       "peRatio": 24.592316,
       "priceToSalesRatio": 3.9683459,
       "return3m": 8.638350853386278,
@@ -29072,7 +29359,7 @@
       "debtToEquity": 0.7388735071697178,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:30.275780+00:00",
+      "updatedAt": "2026-08-23T21:39:19.367679+00:00",
       "fundamentalScore": 41,
       "attentionScore": 60,
       "gemScore": -19,
@@ -29146,8 +29433,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 194834968803.5703,
-          "score": 82.24167265795596,
+          "value": 194880493678.42578,
+          "score": 82.24420927812277,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -29240,7 +29527,7 @@
       "debtToEquity": 0.10484881016281983,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:32.053764+00:00",
+      "updatedAt": "2026-08-23T21:39:21.673150+00:00",
       "fundamentalScore": 48,
       "attentionScore": 69,
       "gemScore": -21,
@@ -29380,7 +29667,7 @@
       "marketCapLocal": 5761557594112.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 36249890317.19116,
+      "marketCapUsd": 36277739175.496826,
       "peRatio": 20.903812,
       "priceToSalesRatio": 1.1020525,
       "return3m": -13.9829628090588,
@@ -29408,7 +29695,7 @@
       "debtToEquity": 0.33631398994423983,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:33.839131+00:00",
+      "updatedAt": "2026-08-23T21:39:24.189878+00:00",
       "fundamentalScore": 31,
       "attentionScore": 41,
       "gemScore": -10,
@@ -29482,8 +29769,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 36249890317.19116,
-          "score": 63.98266742115069,
+          "value": 36277739175.496826,
+          "score": 63.99100535123916,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -29541,7 +29828,7 @@
       "marketCapLocal": 4469341290496.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 28119675786.308594,
+      "marketCapUsd": 28141278634.19922,
       "peRatio": 21.653183,
       "priceToSalesRatio": 4.893361,
       "return3m": 7.273275992153312,
@@ -29569,7 +29856,7 @@
       "debtToEquity": 0.0024074625666047306,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:35.729863+00:00",
+      "updatedAt": "2026-08-23T21:39:26.635072+00:00",
       "fundamentalScore": 46,
       "attentionScore": 43,
       "gemScore": 3,
@@ -29643,8 +29930,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 28119675786.308594,
-          "score": 61.225257726414384,
+          "value": 28141278634.19922,
+          "score": 61.23359565650286,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -29702,7 +29989,7 @@
       "marketCapLocal": 36238340096.0,
       "marketCapCurrency": "EUR",
       "financialCurrency": "EUR",
-      "marketCapUsd": 42319676052.65723,
+      "marketCapUsd": 42329564410.83057,
       "peRatio": 20.26932,
       "priceToSalesRatio": 1.667434,
       "return3m": -17.49833833516361,
@@ -29730,7 +30017,7 @@
       "debtToEquity": 0.8044485634847081,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:37.573830+00:00",
+      "updatedAt": "2026-08-23T21:39:28.922669+00:00",
       "fundamentalScore": 40,
       "attentionScore": 47,
       "gemScore": -7,
@@ -29804,8 +30091,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 42319676052.65723,
-          "score": 65.66355836539832,
+          "value": 42329564410.83057,
+          "score": 65.66609498556511,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -29870,7 +30157,7 @@
       "marketCapLocal": 2685949444096.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 16899140754.143066,
+      "marketCapUsd": 16912123463.117676,
       "peRatio": 12.874292,
       "priceToSalesRatio": 1.9476583,
       "return3m": -28.835041938490214,
@@ -29898,7 +30185,7 @@
       "debtToEquity": 0.7897484222439624,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:39.421975+00:00",
+      "updatedAt": "2026-08-23T21:39:31.510899+00:00",
       "fundamentalScore": 30,
       "attentionScore": 44,
       "gemScore": -14,
@@ -29972,8 +30259,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 16899140754.143066,
-          "score": 55.696615580991235,
+          "value": 16912123463.117676,
+          "score": 55.7049535110797,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -30038,7 +30325,7 @@
       "marketCapLocal": 8742099222528.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 55002511522.664795,
+      "marketCapUsd": 55044767020.16968,
       "peRatio": 17.43495,
       "priceToSalesRatio": 6.6406164,
       "return3m": 8.8659793814433,
@@ -30066,7 +30353,7 @@
       "debtToEquity": 0.1813332714690042,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:41.498207+00:00",
+      "updatedAt": "2026-08-23T21:39:34.050374+00:00",
       "fundamentalScore": 63,
       "attentionScore": 52,
       "gemScore": 11,
@@ -30140,8 +30427,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 55002511522.664795,
-          "score": 68.50956301714312,
+          "value": 55044767020.16968,
+          "score": 68.5179009472316,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ]
@@ -30226,7 +30513,7 @@
       "debtToEquity": 1.6357032569106205,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:43.300048+00:00",
+      "updatedAt": "2026-08-23T21:39:36.464775+00:00",
       "fundamentalScore": 36,
       "attentionScore": 37,
       "gemScore": -1,
@@ -30365,7 +30652,7 @@
       "marketCapLocal": 130486140928.0,
       "marketCapCurrency": "EUR",
       "financialCurrency": "EUR",
-      "marketCapUsd": 152383668755.39844,
+      "marketCapUsd": 152419274516.9961,
       "peRatio": 24.785976,
       "priceToSalesRatio": 3.1183956,
       "return3m": -15.410922212411599,
@@ -30393,7 +30680,7 @@
       "debtToEquity": 0.3850111639646636,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:45.069599+00:00",
+      "updatedAt": "2026-08-23T21:39:38.774913+00:00",
       "fundamentalScore": 50,
       "attentionScore": 50,
       "gemScore": 0,
@@ -30467,8 +30754,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 152383668755.39844,
-          "score": 79.5734606335112,
+          "value": 152419274516.9961,
+          "score": 79.57599725367803,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ]
@@ -30525,7 +30812,7 @@
       "marketCapLocal": 539600715776.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 3394996308.2808685,
+      "marketCapUsd": 3397604502.96257,
       "peRatio": 75.307175,
       "priceToSalesRatio": 8.600316,
       "return3m": -18.687589158345222,
@@ -30553,7 +30840,7 @@
       "debtToEquity": 0.22472418611462078,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:46.997992+00:00",
+      "updatedAt": "2026-08-23T21:39:41.156948+00:00",
       "fundamentalScore": 37,
       "attentionScore": 59,
       "gemScore": -22,
@@ -30627,8 +30914,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 3394996308.2808685,
-          "score": 38.270982659123476,
+          "value": 3397604502.96257,
+          "score": 38.27932058921195,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -30686,7 +30973,7 @@
       "marketCapLocal": 530494324736.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 3337701788.3540344,
+      "marketCapUsd": 3340265966.7103577,
       "peRatio": 41.963295,
       "priceToSalesRatio": 1.7129463,
       "return3m": -16.9486077802633,
@@ -30714,7 +31001,7 @@
       "debtToEquity": 0.2198932085962667,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:48.936626+00:00",
+      "updatedAt": "2026-08-23T21:39:43.537260+00:00",
       "fundamentalScore": 38,
       "attentionScore": 38,
       "gemScore": 0,
@@ -30788,8 +31075,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 3337701788.3540344,
-          "score": 38.08618828567918,
+          "value": 3340265966.7103577,
+          "score": 38.09452621576766,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -30854,7 +31141,7 @@
       "marketCapLocal": 1291393040384.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 8125034820.122986,
+      "marketCapUsd": 8131276851.242371,
       "peRatio": 24.300844,
       "priceToSalesRatio": 2.3248992,
       "return3m": -29.39591605218378,
@@ -30882,7 +31169,7 @@
       "debtToEquity": 0.25820094221391315,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:50.836844+00:00",
+      "updatedAt": "2026-08-23T21:39:45.875560+00:00",
       "fundamentalScore": 33,
       "attentionScore": 31,
       "gemScore": 2,
@@ -30956,8 +31243,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 8125034820.122986,
-          "score": 47.745630770980085,
+          "value": 8131276851.242371,
+          "score": 47.75396870106856,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -31026,7 +31313,7 @@
       "peRatio": 29.908113,
       "priceToSalesRatio": 9.35255,
       "return3m": -5.671413231443088,
-      "return6m": 8.50688121270208,
+      "return6m": 8.506888631477873,
       "price": 60.540000915527344,
       "revenueCagrYears": 3,
       "revenueCagr5y": -0.3901868327312652,
@@ -31050,7 +31337,7 @@
       "debtToEquity": 0.05133450543970411,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:52.548962+00:00",
+      "updatedAt": "2026-08-23T21:39:48.190618+00:00",
       "fundamentalScore": 46,
       "attentionScore": 45,
       "gemScore": 1,
@@ -31110,8 +31397,8 @@
         {
           "id": "price-momentum",
           "label": "株価モメンタム",
-          "value": 1.417733990629496,
-          "score": 30.596762843756427,
+          "value": 1.4177377000173923,
+          "score": 30.596768142881984,
           "detail": "3ヶ月と6ヶ月の騰落率"
         },
         {
@@ -31183,7 +31470,7 @@
       "marketCapLocal": 1237192146944.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 7784020014.629822,
+      "marketCapUsd": 7790000062.253113,
       "peRatio": 23.211716,
       "priceToSalesRatio": 1.526013,
       "return3m": 14.817518248175181,
@@ -31211,7 +31498,7 @@
       "debtToEquity": 0.28856720721151835,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:54.503017+00:00",
+      "updatedAt": "2026-08-23T21:39:50.574908+00:00",
       "fundamentalScore": 37,
       "attentionScore": 45,
       "gemScore": -8,
@@ -31285,8 +31572,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 7784020014.629822,
-          "score": 47.28009859849131,
+          "value": 7790000062.253113,
+          "score": 47.28843652857978,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -31348,7 +31635,7 @@
       "marketCapLocal": 11464133836800.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 72128688705.68848,
+      "marketCapUsd": 72184101332.15332,
       "peRatio": 33.922733,
       "priceToSalesRatio": 1.8858709,
       "return3m": -11.09347722583717,
@@ -31376,7 +31663,7 @@
       "debtToEquity": 0.08101169734355634,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:56.355676+00:00",
+      "updatedAt": "2026-08-23T21:39:52.928128+00:00",
       "fundamentalScore": 35,
       "attentionScore": 30,
       "gemScore": 5,
@@ -31450,8 +31737,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 72128688705.68848,
-          "score": 71.45270092049398,
+          "value": 72184101332.15332,
+          "score": 71.46103885058245,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -31544,7 +31831,7 @@
       "debtToEquity": 2.2077997364953887,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:38:58.140734+00:00",
+      "updatedAt": "2026-08-23T21:39:55.071748+00:00",
       "fundamentalScore": 15,
       "attentionScore": 29,
       "gemScore": -14,
@@ -31677,7 +31964,7 @@
       "marketCapLocal": 2199544922112.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 13838838000.29663,
+      "marketCapUsd": 13849469641.80542,
       "peRatio": 16.37243,
       "priceToSalesRatio": 0.6955432,
       "return3m": -4.8957126303592124,
@@ -31705,7 +31992,7 @@
       "debtToEquity": 0.4841948058353073,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:00.029609+00:00",
+      "updatedAt": "2026-08-23T21:39:57.700298+00:00",
       "fundamentalScore": 29,
       "attentionScore": 41,
       "gemScore": -12,
@@ -31779,8 +32066,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 13838838000.29663,
-          "score": 53.52749063588441,
+          "value": 13849469641.80542,
+          "score": 53.53582856597288,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -31838,7 +32125,7 @@
       "marketCapLocal": 1891475783680.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 11900564834.428406,
+      "marketCapUsd": 11909707403.990173,
       "peRatio": 19.191545,
       "priceToSalesRatio": 0.70889187,
       "return3m": 19.62229387379088,
@@ -31866,7 +32153,7 @@
       "debtToEquity": 0.5030721232315848,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:01.980550+00:00",
+      "updatedAt": "2026-08-23T21:40:00.027295+00:00",
       "fundamentalScore": 25,
       "attentionScore": 50,
       "gemScore": -25,
@@ -31940,8 +32227,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 11900564834.428406,
-          "score": 51.88918936811985,
+          "value": 11909707403.990173,
+          "score": 51.897527298208324,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -32034,7 +32321,7 @@
       "debtToEquity": 0.8307846308955729,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:03.868277+00:00",
+      "updatedAt": "2026-08-23T21:40:02.566108+00:00",
       "fundamentalScore": 48,
       "attentionScore": 47,
       "gemScore": 1,
@@ -32174,7 +32461,7 @@
       "marketCapLocal": 144376610816.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 908371776.3745499,
+      "marketCapUsd": 909069629.9864578,
       "peRatio": 22.051598,
       "priceToSalesRatio": 3.1996944,
       "return3m": -12.66748594746546,
@@ -32202,7 +32489,7 @@
       "debtToEquity": null,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:05.653020+00:00",
+      "updatedAt": "2026-08-23T21:40:04.942549+00:00",
       "fundamentalScore": 40,
       "attentionScore": 54,
       "gemScore": -14,
@@ -32276,8 +32563,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 908371776.3745499,
-          "score": 23.95659079954636,
+          "value": 909069629.9864578,
+          "score": 23.964928729634835,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -32363,7 +32650,7 @@
       "debtToEquity": 0.7374501469844776,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:07.435246+00:00",
+      "updatedAt": "2026-08-23T21:40:07.286658+00:00",
       "fundamentalScore": 40,
       "attentionScore": 71,
       "gemScore": -31,
@@ -32531,7 +32818,7 @@
       "debtToEquity": 0.3749191000114212,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:09.220215+00:00",
+      "updatedAt": "2026-08-23T21:40:09.588335+00:00",
       "fundamentalScore": 39,
       "attentionScore": 62,
       "gemScore": -23,
@@ -32671,7 +32958,7 @@
       "marketCapLocal": 1187255025664.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 7469831509.249573,
+      "marketCapUsd": 7475570182.593079,
       "peRatio": 19.148144,
       "priceToSalesRatio": 2.0721612,
       "return3m": 10.456989247311828,
@@ -32699,7 +32986,7 @@
       "debtToEquity": 0.018548893666339324,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:11.133623+00:00",
+      "updatedAt": "2026-08-23T21:40:11.914853+00:00",
       "fundamentalScore": 41,
       "attentionScore": 40,
       "gemScore": 1,
@@ -32773,8 +33060,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 7469831509.249573,
-          "score": 46.83277014769948,
+          "value": 7475570182.593079,
+          "score": 46.84110807778795,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -32839,7 +33126,7 @@
       "marketCapLocal": 41361756160.0,
       "marketCapCurrency": "CHF",
       "financialCurrency": "CHF",
-      "marketCapUsd": 51647962369.4751,
+      "marketCapUsd": 51669258086.81641,
       "peRatio": 26.938875,
       "priceToSalesRatio": 6.0197577,
       "return3m": 20.48830360265132,
@@ -32867,7 +33154,7 @@
       "debtToEquity": 0.5737394161506382,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:12.962791+00:00",
+      "updatedAt": "2026-08-23T21:40:14.191442+00:00",
       "fundamentalScore": 50,
       "attentionScore": 61,
       "gemScore": -11,
@@ -32941,8 +33228,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 51647962369.4751,
-          "score": 67.82632980701577,
+          "value": 51669258086.81641,
+          "score": 67.8308056400955,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -33007,7 +33294,7 @@
       "marketCapLocal": 71797265399808.0,
       "marketCapCurrency": "KRW",
       "financialCurrency": "KRW",
-      "marketCapUsd": 51880384388.37744,
+      "marketCapUsd": 51813739469.31152,
       "peRatio": 31.448503,
       "priceToSalesRatio": 14.019565,
       "return3m": 16.00598354525056,
@@ -33035,7 +33322,7 @@
       "debtToEquity": 0.12442366009573831,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:14.843272+00:00",
+      "updatedAt": "2026-08-23T21:40:16.277691+00:00",
       "fundamentalScore": 77,
       "attentionScore": 60,
       "gemScore": 17,
@@ -33109,8 +33396,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 51880384388.37744,
-          "score": 67.8750796291777,
+          "value": 51813739469.31152,
+          "score": 67.86112342630636,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ]
@@ -33174,7 +33461,7 @@
       "marketCapLocal": 3789535576064.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 23842554160.319214,
+      "marketCapUsd": 23860871123.671265,
       "peRatio": 25.228321,
       "priceToSalesRatio": 3.201373,
       "return3m": 7.332358470858575,
@@ -33202,7 +33489,7 @@
       "debtToEquity": 0.23969317940131613,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:16.713634+00:00",
+      "updatedAt": "2026-08-23T21:40:18.736207+00:00",
       "fundamentalScore": 38,
       "attentionScore": 54,
       "gemScore": -16,
@@ -33276,8 +33563,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 23842554160.319214,
-          "score": 59.433819446079106,
+          "value": 23860871123.671265,
+          "score": 59.44215737616757,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ]
@@ -33341,7 +33628,7 @@
       "marketCapLocal": 258669903872.0,
       "marketCapCurrency": "JPY",
       "financialCurrency": "JPY",
-      "marketCapUsd": 1627468872.8792572,
+      "marketCapUsd": 1628719170.4564667,
       "peRatio": 15.000472,
       "priceToSalesRatio": 0.3867308,
       "return3m": -7.413893753648569,
@@ -33369,7 +33656,7 @@
       "debtToEquity": 2.3386121204161743,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:18.607676+00:00",
+      "updatedAt": "2026-08-23T21:40:21.388482+00:00",
       "fundamentalScore": 16,
       "attentionScore": 27,
       "gemScore": -11,
@@ -33443,8 +33730,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 1627468872.8792572,
-          "score": 30.28781727407714,
+          "value": 1628719170.4564667,
+          "score": 30.296155204165615,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -33537,7 +33824,7 @@
       "debtToEquity": 0.5661319073083779,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:20.640652+00:00",
+      "updatedAt": "2026-08-23T21:40:23.690868+00:00",
       "fundamentalScore": 27,
       "attentionScore": 36,
       "gemScore": -9,
@@ -33677,7 +33964,7 @@
       "marketCapLocal": 32449830912.0,
       "marketCapCurrency": "EUR",
       "financialCurrency": "EUR",
-      "marketCapUsd": 37895398313.53711,
+      "marketCapUsd": 37904252900.96777,
       "peRatio": 19.704142,
       "priceToSalesRatio": 1.5762292,
       "return3m": 8.172330988435531,
@@ -33705,7 +33992,7 @@
       "debtToEquity": 0.46956066945606695,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:22.383576+00:00",
+      "updatedAt": "2026-08-23T21:40:25.911311+00:00",
       "fundamentalScore": 37,
       "attentionScore": 50,
       "gemScore": -13,
@@ -33779,8 +34066,8 @@
         {
           "id": "market-cap",
           "label": "時価総額",
-          "value": 37895398313.53711,
-          "score": 64.46466190594799,
+          "value": 37904252900.96777,
+          "score": 64.4671985261148,
           "detail": "規模が大きいほど発見済みとして評価"
         }
       ],
@@ -33866,7 +34153,7 @@
       "debtToEquity": 0.34269410638105186,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:24.222134+00:00",
+      "updatedAt": "2026-08-23T21:40:28.249952+00:00",
       "fundamentalScore": 44,
       "attentionScore": 76,
       "gemScore": -32,
@@ -34034,7 +34321,7 @@
       "debtToEquity": 2.41126142210081,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:25.908038+00:00",
+      "updatedAt": "2026-08-23T21:40:30.498135+00:00",
       "fundamentalScore": 39,
       "attentionScore": 90,
       "gemScore": -51,
@@ -34202,11 +34489,11 @@
       "debtToEquity": 0.011059592524254902,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:27.822011+00:00",
+      "updatedAt": "2026-08-23T21:40:32.672419+00:00",
       "fundamentalScore": 55,
       "attentionScore": 53,
       "gemScore": 2,
-      "valuationToThemeMedian": 0.9442296089076698,
+      "valuationToThemeMedian": 0.9204270085492178,
       "fundamentalComponents": [
         {
           "id": "revenue-cagr",
@@ -34255,8 +34542,8 @@
         {
           "id": "valuation",
           "label": "相対バリュエーション",
-          "value": 0.9442296089076698,
-          "score": 47.21148044538349,
+          "value": 0.9204270085492178,
+          "score": 46.02135042746089,
           "detail": "テーマ内PERまたはPSR中央値との比較"
         },
         {
@@ -34370,7 +34657,7 @@
       "debtToEquity": 1.3380304612588665,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:29.781517+00:00",
+      "updatedAt": "2026-08-23T21:40:34.889118+00:00",
       "fundamentalScore": 58,
       "attentionScore": 76,
       "gemScore": -18,
@@ -34538,7 +34825,7 @@
       "debtToEquity": 3.674343652959443,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:31.562446+00:00",
+      "updatedAt": "2026-08-23T21:40:37.042521+00:00",
       "fundamentalScore": 44,
       "attentionScore": 52,
       "gemScore": -8,
@@ -34681,7 +34968,7 @@
       "peRatio": 15.845125,
       "priceToSalesRatio": 6.137534,
       "return3m": -9.379679281004947,
-      "return6m": -15.980697934992383,
+      "return6m": -15.98070577027057,
       "price": 549.9000244140625,
       "revenueCagrYears": 3,
       "revenueCagr5y": 19.89383144293926,
@@ -34705,7 +34992,7 @@
       "debtToEquity": 0.38618965858508675,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:33.356886+00:00",
+      "updatedAt": "2026-08-23T21:40:39.272937+00:00",
       "fundamentalScore": 74,
       "attentionScore": 55,
       "gemScore": 19,
@@ -34765,8 +35052,8 @@
         {
           "id": "price-momentum",
           "label": "株価モメンタム",
-          "value": -12.680188607998666,
-          "score": 10.456873417144763,
+          "value": -12.680192525637757,
+          "score": 10.456867820517491,
           "detail": "3ヶ月と6ヶ月の騰落率"
         },
         {
@@ -34872,7 +35159,7 @@
       "debtToEquity": 0.5433992418249104,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:35.298662+00:00",
+      "updatedAt": "2026-08-23T21:40:41.550471+00:00",
       "fundamentalScore": 65,
       "attentionScore": 59,
       "gemScore": 6,
@@ -35032,7 +35319,7 @@
       "debtToEquity": 0.37217228418863196,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:37.182547+00:00",
+      "updatedAt": "2026-08-23T21:40:43.735142+00:00",
       "fundamentalScore": 43,
       "attentionScore": 68,
       "gemScore": -25,
@@ -35199,7 +35486,7 @@
       "debtToEquity": 5.100288769218762,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:39.256115+00:00",
+      "updatedAt": "2026-08-23T21:40:46.155791+00:00",
       "fundamentalScore": 37,
       "attentionScore": 58,
       "gemScore": -21,
@@ -35343,7 +35630,7 @@
       "peRatio": 32.155037,
       "priceToSalesRatio": 1.1215112,
       "return3m": -14.3330653438119,
-      "return6m": -15.147274988516429,
+      "return6m": -15.147269691358206,
       "price": 103.69999694824219,
       "revenueCagrYears": 3,
       "revenueCagr5y": 5.272290929168877,
@@ -35367,7 +35654,7 @@
       "debtToEquity": 0.6735296184386199,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:41.244556+00:00",
+      "updatedAt": "2026-08-23T21:40:48.590326+00:00",
       "fundamentalScore": 34,
       "attentionScore": 57,
       "gemScore": -23,
@@ -35427,8 +35714,8 @@
         {
           "id": "price-momentum",
           "label": "株価モメンタム",
-          "value": -14.740170166164164,
-          "score": 7.514042619765479,
+          "value": -14.740167517585054,
+          "score": 7.514046403449924,
           "detail": "3ヶ月と6ヶ月の騰落率"
         },
         {
@@ -35535,7 +35822,7 @@
       "debtToEquity": 0.2802427650528048,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:42.993893+00:00",
+      "updatedAt": "2026-08-23T21:40:50.890598+00:00",
       "fundamentalScore": 47,
       "attentionScore": 63,
       "gemScore": -16,
@@ -35696,7 +35983,7 @@
       "debtToEquity": 0.6476581424160056,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:44.842472+00:00",
+      "updatedAt": "2026-08-23T21:40:53.357107+00:00",
       "fundamentalScore": 49,
       "attentionScore": 49,
       "gemScore": 0,
@@ -35864,7 +36151,7 @@
       "debtToEquity": 0.832950802252683,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:46.622869+00:00",
+      "updatedAt": "2026-08-23T21:40:55.829931+00:00",
       "fundamentalScore": 32,
       "attentionScore": 64,
       "gemScore": -32,
@@ -36031,7 +36318,7 @@
       "debtToEquity": 0.5878176199352497,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:48.455173+00:00",
+      "updatedAt": "2026-08-23T21:40:58.059249+00:00",
       "fundamentalScore": 53,
       "attentionScore": 64,
       "gemScore": -11,
@@ -36192,7 +36479,7 @@
       "debtToEquity": 1.379496631147948,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:50.354168+00:00",
+      "updatedAt": "2026-08-23T21:41:00.317589+00:00",
       "fundamentalScore": 24,
       "attentionScore": 64,
       "gemScore": -40,
@@ -36360,7 +36647,7 @@
       "debtToEquity": 1.2066362620076967,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:52.095622+00:00",
+      "updatedAt": "2026-08-23T21:41:02.785655+00:00",
       "fundamentalScore": 26,
       "attentionScore": 62,
       "gemScore": -36,
@@ -36521,7 +36808,7 @@
       "debtToEquity": 3.089892135838428,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:53.956368+00:00",
+      "updatedAt": "2026-08-23T21:41:05.051074+00:00",
       "fundamentalScore": 17,
       "attentionScore": 58,
       "gemScore": -41,
@@ -36665,7 +36952,7 @@
       "peRatio": 38.38741,
       "priceToSalesRatio": 7.137891,
       "return3m": 15.589946375783459,
-      "return6m": 1.7750517038026734,
+      "return6m": 1.7750607776616374,
       "price": 348.3699951171875,
       "revenueCagrYears": 3,
       "revenueCagr5y": 16.315435597034412,
@@ -36689,7 +36976,7 @@
       "debtToEquity": 1.09733897306848,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:55.950127+00:00",
+      "updatedAt": "2026-08-23T21:41:07.747569+00:00",
       "fundamentalScore": 61,
       "attentionScore": 66,
       "gemScore": -5,
@@ -36749,8 +37036,8 @@
         {
           "id": "price-momentum",
           "label": "株価モメンタム",
-          "value": 8.682499039793067,
-          "score": 40.974998628275806,
+          "value": 8.682503576722548,
+          "score": 40.975005109603636,
           "detail": "3ヶ月と6ヶ月の騰落率"
         },
         {
@@ -36856,7 +37143,7 @@
       "debtToEquity": 2.03255464865372,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:57.758682+00:00",
+      "updatedAt": "2026-08-23T21:41:10.102770+00:00",
       "fundamentalScore": 34,
       "attentionScore": 60,
       "gemScore": -26,
@@ -37024,7 +37311,7 @@
       "debtToEquity": 0.16784637567177874,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:39:59.567470+00:00",
+      "updatedAt": "2026-08-23T21:41:12.605865+00:00",
       "fundamentalScore": 36,
       "attentionScore": 62,
       "gemScore": -26,
@@ -37185,7 +37472,7 @@
       "debtToEquity": 0.21860016090104586,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:40:01.517512+00:00",
+      "updatedAt": "2026-08-23T21:41:14.977157+00:00",
       "fundamentalScore": 32,
       "attentionScore": 62,
       "gemScore": -30,
@@ -37353,7 +37640,7 @@
       "debtToEquity": 0.44567007545290893,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:40:03.279388+00:00",
+      "updatedAt": "2026-08-23T21:41:17.138169+00:00",
       "fundamentalScore": 33,
       "attentionScore": 59,
       "gemScore": -26,
@@ -37521,7 +37808,7 @@
       "debtToEquity": 0.7339260033991372,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:40:05.063688+00:00",
+      "updatedAt": "2026-08-23T21:41:19.434703+00:00",
       "fundamentalScore": 46,
       "attentionScore": 56,
       "gemScore": -10,
@@ -37689,7 +37976,7 @@
       "debtToEquity": 2.8146488919818196,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:40:07.132920+00:00",
+      "updatedAt": "2026-08-23T21:41:21.678561+00:00",
       "fundamentalScore": 35,
       "attentionScore": 55,
       "gemScore": -20,
@@ -37857,7 +38144,7 @@
       "debtToEquity": 1.751007178435394,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:40:09.019541+00:00",
+      "updatedAt": "2026-08-23T21:41:24.363687+00:00",
       "fundamentalScore": 36,
       "attentionScore": 49,
       "gemScore": -13,
@@ -38025,7 +38312,7 @@
       "debtToEquity": 2.0567247889826743,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:40:10.900360+00:00",
+      "updatedAt": "2026-08-23T21:41:26.770988+00:00",
       "fundamentalScore": 37,
       "attentionScore": 49,
       "gemScore": -12,
@@ -38193,7 +38480,7 @@
       "debtToEquity": 0.6707727445801415,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:40:12.779061+00:00",
+      "updatedAt": "2026-08-23T21:41:29.049466+00:00",
       "fundamentalScore": 40,
       "attentionScore": 48,
       "gemScore": -8,
@@ -38360,7 +38647,7 @@
       "debtToEquity": 12.310444900752909,
       "backlog": null,
       "backlogGrowth": null,
-      "updatedAt": "2026-08-22T21:40:14.614868+00:00",
+      "updatedAt": "2026-08-23T21:41:31.432405+00:00",
       "fundamentalScore": 37,
       "attentionScore": 46,
       "gemScore": -9,
