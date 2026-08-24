@@ -140,6 +140,7 @@ function triggerCandidates(indicators: IndicatorValue[]): TriggerCandidate[] {
 
 export function WeatherBriefDashboard({ dashboard, news, contagion }: { dashboard: DashboardData; news: MarketNewsItem[]; contagion: ContagionWatchData }) {
   const indicators = dashboard.indicators;
+  const hasUsableData = indicators.some((item) => item.signal !== "unavailable");
   const overall = getOverallSignal(indicators);
   const weather = weatherCopy(overall);
   const radar = buildUpdateRadarData(indicators, news, dashboard.fetchedAt);
@@ -166,7 +167,7 @@ export function WeatherBriefDashboard({ dashboard, news, contagion }: { dashboar
           <SectionHead number="01" eyebrow="TODAY" title="今日の天気" meta={formatDate(dashboard.fetchedAt)} />
           <div className="mt-7 grid gap-6 sm:grid-cols-[150px_1fr] sm:items-center">
             <div className="grid h-32 place-items-center rounded-3xl border border-white/10 bg-black/20" style={{ boxShadow: `inset 0 0 40px ${weather.accent}18` }}><strong className="text-4xl font-black" style={{ color: weather.accent }}>{weather.label}</strong></div>
-            <div><h3 className="text-xl font-black sm:text-2xl">{weather.headline}</h3><p className="mt-3 text-sm leading-7 text-slate-300">{weather.plain}</p><div className="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-400"><span className="rounded-full border border-white/10 px-3 py-1.5">比較可能 {radar.summary.comparableIndicators}件</span><span className={`rounded-full border px-3 py-1.5 ${staleCount ? "border-amber-300/20 text-amber-100" : "border-white/10"}`}>鮮度注意 {staleCount}件</span></div></div>
+            <div><h3 className="text-xl font-black sm:text-2xl">{weather.headline}</h3><p className="mt-3 text-sm leading-7 text-slate-300">{weather.plain}</p><div className="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-400"><span className="rounded-full border border-white/10 px-3 py-1.5">比較可能 {radar.summary.comparableIndicators}件</span><span className={`rounded-full border px-3 py-1.5 ${staleCount ? "border-amber-300/20 text-amber-100" : "border-white/10"}`}>鮮度注意 {staleCount}件</span></div>{!hasUsableData && <p role="alert" className="mt-4 rounded-xl border border-rose-300/20 bg-rose-300/[0.06] px-4 py-3 text-sm font-bold text-rose-100">データ取得エラー。現在値を確認できません。時間をおいて再読み込みしてください。</p>}</div>
           </div>
           <WeatherLevelGauge overall={overall} indicators={indicators} />
         </section>
@@ -219,6 +220,7 @@ const gaugeStage: Record<OverallSignal, string> = {
 
 function WeatherLevelGauge({ overall, indicators }: { overall: OverallSignal; indicators: IndicatorValue[] }) {
   const position = gaugePosition[overall];
+  const hasUsableData = indicators.some((item) => item.signal !== "unavailable");
   const safety = indicators.filter((item) => item.type === "safety_valve");
   const warnings = indicators.filter((item) => item.type === "warning_signal");
   const vulnerabilities = indicators.filter((item) => item.type === "vulnerability");
@@ -233,7 +235,7 @@ function WeatherLevelGauge({ overall, indicators }: { overall: OverallSignal; in
           <h3 className="text-base font-black text-white">市場ストレス水準</h3>
           <p className="mt-1 text-xs leading-5 text-slate-400">危機の確率ではなく、既存の信号判定が現在どの段階にあるかを示します。</p>
         </div>
-        <strong className="text-sm text-cyan-100">現在位置：{gaugeStage[overall]}</strong>
+        <strong className="text-sm text-cyan-100">現在位置：{hasUsableData ? gaugeStage[overall] : "データ取得エラー"}</strong>
       </div>
 
       <div role="meter" aria-label="市場ストレス水準" aria-valuemin={0} aria-valuemax={100} aria-valuenow={position ?? undefined} className="relative mt-6">
@@ -243,7 +245,7 @@ function WeatherLevelGauge({ overall, indicators }: { overall: OverallSignal; in
           <span className="bg-amber-400/75" />
           <span className="bg-rose-400/80" />
         </div>
-        {position !== null && (
+        {hasUsableData && position !== null && (
           <span className="absolute top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-[#08111f] shadow-[0_0_14px_rgba(255,255,255,0.35)]" style={{ left: `${position}%` }} />
         )}
         <div className="mt-2 grid grid-cols-4 text-center text-[10px] font-bold text-slate-500">
@@ -252,9 +254,9 @@ function WeatherLevelGauge({ overall, indicators }: { overall: OverallSignal; in
       </div>
 
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
-        <GaugeBasis label="安全弁" value={`${safetyStress}/${safety.length} 点灯`} description="信用・流動性・銀行資金" priority="最優先" items={safety} />
-        <GaugeBasis label="警告サイン" value={`${warningStress}/${warnings.length} 点灯`} description="金利・雇用・市場心理" priority="次に確認" items={warnings} />
-        <GaugeBasis label="脆弱性" value={`${vulnerabilityStress}/${vulnerabilities.length} 高警戒`} description="CRE・Private Credit・割高感" priority="被害の大きさ" items={vulnerabilities} />
+        <GaugeBasis label="安全弁" value={hasUsableData ? `${safetyStress}/${safety.length} 点灯` : "データ取得エラー"} description="信用・流動性・銀行資金" priority="最優先" items={safety} />
+        <GaugeBasis label="警告サイン" value={hasUsableData ? `${warningStress}/${warnings.length} 点灯` : "データ取得エラー"} description="金利・雇用・市場心理" priority="次に確認" items={warnings} />
+        <GaugeBasis label="脆弱性" value={hasUsableData ? `${vulnerabilityStress}/${vulnerabilities.length} 高警戒` : "データ取得エラー"} description="CRE・Private Credit・割高感" priority="被害の大きさ" items={vulnerabilities} />
       </div>
       <p className="mt-4 text-xs leading-6 text-slate-500">安全弁と警告サインの分子は黄・橙・赤の件数、脆弱性は橙・赤だけを数えます。観測待ちは点灯数に含めません。カードを開くと対象指標と状態を確認できます。</p>
     </div>
