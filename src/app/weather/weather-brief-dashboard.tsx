@@ -1,10 +1,8 @@
-"use client";
-
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
 import { assessIndicatorFreshness } from "@/lib/data-freshness";
 import { getOverallSignal } from "@/lib/indicators";
 import { buildUpdateRadarData } from "@/lib/update-radar";
+import type { ContagionWatchData } from "@/types/contagion-watch";
 import type { DashboardData, IndicatorValue, MarketNewsItem, OverallSignal, Signal, UpdateItem } from "@/types/indicator";
 
 type BriefItem = {
@@ -41,10 +39,6 @@ const directionMeta = {
   new: { label: "新しい材料", className: "border-cyan-300/20 bg-cyan-300/[0.05] text-cyan-100" },
 } as const;
 
-function isDashboardData(value: unknown): value is DashboardData {
-  return typeof value === "object" && value !== null && Array.isArray((value as DashboardData).indicators);
-}
-
 function byId(indicators: IndicatorValue[], id: string) {
   return indicators.find((item) => item.id === id);
 }
@@ -57,13 +51,38 @@ function weatherCopy(signal: OverallSignal) {
   return { label: "晴れ", accent: "#fbbf24", headline: "主要な信用・流動性指標は、おおむね落ち着いています。", plain: "平静な時ほど、次に点灯しそうな線だけを短時間で確認します。" };
 }
 
-function marketGap(indicators: IndicatorValue[]): BriefItem {
+function marketGap(indicators: IndicatorValue[], contagion: ContagionWatchData): BriefItem {
   const hy = byId(indicators, "hy-oas");
   const ccc = byId(indicators, "ccc-oas");
   const office = byId(indicators, "office-cmbs");
   const privateCredit = byId(indicators, "private-credit-default");
   const vix = byId(indicators, "vix");
   const dgs30 = byId(indicators, "dgs30");
+  const redemption = contagion.privateCreditLiquidity.indicators.find(
+    (item) => item.id === "pc-redemption-pressure",
+  );
+  const fsk = contagion.privateCreditLiquidity.bdcDiscounts.find(
+    (item) => item.id === "fsk-nav-discount",
+  );
+
+  if (
+    hy?.signal === "green" &&
+    (contagion.privateCreditLiquidity.liquiditySignal === "yellow" ||
+      contagion.privateCreditLiquidity.liquiditySignal === "red")
+  ) {
+    const evidence = [
+      redemption && redemption.signal !== "unavailable" ? `${redemption.name} ${redemption.valueLabel}` : null,
+      fsk && fsk.signal !== "unavailable" ? `${fsk.name} ${fsk.valueLabel}` : null,
+    ].filter(Boolean).join("、");
+    return {
+      id: "gap-private-credit-liquidity",
+      title: "今日のズレ：信用市場は平静、私募市場は流動性注意",
+      summary: `HY OASは${formatIndicatorValue(hy)}で点火線の内側です。一方、${evidence || "Private Creditの解約・NAV乖離"}を確認中です。流動性の傷みと信用悪化を分けて見ます。`,
+      direction: "unchanged",
+      href: "/#contagion-watch-fold",
+      meta: "公開信用 × Private Credit",
+    };
+  }
 
   if (hy?.signal === "green" && (office?.signal === "red" || privateCredit?.signal === "red")) {
     return { id: "gap-private-credit", title: "市場が見落としやすいズレ", summary: "社債市場全体はまだ平静ですが、商業不動産・非公開融資の傷みは残っています。火元と延焼を分けて見ます。", direction: "unchanged", href: "/#contagion-watch-fold", meta: "HY OAS × Private Credit" };
@@ -77,7 +96,7 @@ function marketGap(indicators: IndicatorValue[]): BriefItem {
   return { id: "gap-none", title: "点火層の同時悪化は未確認", summary: "単独の赤ではなく、信用・流動性・銀行資金が同時に悪化するかを次に確認します。", direction: "unchanged", href: "/#liquidity-core-fold", meta: "信用 × 流動性" };
 }
 
-function briefItems(indicators: IndicatorValue[], updates: UpdateItem[]): BriefItem[] {
+function briefItems(indicators: IndicatorValue[], updates: UpdateItem[], contagion: ContagionWatchData): BriefItem[] {
   const result = updates.slice(0, 2).map((item) => ({
     id: item.id,
     title: item.title,
@@ -86,9 +105,12 @@ function briefItems(indicators: IndicatorValue[], updates: UpdateItem[]): BriefI
     href: item.relatedIndicators?.[0] ? `/#indicator-${item.relatedIndicators[0]}` : item.sourceUrl ?? "/",
     meta: `${item.before ?? "--"} → ${item.after ?? "--"}`,
   }));
-  result.push(marketGap(indicators));
-  if (result.length < 3) result.push({ id: "no-large-change", title: "大きな信号変化はありません", summary: "高い水準が続いているだけの指標は、今日の異常には数えていません。次の公表値を待ちます。", direction: "unchanged", href: "/#update-radar-fold", meta: "変化速度を優先" });
-  return result.slice(0, 3);
+  const fallbackItems: BriefItem[] = [
+    { id: "no-large-change", title: "大きな信号変化はありません", summary: "高い水準が続いているだけの指標は、今日の異常には数えていません。次の公表値を待ちます。", direction: "unchanged", href: "/#update-radar-fold", meta: "変化速度を優先" },
+    { id: "no-chain-deterioration", title: "点火層の連鎖悪化は未確認", summary: "信用・短期流動性・銀行資金が同時に悪化しているかを優先します。単独の赤だけで危機とは判定しません。", direction: "unchanged", href: "/#liquidity-core-fold", meta: "同時悪化を確認" },
+  ];
+  while (result.length < 2) result.push(fallbackItems[result.length]);
+  return [...result.slice(0, 2), marketGap(indicators, contagion)];
 }
 
 function triggerCandidates(indicators: IndicatorValue[]): TriggerCandidate[] {
@@ -116,36 +138,14 @@ function triggerCandidates(indicators: IndicatorValue[]): TriggerCandidate[] {
   }).sort((left, right) => right.progress - left.progress).slice(0, 3);
 }
 
-export function WeatherBriefDashboard() {
-  const [dashboard, setDashboard] = useState<DashboardData | null>(null);
-  const [news, setNews] = useState<MarketNewsItem[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let active = true;
-    Promise.all([fetch("/api/indicators", { cache: "no-store" }), fetch("/api/news", { cache: "no-store" })])
-      .then(async ([indicatorResponse, newsResponse]) => {
-        if (!indicatorResponse.ok) throw new Error("指標データの取得に失敗しました");
-        const indicatorJson: unknown = await indicatorResponse.json();
-        const newsJson: unknown = newsResponse.ok ? await newsResponse.json() : [];
-        if (!active) return;
-        setDashboard(isDashboardData(indicatorJson) ? indicatorJson : null);
-        setNews(Array.isArray(newsJson) ? newsJson as MarketNewsItem[] : []);
-        setError(isDashboardData(indicatorJson) ? null : "指標データを確認中です");
-      })
-      .catch((caught: unknown) => { if (active) setError(caught instanceof Error ? caught.message : "データ取得に失敗しました"); })
-      .finally(() => { if (active) setLoading(false); });
-    return () => { active = false; };
-  }, []);
-
-  const indicators = useMemo(() => dashboard?.indicators ?? [], [dashboard]);
-  const overall = useMemo(() => getOverallSignal(indicators), [indicators]);
-  const weather = useMemo(() => weatherCopy(overall), [overall]);
-  const radar = useMemo(() => buildUpdateRadarData(indicators, news, dashboard?.fetchedAt ?? new Date().toISOString()), [dashboard?.fetchedAt, indicators, news]);
-  const dailyBrief = useMemo(() => briefItems(indicators, radar.highlights), [indicators, radar.highlights]);
-  const triggers = useMemo(() => triggerCandidates(indicators), [indicators]);
-  const staleCount = useMemo(() => indicators.map((item) => assessIndicatorFreshness(item)).filter((item) => item.status === "stale" || item.status === "unknown").length, [indicators]);
+export function WeatherBriefDashboard({ dashboard, news, contagion }: { dashboard: DashboardData; news: MarketNewsItem[]; contagion: ContagionWatchData }) {
+  const indicators = dashboard.indicators;
+  const overall = getOverallSignal(indicators);
+  const weather = weatherCopy(overall);
+  const radar = buildUpdateRadarData(indicators, news, dashboard.fetchedAt);
+  const dailyBrief = briefItems(indicators, radar.highlights, contagion);
+  const triggers = triggerCandidates(indicators);
+  const staleCount = indicators.map((item) => assessIndicatorFreshness(item)).filter((item) => item.status === "stale" || item.status === "unknown").length;
 
   return (
     <main className="min-h-screen bg-[#020713] text-white">
@@ -163,12 +163,12 @@ export function WeatherBriefDashboard() {
         </header>
 
         <section id="today-weather" className="scroll-mt-6 rounded-[1.75rem] border border-white/10 bg-white/[0.055] p-5 shadow-2xl shadow-black/30 sm:p-8">
-          <SectionHead number="01" eyebrow="TODAY" title="今日の天気" meta={loading ? "取得中" : dashboard?.fetchedAt ? formatDate(dashboard.fetchedAt) : "観測待ち"} />
+          <SectionHead number="01" eyebrow="TODAY" title="今日の天気" meta={formatDate(dashboard.fetchedAt)} />
           <div className="mt-7 grid gap-6 sm:grid-cols-[150px_1fr] sm:items-center">
-            <div className="grid h-32 place-items-center rounded-3xl border border-white/10 bg-black/20" style={{ boxShadow: `inset 0 0 40px ${weather.accent}18` }}><strong className="text-4xl font-black" style={{ color: weather.accent }}>{loading ? "確認中" : weather.label}</strong></div>
-            <div><h3 className="text-xl font-black sm:text-2xl">{loading ? "公開データを取得しています" : weather.headline}</h3><p className="mt-3 text-sm leading-7 text-slate-300">{weather.plain}</p><div className="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-400"><span className="rounded-full border border-white/10 px-3 py-1.5">比較可能 {radar.summary.comparableIndicators}件</span><span className={`rounded-full border px-3 py-1.5 ${staleCount ? "border-amber-300/20 text-amber-100" : "border-white/10"}`}>鮮度注意 {staleCount}件</span></div>{error && <p className="mt-4 text-xs text-amber-200">{error}</p>}</div>
+            <div className="grid h-32 place-items-center rounded-3xl border border-white/10 bg-black/20" style={{ boxShadow: `inset 0 0 40px ${weather.accent}18` }}><strong className="text-4xl font-black" style={{ color: weather.accent }}>{weather.label}</strong></div>
+            <div><h3 className="text-xl font-black sm:text-2xl">{weather.headline}</h3><p className="mt-3 text-sm leading-7 text-slate-300">{weather.plain}</p><div className="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-400"><span className="rounded-full border border-white/10 px-3 py-1.5">比較可能 {radar.summary.comparableIndicators}件</span><span className={`rounded-full border px-3 py-1.5 ${staleCount ? "border-amber-300/20 text-amber-100" : "border-white/10"}`}>鮮度注意 {staleCount}件</span></div></div>
           </div>
-          <WeatherLevelGauge overall={overall} indicators={indicators} loading={loading} />
+          <WeatherLevelGauge overall={overall} indicators={indicators} />
         </section>
 
         <section id="today-changes" className="scroll-mt-6 mt-6 rounded-[1.75rem] border border-white/10 bg-white/[0.045] p-5 sm:p-8">
@@ -217,7 +217,7 @@ const gaugeStage: Record<OverallSignal, string> = {
   crisis: "強い警戒",
 };
 
-function WeatherLevelGauge({ overall, indicators, loading }: { overall: OverallSignal; indicators: IndicatorValue[]; loading: boolean }) {
+function WeatherLevelGauge({ overall, indicators }: { overall: OverallSignal; indicators: IndicatorValue[] }) {
   const position = gaugePosition[overall];
   const safety = indicators.filter((item) => item.type === "safety_valve");
   const warnings = indicators.filter((item) => item.type === "warning_signal");
@@ -233,7 +233,7 @@ function WeatherLevelGauge({ overall, indicators, loading }: { overall: OverallS
           <h3 className="text-base font-black text-white">市場ストレス水準</h3>
           <p className="mt-1 text-xs leading-5 text-slate-400">危機の確率ではなく、既存の信号判定が現在どの段階にあるかを示します。</p>
         </div>
-        <strong className="text-sm text-cyan-100">現在位置：{loading ? "観測中" : gaugeStage[overall]}</strong>
+        <strong className="text-sm text-cyan-100">現在位置：{gaugeStage[overall]}</strong>
       </div>
 
       <div role="meter" aria-label="市場ストレス水準" aria-valuemin={0} aria-valuemax={100} aria-valuenow={position ?? undefined} className="relative mt-6">
@@ -243,7 +243,7 @@ function WeatherLevelGauge({ overall, indicators, loading }: { overall: OverallS
           <span className="bg-amber-400/75" />
           <span className="bg-rose-400/80" />
         </div>
-        {position !== null && !loading && (
+        {position !== null && (
           <span className="absolute top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-[#08111f] shadow-[0_0_14px_rgba(255,255,255,0.35)]" style={{ left: `${position}%` }} />
         )}
         <div className="mt-2 grid grid-cols-4 text-center text-[10px] font-bold text-slate-500">
@@ -252,9 +252,9 @@ function WeatherLevelGauge({ overall, indicators, loading }: { overall: OverallS
       </div>
 
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
-        <GaugeBasis label="安全弁" value={loading ? "--" : `${safetyStress}/${safety.length} 点灯`} description="信用・流動性・銀行資金" priority="最優先" items={safety} />
-        <GaugeBasis label="警告サイン" value={loading ? "--" : `${warningStress}/${warnings.length} 点灯`} description="金利・雇用・市場心理" priority="次に確認" items={warnings} />
-        <GaugeBasis label="脆弱性" value={loading ? "--" : `${vulnerabilityStress}/${vulnerabilities.length} 高警戒`} description="CRE・Private Credit・割高感" priority="被害の大きさ" items={vulnerabilities} />
+        <GaugeBasis label="安全弁" value={`${safetyStress}/${safety.length} 点灯`} description="信用・流動性・銀行資金" priority="最優先" items={safety} />
+        <GaugeBasis label="警告サイン" value={`${warningStress}/${warnings.length} 点灯`} description="金利・雇用・市場心理" priority="次に確認" items={warnings} />
+        <GaugeBasis label="脆弱性" value={`${vulnerabilityStress}/${vulnerabilities.length} 高警戒`} description="CRE・Private Credit・割高感" priority="被害の大きさ" items={vulnerabilities} />
       </div>
       <p className="mt-4 text-xs leading-6 text-slate-500">安全弁と警告サインの分子は黄・橙・赤の件数、脆弱性は橙・赤だけを数えます。観測待ちは点灯数に含めません。カードを開くと対象指標と状態を確認できます。</p>
     </div>
@@ -291,6 +291,11 @@ function GaugeBasis({ label, value, description, priority, items }: { label: str
 
 function formatNumber(value: number, decimals: number) {
   return value.toLocaleString("ja-JP", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+}
+
+function formatIndicatorValue(item: IndicatorValue) {
+  if (item.numericValue === null) return "観測待ち";
+  return `${formatNumber(item.numericValue, item.decimals)}${item.unit}`;
 }
 
 function formatDate(value: string) {
