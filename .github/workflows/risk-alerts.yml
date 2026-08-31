@@ -1,0 +1,29 @@
+name: Operator risk alert check
+
+on:
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: operator-risk-alert-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    if: github.repository == 'ryuuuta6o/macro-crisis-dashboard'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Check for new operator-only warnings
+        env:
+          RISK_ALERT_CRON_SECRET: ${{ secrets.RISK_ALERT_CRON_SECRET }}
+        run: |
+          test -n "$RISK_ALERT_CRON_SECRET"
+          curl --fail-with-body --retry 1 --retry-delay 10 --retry-all-errors \
+            --connect-timeout 10 --max-time 130 \
+            --header "Authorization: Bearer $RISK_ALERT_CRON_SECRET" \
+            "https://macro-crisis-dashboard.vercel.app/api/cron/risk-alerts"
